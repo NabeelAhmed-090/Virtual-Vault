@@ -1,0 +1,20 @@
+.navbar {
+    height: 80px;
+    background-color: black;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    border-bottom: 1px solid lightgray;
+}
+
+.navbar>h4 {
+    color: white;
+    text-align: right;
+    padding-right: 2vw;
+}
+
+@media only screen and (max-width: 800px) {
+    .navbar {
+        justify-content: center;
+    }
+}
