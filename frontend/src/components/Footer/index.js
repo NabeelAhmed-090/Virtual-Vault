@@ -1,12 +1,11 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import { FaInstagram, FaFacebook, FaLinkedin, FaSnapchat } from 'react-icons/fa'
 
 import './index.css'
 
 const Footer = () => {
     return (
-        <div className='footer-div'>
+        <div className='footer-div mt-3'>
             <Container className="first-container">
                 <Row className='first-row'>
                     <h1 className='p-3'>Virtual Vault</h1>

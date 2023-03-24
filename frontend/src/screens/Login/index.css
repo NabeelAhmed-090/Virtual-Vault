@@ -1,0 +1,37 @@
+.login-main-div {
+    width: 100%;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.display {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.switch {
+    cursor: pointer;
+    color: darkblue;
+    background-color: transparent;
+    border: none;
+}
+
+.login-box {
+    width: 30%;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+}
+
+.login-heading {
+    text-align: center;
+}
+
+@media screen and (max-width: 1150px) {
+    .login-box {
+        width: 80%;
+    }
+}

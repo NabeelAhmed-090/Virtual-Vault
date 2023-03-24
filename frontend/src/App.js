@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './screens/Home/index';
 import Header from './components/Header/index'
 import Footer from './components/Footer';
+import Login from './screens/Login';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} exact />
+          <Route path="/login" element={<Login />} exact />
         </Routes>
       </Router>
       <Footer />

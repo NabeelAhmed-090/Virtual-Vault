@@ -7,7 +7,7 @@
     background-position: center center;
 }
 
-main-section-row {
+.main-section-row {
     height: 100%;
     width: 100%
 }
@@ -18,4 +18,10 @@ main-section-row {
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.blog-container {
+    width: 100%;
+    /* background: linear-gradient(to right, #414141, #000000); */
+    background-color: black;
 }
