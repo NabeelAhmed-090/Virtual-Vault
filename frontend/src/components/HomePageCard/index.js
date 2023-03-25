@@ -13,12 +13,14 @@ function HomePageCard({ title, owner, img }) {
                 <Container className="card-body-container">
                     <Row>
                         <Col className="title-text" md={6} lg={6} sm={12}>
-                            <Card.Title><b><h6>{title}</h6></b></Card.Title>
+                            <h6><Card.Title><b>{title}</b></Card.Title></h6>
                         </Col>
                         <Col className="owner-text" md={6} lg={6} sm={12}>
-                            <Card.Text>
-                                <b><h6>{owner}</h6></b>
-                            </Card.Text>
+                            <h6>
+                                <Card.Text>
+                                    <b>{owner}</b>
+                                </Card.Text>
+                            </h6>
                         </Col>
                     </Row>
                 </Container>

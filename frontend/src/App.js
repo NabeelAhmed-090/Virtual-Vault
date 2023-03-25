@@ -10,8 +10,8 @@ function App() {
       <Header />
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} exact />
-          <Route path="/login" element={<Login />} exact />
+          <Route path="/" element={<Login />} exact />
+          <Route path="/home" element={<Home />} exact />
         </Routes>
       </Router>
       <Footer />

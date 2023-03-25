@@ -1,0 +1,9 @@
+.missing-field {
+    outline: red;
+    border: 1px solid red;
+}
+
+.credentials {
+    text-align: center;
+    color: red;
+}
