@@ -1,0 +1,47 @@
+{
+    "name": "virtualvault",
+    "proxy": "http://localhost:5000",
+    "version": "1.0.0",
+    "description": "MERN gaming online shopping app",
+    "main": "server.js",
+    "type": "module",
+    "scripts": {
+        "start": "node backend/server",
+        "server": "nodemon backend/server",
+        "client": "npm start --prefix frontend",
+        "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "data:import": "node backend/seeder",
+        "data:destroy": "node backend/seeder -d"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/NabeelAhmed-090/Virtual-Vault.git"
+    },
+    "author": "Nabeel Ahmed",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/NabeelAhmed-090/Virtual-Vault/issues"
+    },
+    "homepage": "https://github.com/NabeelAhmed-090/Virtual-Vault#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "colors": "^1.4.0",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "express-async-handler": "^1.2.0",
+        "jsonwebtoken": "^9.0.0",
+        "mongoose": "^7.0.3"
+    },
+    "devDependencies": {
+        "concurrently": "^7.6.0",
+        "eslint": "^8.36.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-config-standard": "^17.0.0",
+        "eslint-plugin-import": "^2.27.5",
+        "eslint-plugin-n": "^15.6.1",
+        "eslint-plugin-promise": "^6.1.1",
+        "eslint-plugin-react": "^7.32.2",
+        "nodemon": "^2.0.22",
+        "prettier": "^2.8.7"
+    }
+}
