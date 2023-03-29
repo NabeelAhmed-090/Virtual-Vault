@@ -4,41 +4,49 @@ import { useNavigate } from 'react-router-dom'
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import { loginFunction } from '../../actions/userActions'
 import Loader from '../Loader'
+import ErrorToaster from '../ErrorToaster'
 import './index.css'
+
 
 const LoginForm = ({ login, setLogin }) => {
     let history = useNavigate()
     const dispatch = useDispatch()
 
     const userLogin = useSelector(state => state.userLogin)
-    const { loading, error, userInfo } = userLogin
+    const { loading, error } = userLogin
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [fieldsCheck, setFieldsCheck] = useState(false)
 
     const handleLogin = (e) => {
-        e.preventDefault()
-        dispatch(loginFunction(email, password))
+        e.preventDefault();
+        try {
+            if (password.length == 0 && email.length == 0) {
+                setFieldsCheck(true)
+            } else {
+                setFieldsCheck(false)
+                dispatch(loginFunction(email, password))
+            }
+        } catch (error) {
+            setEmail("")
+            setPassword("")
+        }
     }
 
     useEffect(() => {
-        console.log("userinfo", userInfo)
         if (error) {
             console.log("error", error)
+            setEmail("")
+            setPassword("")
         }
-        if (userInfo) {
-            history("/home")
-        }
-    }, [userInfo, error])
+    }, [error])
 
     return (
-        <div className={login ? "display" : "hide"}>
+        <div className={login ? "display main-div" : "hide main-div"}>
             {loading ? <Loader /> : <>
                 <Row className='mt-5'>
                     <Col md={12} sm={12} lg={12}>
-                        {
-                            error && <h3 className="credentials pb-4"><b><u>Invalid Credentials</u></b></h3>
-                        }
                         <Form>
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label>Email address</Form.Label>
@@ -61,10 +69,9 @@ const LoginForm = ({ login, setLogin }) => {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required />
                             </Form.Group>
-                            <Button variant="dark" href='/' className='w-100 mt-3' type="submit" onClick={(e) => handleLogin(e)}>
+                            <Button variant="dark" href='/' className='w-100 mt-3' type="button" onClick={(e) => handleLogin(e)}>
                                 Login
                             </Button>
-
                         </Form>
                     </Col>
                 </Row>
@@ -75,6 +82,9 @@ const LoginForm = ({ login, setLogin }) => {
                         </p>
                     </Col>
                 </Row>
+
+                <ErrorToaster display={!!error} message="Invalid username or password" />
+                <ErrorToaster display={fieldsCheck} message="Required fields missing" />
             </>
             }
         </div>

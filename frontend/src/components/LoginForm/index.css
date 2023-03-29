@@ -3,7 +3,10 @@
     border: 1px solid red;
 }
 
+.main-div {
+    min-height: 30vh;
+}
+
 .credentials {
-    text-align: center;
     color: red;
 }
