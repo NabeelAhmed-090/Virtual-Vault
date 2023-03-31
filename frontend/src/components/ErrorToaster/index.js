@@ -21,7 +21,7 @@ const ErrorToaster = ({ display, message }) => {
         } catch (error) {
             console.log(error)
         }
-    }, [display])
+    }, [display, message])
 
     return (
         <div>

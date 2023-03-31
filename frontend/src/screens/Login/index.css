@@ -16,7 +16,7 @@
 
 .switch {
     cursor: pointer;
-    color: darkblue;
+    font-weight: bolder;
     background-color: transparent;
     border: none;
 }

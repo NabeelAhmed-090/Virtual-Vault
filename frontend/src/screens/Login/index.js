@@ -19,7 +19,7 @@ const Login = () => {
         if (userInfo) {
             history("/home")
         }
-    }, [userInfo])
+    }, [userInfo, history])
 
 
     return (

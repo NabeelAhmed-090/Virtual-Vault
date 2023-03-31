@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { Row, Col, Form, Button } from 'react-bootstrap'
+import { Row, Col, Form, Button, InputGroup } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { loginFunction } from '../../actions/userActions'
 import Loader from '../Loader'
 import ErrorToaster from '../ErrorToaster'
@@ -9,7 +10,6 @@ import './index.css'
 
 
 const LoginForm = ({ login, setLogin }) => {
-    let history = useNavigate()
     const dispatch = useDispatch()
 
     const userLogin = useSelector(state => state.userLogin)
@@ -17,28 +17,31 @@ const LoginForm = ({ login, setLogin }) => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [fieldsCheck, setFieldsCheck] = useState(false)
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        try {
-            if (password.length == 0 && email.length == 0) {
-                setFieldsCheck(true)
-            } else {
-                setFieldsCheck(false)
+    const [type, setType] = useState(true)
+    const [validated, setValidated] = useState(false);
+
+    const handleSubmit = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            try {
                 dispatch(loginFunction(email, password))
+            } catch (error) {
+                setEmail("")
+                setPassword("")
             }
-        } catch (error) {
-            setEmail("")
-            setPassword("")
         }
-    }
+        setValidated(true);
+    };
 
     useEffect(() => {
         if (error) {
-            console.log("error", error)
             setEmail("")
             setPassword("")
+            setValidated(false);
         }
     }, [error])
 
@@ -47,47 +50,58 @@ const LoginForm = ({ login, setLogin }) => {
             {loading ? <Loader /> : <>
                 <Row className='mt-5'>
                     <Col md={12} sm={12} lg={12}>
-                        <Form>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control
-                                    className={'shadow-none'}
-                                    type="email"
-                                    placeholder="Enter email"
-                                    onBlur={(e) => setEmail(e.target.value)} />
-                                <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                                </Form.Text>
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control
-                                    className={'shadow-none'}
-                                    type="password"
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required />
-                            </Form.Group>
-                            <Button variant="dark" href='/' className='w-100 mt-3' type="button" onClick={(e) => handleLogin(e)}>
-                                Login
-                            </Button>
+                        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md="12" controlId="validationEmail">
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control
+                                        className={'shadow-none'}
+                                        required
+                                        type="email"
+                                        placeholder="enter email"
+                                        onBlur={(e) => setEmail(e.target.value)}
+                                    />
+                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Email is required.
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </Row>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md="12" controlId="validationPassword">
+                                    <Form.Label>Password</Form.Label>
+                                    <InputGroup hasValidation>
+                                        <Form.Control
+                                            className={'shadow-none'}
+                                            required
+                                            type={type ? "password" : "text"}
+                                            placeholder="password"
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                        <InputGroup.Text id="inputGroupPrepend" className='cursor' onClick={() => setType(prev => !prev)}>
+                                            <FontAwesomeIcon icon={type ? faEye : faEyeSlash} />
+                                        </InputGroup.Text>
+                                        <Form.Control.Feedback type="invalid">
+                                            password is required
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
+                                </Form.Group>
+                            </Row>
+                            <Button type="submit" variant="dark" className='w-100 mt-3'> Login</Button>
                         </Form>
                     </Col>
                 </Row>
                 <Row className='mt-3'>
                     <Col>
                         <p>Dont have an account yet?
-                            <button className='switch' onClick={() => setLogin(false)}><u>Signup</u></button>
+                            <button className='switch' onClick={() => setLogin(false)}>Signup</button>
                         </p>
                     </Col>
                 </Row>
-
-                <ErrorToaster display={!!error} message="Invalid username or password" />
-                <ErrorToaster display={fieldsCheck} message="Required fields missing" />
+                <ErrorToaster display={!!error} message={(error && error.includes("500") === true) ? "Unable to connect to server" : `${error}`} />
             </>
             }
-        </div>
+        </div >
     )
 }
 
