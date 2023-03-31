@@ -21,6 +21,13 @@ const LoginForm = ({ login, setLogin }) => {
     const [type, setType] = useState(true)
     const [validated, setValidated] = useState(false);
 
+
+    const resetForm = () => {
+        setEmail("")
+        setPassword("")
+        setValidated(false);
+    }
+
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
@@ -30,8 +37,7 @@ const LoginForm = ({ login, setLogin }) => {
             try {
                 dispatch(loginFunction(email, password))
             } catch (error) {
-                setEmail("")
-                setPassword("")
+                resetForm()
             }
         }
         setValidated(true);
@@ -39,15 +45,13 @@ const LoginForm = ({ login, setLogin }) => {
 
     useEffect(() => {
         if (error) {
-            setEmail("")
-            setPassword("")
-            setValidated(false);
+            resetForm()
         }
     }, [error])
 
     return (
         <div className={login ? "display main-div" : "hide main-div"}>
-            {loading ? <Loader /> : <>
+            {loading ? <Loader message={"Verifying..."} /> : <>
                 <Row className='mt-5'>
                     <Col md={12} sm={12} lg={12}>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>

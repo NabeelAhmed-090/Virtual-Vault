@@ -1,137 +1,225 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Form, Button } from 'react-bootstrap'
+import { Row, Col, Form, Button, InputGroup } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { registerFunction } from '../../actions/userActions'
+import Loader from '../Loader'
 import ErrorToaster from '../ErrorToaster'
 
-const SignupForm = ({ login, setLogin }) => {
 
-    const userLogin = useSelector(state => state.userLogin)
+const SignupForm = ({ login, setLogin }) => {
     const dispatch = useDispatch()
 
+    // const userLogin = useSelector(state => state.userLogin)
+    // const { loading, error } = userLogin
+
+    const userRegister = useSelector(state => state.userRegister)
+    const { loading, error } = userRegister
+
+
     const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
     const [userName, setUserName] = useState("")
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
+    const [city, setCity] = useState("")
+    const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
 
-    const [fieldsCheck, setFieldsCheck] = useState(false)
-    const [passwordCheck, setPasswordCheck] = useState(false)
+    const [requestLoading, setRequestLoading] = useState(false)
 
-    const handleSignup = (e) => {
-        e.preventDefault()
-        if (email === "" || password === "" || userName === "" || firstName === "" || lastName === "" || confirmPassword === "") {
-            console.log(email, password, userName, firstName, lastName, confirmPassword)
-            setFieldsCheck(true)
-            return
-        }
-        else if (password !== confirmPassword) {
-            setPasswordCheck(true)
-        }
-        else {
-            // dispatch(loginFunction(email, password))
-        }
+    const [type, setType] = useState(true)
+    const [confirmType, setConfirmType] = useState(true)
+    const [validated, setValidated] = useState(false);
+    const [confirmPasswordValid, setConfirmPasswordValid] = useState(false);
+
+
+    const resetForm = () => {
+        setEmail("")
+        setUserName("")
+        setFirstName("")
+        setLastName("")
+        setCity("")
+        setPassword("")
+        setConfirmPassword("")
+        setValidated(false);
+        setConfirmPasswordValid(false)
     }
+
+    const handleSubmit = (event) => {
+        const form = event.currentTarget;
+        event.preventDefault();
+        if (form.checkValidity() === false || confirmPasswordValid === false) {
+            event.stopPropagation();
+        } else {
+            try {
+                setRequestLoading(true)
+                dispatch(registerFunction(email, password, userName, firstName, lastName, city))
+            } catch (error) {
+                resetForm()
+            } finally {
+                setRequestLoading(false)
+            }
+        }
+        setValidated(true);
+    };
+
+    useEffect(() => {
+        if (password === confirmPassword) {
+            setConfirmPasswordValid(true);
+        } else {
+            setConfirmPasswordValid(false);
+        }
+    }, [password, confirmPassword]);
+
+    useEffect(() => {
+        if (error) {
+            resetForm()
+        }
+    }, [error])
 
     return (
         <div className={login ? "hide" : "display"}>
-            <Row className='mt-5'>
-                <Col md={12} sm={12} lg={12}>
-                    <Form>
-                        <Row>
-                            <Col>
-                                <Form.Group className="mb-3" controlId="formBasicEmailSignup">
-                                    <Form.Label>Email address</Form.Label>
+            {(loading || requestLoading === true) ? <Loader message={"Creating account"} /> : <>
+                <Row className='mt-5'>
+                    <Col md={12} sm={12} lg={12}>
+                        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md="12" controlId="validationEmail">
+                                    <Form.Label>Email</Form.Label>
                                     <Form.Control
-                                        className='shadow-none'
+                                        className={'shadow-none'}
+                                        required
                                         type="email"
-                                        placeholder="Enter Email"
+                                        placeholder="enter email"
                                         onBlur={(e) => setEmail(e.target.value)}
                                     />
-                                    <Form.Text className="text-muted">
-                                        We'll never share your email with anyone else.
-                                    </Form.Text>
+                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Valid email is required.
+                                    </Form.Control.Feedback>
                                 </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group className="mb-3" controlId="formBasicUsername">
-                                    <Form.Label>User Name</Form.Label>
-                                    <Form.Control
-                                        className='shadow-none'
-                                        type="text"
-                                        placeholder="Enter User Name"
-                                        onBlur={(e) => setUserName(e.target.value)}
-                                    />
+                            </Row>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md="12" controlId="validationUsername">
+                                    <Form.Label>Username</Form.Label>
+                                    <InputGroup hasValidation>
+                                        <InputGroup.Text id="usernamePrepend"><b>@</b></InputGroup.Text>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Username"
+                                            aria-describedby="usernamePrepend"
+                                            required
+                                            onBlur={(e) => setUserName(e.target.value)}
+                                        />
+                                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                        <Form.Control.Feedback type="invalid">
+                                            Please choose a username.
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
                                 </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6} sm={12} lg={6}>
-                                <Form.Group className="mb-3" controlId="formBasicFirstName">
+                            </Row>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md="6" controlId="validationFirstName">
                                     <Form.Label>First Name</Form.Label>
                                     <Form.Control
-                                        className='shadow-none'
+                                        className={'shadow-none'}
+                                        required
                                         type="text"
-                                        placeholder="Enter First Name"
-                                        onBlur={(e) => setFirstName(e.target.value)}
+                                        placeholder="enter first name"
+                                        onChange={(e) => setFirstName(e.target.value)}
                                     />
+                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        First name is required.
+                                    </Form.Control.Feedback>
                                 </Form.Group>
-                            </Col>
-                            <Col md={6} sm={12} lg={6}>
-                                <Form.Group className="mb-3" controlId="formBasicLastName">
+                                <Form.Group as={Col} md="6" controlId="validationLastName">
                                     <Form.Label>Last Name</Form.Label>
                                     <Form.Control
-                                        className='shadow-none'
+                                        className={'shadow-none'}
+                                        required
                                         type="text"
-                                        placeholder="Enter Last Name"
-                                        onBlur={(e) => setLastName(e.target.value)}
+                                        placeholder="enter last name"
+                                        onChange={(e) => setLastName(e.target.value)}
                                     />
+                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        Last name is required.
+                                    </Form.Control.Feedback>
                                 </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group className="mb-3" controlId="formBasicPasswordSignup">
+                            </Row>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md="12" controlId="validationCity">
+                                    <Form.Label>City</Form.Label>
+                                    <Form.Control
+                                        className={'shadow-none'}
+                                        required
+                                        type="text"
+                                        placeholder="enter city"
+                                        onChange={(e) => setCity(e.target.value)}
+                                    />
+                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">
+                                        City is required.
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </Row>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md="12" controlId="validationPasswordSignup">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control
-                                        className='shadow-none'
-                                        type="password"
-                                        placeholder="Password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)} />
+                                    <InputGroup hasValidation>
+                                        <Form.Control
+                                            className={'shadow-none'}
+                                            required
+                                            type={type ? "password" : "text"}
+                                            placeholder="password"
+                                            onChange={(e) => setPassword(e.target.value)}
+                                        />
+                                        <InputGroup.Text id="inputGroupPrepend" className='cursor' onClick={() => setType(prev => !prev)}>
+                                            <FontAwesomeIcon icon={type ? faEye : faEyeSlash} />
+                                        </InputGroup.Text>
+                                        <Form.Control.Feedback type="invalid">
+                                            password is required
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
                                 </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+                            </Row>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md="12" controlId="validationConfirmPasswordSignup">
                                     <Form.Label>Confirm Password</Form.Label>
-                                    <Form.Control
-                                        className='shadow-none'
-                                        type="password"
-                                        placeholder="Password"
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)} />
+                                    <InputGroup hasValidation>
+                                        <Form.Control
+                                            className={'shadow-none'}
+                                            required
+                                            type={confirmType ? "password" : "text"}
+                                            placeholder="password"
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                            isInvalid={!confirmPasswordValid}
+                                        />
+                                        <InputGroup.Text id="inputGroupPrepend" className='cursor' onClick={() => setConfirmType(prev => !prev)}>
+                                            <FontAwesomeIcon icon={confirmType ? faEye : faEyeSlash} />
+                                        </InputGroup.Text>
+                                        <Form.Control.Feedback type="invalid">
+                                            {confirmPasswordValid ? "confirm password to proceed" : "passwords do not match"}
+                                        </Form.Control.Feedback>
+                                    </InputGroup>
                                 </Form.Group>
-                            </Col>
-                        </Row>
-                        <Button variant="dark" className='w-100' type="submit" onClick={(e) => handleSignup(e)}>
-                            Signup
-                        </Button>
-                    </Form>
-                </Col>
-            </Row>
-            <Row className='mt-3'>
-                <Col>
-                    <p>Already have an account?
-                        <button className='switch' onClick={() => setLogin(true)}>Login</button>
-                    </p>
-                </Col>
-            </Row>
-            <ErrorToaster display={fieldsCheck} message="Required fields missing" />
-            <ErrorToaster display={passwordCheck} message="Passwords dont match" />
+                            </Row>
+                            <Button type="submit" variant="dark" className='w-100 mt-3'>Signup</Button>
+                        </Form>
+                    </Col>
+                </Row>
+                <Row className='mt-3'>
+                    <Col>
+                        <p>Already have an account?
+                            <button className='switch' onClick={() => setLogin(true)}>Login</button>
+                        </p>
+                    </Col>
+                </Row>
+                <ErrorToaster display={!!error} message={(error && error.includes("500") === true) ? "Unable to connect to server" : `${error}`} />
+            </>
+            }
         </div>
     )
 }

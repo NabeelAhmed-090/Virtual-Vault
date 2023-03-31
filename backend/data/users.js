@@ -6,7 +6,8 @@ const users = [
         userName: "admin_user",
         email: "admin@gmail.com",
         password: bcrypt.hashSync('123456', 10),
-        isAdmin: true
+        isAdmin: true,
+        city: "lahore"
     },
     {
         firstName: "nabeel",
@@ -14,6 +15,7 @@ const users = [
         userName: "ahmednabeel",
         email: "nabeel@gmail.com",
         password: bcrypt.hashSync('123456', 10),
+        city: "lahore"
     },
     {
         firstName: "laiba",
@@ -21,6 +23,7 @@ const users = [
         userName: "laiba_la",
         email: "laiba@gmail.com",
         password: bcrypt.hashSync('123456', 10),
+        city: "sahiwal"
     }
 ]
 
