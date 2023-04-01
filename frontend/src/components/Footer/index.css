@@ -1,5 +1,5 @@
 .footer-div {
-    height: 350px;
+    min-height: 350px;
     background-color: black;
     color: white;
 }
@@ -18,4 +18,15 @@
 
 .first-row {
     text-align: center;
+}
+
+.icons-col-section {
+    display: flex;
+    justify-content: space-between
+}
+
+@media only screen and (max-width: 766px) {
+    .copyright {
+        text-align: center;
+    }
 }

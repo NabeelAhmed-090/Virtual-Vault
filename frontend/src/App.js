@@ -4,12 +4,14 @@ import Header from './components/Header'
 import Home from './screens/Home/index';
 import Footer from './components/Footer';
 import Login from './screens/Login';
+import Map from './components/Maps';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
+      <Map />
       <Header isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className={isOpen ? 'content-body' : ''}>
         <Router>
@@ -20,7 +22,6 @@ function App() {
         </Router>
         <Footer />
       </div>
-
     </>
   );
 }
