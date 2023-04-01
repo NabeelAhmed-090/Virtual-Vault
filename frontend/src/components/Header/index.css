@@ -1,20 +1,62 @@
-.navbar {
-    height: 80px;
+.navbar-div {
     background-color: black;
     width: 100%;
+    color: white
+}
+
+.options-col {
     display: flex;
-    justify-content: right;
-    border-bottom: 1px solid lightgray;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.navbar>h4 {
+.menu-col {
+    display: none;
+}
+
+#menu-button {
+    cursor: pointer;
+    background-color: transparent;
     color: white;
-    text-align: right;
-    padding-right: 2vw;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 }
 
-@media only screen and (max-width: 800px) {
-    .navbar {
+#sidebar-div {
+    display: none;
+}
+
+.icons {
+    font-size: medium;
+    margin-left: 5px;
+}
+
+.options {
+    font-size: large;
+    text-decoration: none;
+    color: white;
+}
+
+@media only screen and (max-width: 1000px) {
+    .options-col {
+        display: none;
+    }
+
+    .menu-col {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: right;
+    }
+
+    #sidebar-div {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .title-col {
+        display: flex;
         justify-content: center;
     }
 }

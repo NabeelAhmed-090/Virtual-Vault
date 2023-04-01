@@ -1,20 +1,26 @@
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Header from './components/Header'
 import Home from './screens/Home/index';
-import Header from './components/Header/index'
 import Footer from './components/Footer';
 import Login from './screens/Login';
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
-      <Header />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} exact />
-          <Route path="/home" element={<Home />} exact />
-        </Routes>
-      </Router>
-      <Footer />
+      <Header isOpen={isOpen} setIsOpen={setIsOpen} />
+      <div className={isOpen ? 'content-body' : ''}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} exact />
+            <Route path="/home" element={<Home />} exact />
+          </Routes>
+        </Router>
+        <Footer />
+      </div>
+
     </>
   );
 }

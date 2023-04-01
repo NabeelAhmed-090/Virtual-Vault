@@ -17,3 +17,7 @@ code {
 .cursor {
     cursor: pointer;
 }
+
+.content-body {
+    position: fixed;
+}
