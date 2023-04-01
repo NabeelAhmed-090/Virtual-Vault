@@ -37,6 +37,10 @@
     color: white;
 }
 
+.options:hover {
+    color: white;
+}
+
 @media only screen and (max-width: 1000px) {
     .options-col {
         display: none;

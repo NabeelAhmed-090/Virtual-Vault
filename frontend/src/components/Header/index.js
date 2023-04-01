@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBlog, faMagnifyingGlass, faCartShopping, faUser, faRightFromBracket, faBars } from '@fortawesome/free-solid-svg-icons'
 import Sidebar from '../Sidebar'
@@ -33,7 +33,7 @@ const Header = ({ isOpen, setIsOpen }) => {
                                     <a className='options' href='/' >Blogs <FontAwesomeIcon icon={faBlog} className='icons' /></a>
                                     <a className='options' href='/'>Search <FontAwesomeIcon icon={faMagnifyingGlass} className='icons' /></a>
                                     <a className='options' href='/'>Cart <FontAwesomeIcon icon={faCartShopping} className='icons' /></a>
-                                    <a className='options' href='/'>Profile <FontAwesomeIcon icon={faUser} className='icons' /></a>
+                                    <a className='options' href='/profile'>Profile <FontAwesomeIcon icon={faUser} className='icons' /></a>
                                     <a className='options' href='/'>Logout <FontAwesomeIcon icon={faRightFromBracket} className='icons' /></a>
                                 </div>
                                 <div className='menu-col'>

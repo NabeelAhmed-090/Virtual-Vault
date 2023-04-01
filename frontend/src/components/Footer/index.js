@@ -17,7 +17,7 @@ const Footer = () => {
 
     return (
         <>
-            {show == true && (
+            {show === true && (
                 <Popup show={show} handleClose={() => setShow(false)} />
             )}
 
@@ -60,5 +60,4 @@ const Footer = () => {
         </>
     )
 }
-{/* <p onClick={() => setShow(true)}>VirtualVault</p> */ }
 export default Footer

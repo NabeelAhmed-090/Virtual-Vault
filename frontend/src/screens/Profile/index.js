@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Form, Button, InputGroup } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { registerFunction } from '../../actions/userActions'
-import Loader from '../Loader'
-import ErrorToaster from '../ErrorToaster'
+import { getUserDetails, updateUserProfile } from '../../actions/userActions'
+import Loader from '../../components/Loader'
+import './index.css'
+import ErrorToaster from '../../components/ErrorToaster'
 
 
-const SignupForm = ({ login, setLogin }) => {
-    const dispatch = useDispatch()
+const Profile = () => {
 
-    const userRegister = useSelector(state => state.userRegister)
-    const { loading, error } = userRegister
-
+    const [type, setType] = useState(true)
+    const [validated, setValidated] = useState(false);
+    const [requestLoading, setRequestLoading] = useState(false)
 
     const [email, setEmail] = useState("")
     const [userName, setUserName] = useState("")
@@ -21,37 +22,46 @@ const SignupForm = ({ login, setLogin }) => {
     const [lastName, setLastName] = useState("")
     const [city, setCity] = useState("")
     const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
 
-    const [requestLoading, setRequestLoading] = useState(false)
+    let history = useNavigate()
+    let dispatch = useDispatch()
 
-    const [type, setType] = useState(true)
-    const [confirmType, setConfirmType] = useState(true)
-    const [validated, setValidated] = useState(false);
-    const [confirmPasswordValid, setConfirmPasswordValid] = useState(false);
+    const userDetails = useSelector(state => state.userDetails)
+    const { user } = userDetails
+    const detailsLoading = userDetails.loading
+
+    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
+    const { loading, error, success } = userUpdateProfile
+
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
 
 
     const resetForm = () => {
-        setEmail("")
-        setUserName("")
-        setFirstName("")
-        setLastName("")
-        setCity("")
-        setPassword("")
-        setConfirmPassword("")
-        setValidated(false);
-        setConfirmPasswordValid(false)
+        setEmail(user.email)
+        setUserName(user.userName)
+        setFirstName(user.firstName)
+        setLastName(user.lastName)
+        setCity(user.city)
     }
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
-        if (form.checkValidity() === false || confirmPasswordValid === false) {
+        if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
             try {
                 setRequestLoading(true)
-                dispatch(registerFunction(email, password, userName, firstName, lastName, city))
+                dispatch(updateUserProfile({
+                    id: user._id,
+                    email,
+                    userName,
+                    firstName,
+                    lastName,
+                    city,
+                    password
+                }))
             } catch (error) {
                 resetForm()
             } finally {
@@ -62,22 +72,25 @@ const SignupForm = ({ login, setLogin }) => {
     };
 
     useEffect(() => {
-        if (password === confirmPassword) {
-            setConfirmPasswordValid(true);
+        if (!userInfo) {
+            history("/")
         } else {
-            setConfirmPasswordValid(false);
+            if (!user || !user.email) {
+                dispatch(getUserDetails('profile', userInfo))
+            } else {
+                resetForm()
+            }
         }
-    }, [password, confirmPassword]);
+    }, [dispatch, history, userInfo, user])
+
 
     useEffect(() => {
-        if (error) {
-            resetForm()
-        }
-    }, [error])
+        console.log(success)
+    }, [success])
 
     return (
-        <div className={login ? "hide" : "display"}>
-            {(loading || requestLoading === true) ? <Loader message={"Creating account"} /> : <>
+        <Container style={{ minHeight: "100vh" }}>
+            {(loading || detailsLoading) ? <Loader message={"Loading"} /> : <>
                 <Row className='mt-5'>
                     <Col md={12} sm={12} lg={12}>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -89,6 +102,7 @@ const SignupForm = ({ login, setLogin }) => {
                                         required
                                         type="email"
                                         placeholder="enter email"
+                                        defaultValue={email}
                                         onBlur={(e) => setEmail(e.target.value)}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -107,6 +121,7 @@ const SignupForm = ({ login, setLogin }) => {
                                             placeholder="Username"
                                             aria-describedby="usernamePrepend"
                                             required
+                                            defaultValue={userName}
                                             onBlur={(e) => setUserName(e.target.value)}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -124,6 +139,7 @@ const SignupForm = ({ login, setLogin }) => {
                                         required
                                         type="text"
                                         placeholder="enter first name"
+                                        defaultValue={firstName}
                                         onChange={(e) => setFirstName(e.target.value)}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -138,6 +154,7 @@ const SignupForm = ({ login, setLogin }) => {
                                         required
                                         type="text"
                                         placeholder="enter last name"
+                                        defaultValue={lastName}
                                         onChange={(e) => setLastName(e.target.value)}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -154,6 +171,7 @@ const SignupForm = ({ login, setLogin }) => {
                                         required
                                         type="text"
                                         placeholder="enter city"
+                                        defaultValue={city}
                                         onChange={(e) => setCity(e.target.value)}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -164,11 +182,10 @@ const SignupForm = ({ login, setLogin }) => {
                             </Row>
                             <Row className="mb-3">
                                 <Form.Group as={Col} md="12" controlId="validationPasswordSignup">
-                                    <Form.Label>Password</Form.Label>
+                                    <Form.Label>New Password</Form.Label>
                                     <InputGroup hasValidation>
                                         <Form.Control
                                             className={'shadow-none'}
-                                            required
                                             type={type ? "password" : "text"}
                                             placeholder="password"
                                             onChange={(e) => setPassword(e.target.value)}
@@ -176,49 +193,23 @@ const SignupForm = ({ login, setLogin }) => {
                                         <InputGroup.Text id="inputGroupPrepend" className='cursor' onClick={() => setType(prev => !prev)}>
                                             <FontAwesomeIcon icon={type ? faEye : faEyeSlash} />
                                         </InputGroup.Text>
-                                        <Form.Control.Feedback type="invalid">
-                                            password is required
-                                        </Form.Control.Feedback>
                                     </InputGroup>
                                 </Form.Group>
                             </Row>
-                            <Row className="mb-3">
-                                <Form.Group as={Col} md="12" controlId="validationConfirmPasswordSignup">
-                                    <Form.Label>Confirm Password</Form.Label>
-                                    <InputGroup hasValidation>
-                                        <Form.Control
-                                            className={'shadow-none'}
-                                            required
-                                            type={confirmType ? "password" : "text"}
-                                            placeholder="password"
-                                            onChange={(e) => setConfirmPassword(e.target.value)}
-                                            isInvalid={!confirmPasswordValid}
-                                        />
-                                        <InputGroup.Text id="inputGroupPrepend" className='cursor' onClick={() => setConfirmType(prev => !prev)}>
-                                            <FontAwesomeIcon icon={confirmType ? faEye : faEyeSlash} />
-                                        </InputGroup.Text>
-                                        <Form.Control.Feedback type="invalid">
-                                            {confirmPasswordValid ? "confirm password to proceed" : "passwords do not match"}
-                                        </Form.Control.Feedback>
-                                    </InputGroup>
-                                </Form.Group>
+                            <Row>
+                                <Col className='update-button'>
+                                    <Button type="submit" variant="dark" className='mt-3'>Update Profile</Button>
+                                </Col>
                             </Row>
-                            <Button type="submit" variant="dark" className='w-100 mt-3'>Signup</Button>
                         </Form>
                     </Col>
                 </Row>
-                <Row className='mt-3'>
-                    <Col>
-                        <p>Already have an account?
-                            <button className='switch' onClick={() => setLogin(true)}>Login</button>
-                        </p>
-                    </Col>
-                </Row>
                 <ErrorToaster display={!!error} message={(error && error.includes("500") === true) ? "Unable to connect to server" : `${error}`} />
+                <ErrorToaster display={!!success} error={false} message={'Profile Updated'} />
             </>
             }
-        </div>
+        </Container>
     )
 }
 
-export default SignupForm
+export default Profile
