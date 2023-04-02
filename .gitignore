@@ -4,6 +4,7 @@
 /node_modules
 node_modules/
 frontend/src/Images
+frontend/public/Images
 /.pnp
 .pnp.js
 

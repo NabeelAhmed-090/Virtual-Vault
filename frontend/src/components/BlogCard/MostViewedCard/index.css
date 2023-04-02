@@ -1,0 +1,16 @@
+.img-col-blog {
+    max-height: 50vh;
+    width: 100%;
+}
+
+.main-card-blog {
+    min-height: 60vh
+}
+
+.card-body-blog {
+    height: 220px;
+}
+
+.card-text-blog {
+    height: 150px;
+}
