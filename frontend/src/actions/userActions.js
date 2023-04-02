@@ -33,8 +33,13 @@ export const loginFunction = (email, password) => async (dispatch) => {
 }
 
 export const logout = () => (dispatch) => {
-    localStorage.removeItem('userInfo')
-    dispatch({ type: USER_LOGOUT })
+    try {
+        dispatch({ type: USER_LOGOUT })
+        localStorage.removeItem('userInfo')
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 

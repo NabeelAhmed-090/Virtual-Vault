@@ -95,11 +95,11 @@ const Profile = () => {
                     <Col md={12} sm={12} lg={12}>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <Row className="mb-3">
-                                <Form.Group as={Col} md="12" controlId="validationEmail">
+                                <Form.Group as={Col} md="12" controlId="validationEmailProfile">
                                     <Form.Label>Email</Form.Label>
                                     <Form.Control
                                         className={'shadow-none'}
-                                        required
+                                        disabled
                                         type="email"
                                         placeholder="enter email"
                                         defaultValue={email}
@@ -112,7 +112,7 @@ const Profile = () => {
                                 </Form.Group>
                             </Row>
                             <Row className="mb-3">
-                                <Form.Group as={Col} md="12" controlId="validationUsername">
+                                <Form.Group as={Col} md="12" controlId="validationUsernameProfile">
                                     <Form.Label>Username</Form.Label>
                                     <InputGroup hasValidation>
                                         <InputGroup.Text id="usernamePrepend"><b>@</b></InputGroup.Text>
@@ -120,7 +120,7 @@ const Profile = () => {
                                             type="text"
                                             placeholder="Username"
                                             aria-describedby="usernamePrepend"
-                                            required
+                                            disabled
                                             defaultValue={userName}
                                             onBlur={(e) => setUserName(e.target.value)}
                                         />

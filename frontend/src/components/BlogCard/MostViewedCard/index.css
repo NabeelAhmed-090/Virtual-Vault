@@ -1,16 +1,28 @@
-.img-col-blog {
-    max-height: 50vh;
+.img-col-blog-col {
+    height: 25vh;
     width: 100%;
 }
 
+.img-card-blog {
+    height: 100%;
+    width: 100%;
+}
+
+.header-card-blog {
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .main-card-blog {
-    min-height: 60vh
+    height: 80vh
 }
 
 .card-body-blog {
-    height: 220px;
+    height: 40vh
 }
 
 .card-text-blog {
-    height: 150px;
+    height: 25vh;
 }

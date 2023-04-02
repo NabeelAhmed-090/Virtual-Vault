@@ -13,10 +13,10 @@ function App() {
 
   return (
     <>
-      <Map />
-      <Header isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className={isOpen ? 'content-body' : ''}>
         <Router>
+          <Map />
+          <Header isOpen={isOpen} setIsOpen={setIsOpen} />
           <Routes>
             <Route path="/" element={<Login />} exact />
             <Route path="/home" element={<Home />} exact />

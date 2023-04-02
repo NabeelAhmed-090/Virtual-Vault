@@ -1,11 +1,23 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
 import { Col, Container, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark, faBlog, faMagnifyingGlass, faCartShopping, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import './index.css';
+import { logout } from '../../actions/userActions';
+
 
 
 function Sidebar({ isOpen, handleButtonClick }) {
+    let history = useNavigate()
+    let dispatch = useDispatch()
+
+
+    const handleLogout = async () => {
+        dispatch(logout())
+        history("/")
+    }
     return (
         <div className={`sidebar ${isOpen ? 'open' : ''}`}>
             <Container>
@@ -19,7 +31,7 @@ function Sidebar({ isOpen, handleButtonClick }) {
                 <div className="sidebar-content">
                     <Row>
                         <Col>
-                            <a className='options' href='/' >Blogs <FontAwesomeIcon icon={faBlog} className='icons' /></a>
+                            <a className='options' href='/blogs' >Blogs <FontAwesomeIcon icon={faBlog} className='icons' /></a>
                         </Col>
                     </Row>
                     <hr />
@@ -43,7 +55,7 @@ function Sidebar({ isOpen, handleButtonClick }) {
                     <hr />
                     <Row>
                         <Col>
-                            <a className='options' href='/'>Logout <FontAwesomeIcon icon={faRightFromBracket} className='icons' /></a>
+                            <a className='options cursor' onClick={() => handleLogout()}>Logout <FontAwesomeIcon icon={faRightFromBracket} className='icons' /></a>
                         </Col>
                     </Row>
                 </div>
