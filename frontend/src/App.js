@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Login from './screens/Login';
 import Map from './components/Maps';
 import Blogs from './screens/Blogs';
+import Blog from './screens/Blog';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ function App() {
             <Route path="/home" element={<Home />} exact />
             <Route path="/profile" element={<Profile />} exact />
             <Route path="/blogs" element={<Blogs />} exact />
+            <Route path="/blogs/:id" element={<Blog />} exact />
           </Routes>
         </Router>
         <Footer />

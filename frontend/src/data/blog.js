@@ -108,6 +108,19 @@ const blogs = {
     oldArticles: oldArticles,
 }
 
-export default blogs
+const dummy_blog = {
+    _id: "642963b65f9b61eb41e210ae",
+    user: "nlawille16",
+    title: "Get on Up",
+    blog: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt, nostrum debitis, aperiam nisi quisquam quos aliquid laudantium sint quis minus cumque cupiditate illum alias est expedita tempore, reiciendis iusto optio ratione dignissimos enim! Molestias odio totam a at corporis amet ab reprehenderit asperiores quae cum incidunt, delectus unde tempore reiciendis quia obcaecati officia voluptatem, quaerat optio illum eos repudiandae! Reprehenderit iste et repellendus sit fugit doloribus! Iste, libero molestias. Quas iusto quisquam expedita illo officiis at quia labore porro vero veniam veritatis iure necessitatibus excepturi quasi fugiat adipisci illum, obcaecati voluptatem ullam tempore est non consequatur. Omnis esse, neque, earum cupiditate ex ipsa in harum deserunt assumenda optio minima expedita, porro ducimus sed aliquam voluptatum mollitia accusamus error eaque. Voluptatum hic saepe animi. Tenetur consequuntur consequatur doloribus, consectetur officia suscipit? Laborum, asperiores! Error ab fuga quae! Inventore ipsa ea quo labore voluptatum minima, fugiat quae cum officia? Delectus, non nisi illum neque porro error accusamus odio illo sit explicabo minima fuga consectetur repellat? Iure accusamus doloremque, dolorum nihil quod dolores similique vero minus inventore obcaecati nemo saepe eveniet voluptas dignissimos maxime voluptates iste, consequatur assumenda tempore! Architecto id libero nulla, suscipit nostrum magni beatae maxime cum nihil similique labore voluptatibus saepe? Quisquam, ratione. Sint aliquid quibusdam illo, et in, ab molestiae suscipit ipsam adipisci fugit aperiam quia quaerat nam ratione earum quas ipsa aut? Porro ad eos dignissimos sequi libero vero nesciunt dolore quia velit quisquam doloribus id tempora placeat repellendus quis incidunt alias, eaque deleniti aperiam. Ipsam, suscipit facere. Reprehenderit accusamus veniam esse ullam asperiores dolorem deserunt, minus ducimus, sit sunt provident autem fugit temporibus nesciunt quis perspiciatis distinctio. Possimus vitae, earum quaerat doloremque iusto nulla accusantium veritatis. Expedita officia temporibus nesciunt omnis iusto, vel, ipsum accusamus magni quam ipsam, hic maiores. Cum quae sequi ducimus porro consequatur aperiam inventore? Debitis facilis consequatur dignissimos vel enim odio quasi esse porro earum nisi officiis, ipsam ea labore incidunt modi nam nesciunt quam officia! Quisquam mollitia repudiandae adipisci distinctio molestiae. Rem voluptas facere aut at quae, suscipit explicabo dolore facilis soluta aliquid veritatis quod repellendus nulla error itaque cupiditate provident magnam, consequatur quia nisi? Alias laudantium optio aut non, at blanditiis autem dolore itaque modi ea eos molestiae quisquam minima. Iusto explicabo, ipsum ea hic, voluptatibus et nostrum a, sunt inventore quasi iure dolores nemo harum labore provident accusamus sapiente excepturi vel. Laudantium voluptatem inventore consectetur qui beatae tenetur adipisci quidem doloremque reiciendis nemo ipsam culpa numquam quas ut nisi possimus, reprehenderit minus ab necessitatibus id odit cum vitae vel. Nesciunt, repellat in. Doloribus neque aliquam, maxime quibusdam beatae unde molestiae, est praesentium blanditiis provident magnam accusantium. Illum quam reprehenderit ducimus, inventore non facere soluta delectus laborum harum saepe earum aliquam labore numquam quaerat iure sed molestiae ipsum nostrum possimus. Quo ipsa molestias a aliquam nam, quibusdam nemo repellat facere, cupiditate natus asperiores enim eligendi dolor, dignissimos mollitia ipsum cum quam molestiae. Tenetur aperiam recusandae, culpa aut natus, aspernatur praesentium, quas pariatur neque eligendi blanditiis doloremque accusantium atque veniam hic officiis.",
+    imagePath: "/Images/Blogs/blog_10.jpg",
+    totalViews: 4,
+    date: "Mon Apr 03 2023 20:22:48 GMT+0500 (Pakistan Standard Time)"
+}
+
+
+
+
+export default { blogs, dummy_blog }
 
 

@@ -35,7 +35,7 @@
 .list-blog-row {
     height: 15vh;
     background-color: lightgray;
-    box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 4px 4px 8px 1px rgba(0, 0, 0, 0.5);
 }
 
 .list-blog-cols {
@@ -51,6 +51,7 @@
     .selected-row-style {
         height: 100vh;
     }
+
     .selected-img-col {
         height: 40%;
     }

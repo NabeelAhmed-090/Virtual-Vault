@@ -1,9 +1,18 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Button, Card, Col, Container, Row } from 'react-bootstrap'
 import './index.css'
 
-const MostViewedCard = ({ title, blog, user, imagePath }) => {
+const MostViewedCard = ({ id, title, blog, user, imagePath }) => {
+
+    let history = useNavigate()
+
+    const handleOnClick = () => {
+        history(`/blogs/${id}`)
+    }
+
     const shortenedBlog = blog.slice(0, 100) + ".......";
+
     return (
         <Card className='mt-3 main-card-blog '>
             <Container>
@@ -19,7 +28,7 @@ const MostViewedCard = ({ title, blog, user, imagePath }) => {
                             <Card.Text className='card-text-blog'>
                                 {shortenedBlog}
                             </Card.Text>
-                            <Button variant="dark" className="w-100">Read</Button>
+                            <Button variant="dark" className="w-100" onClick={() => handleOnClick()}>Read</Button>
                         </Card.Body>
                     </Col>
                 </Row>

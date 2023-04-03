@@ -21,3 +21,7 @@ code {
 .content-body {
     position: fixed;
 }
+
+.temp-height {
+    height: 100vh;
+}

@@ -1,5 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Blog from '../models/blogModel.js'
+import User from '../models/userModel.js'
+
 
 // @desc Get blogs
 // @route Get /api/blogs
@@ -26,8 +28,41 @@ const getBlogs = asyncHandler(async (req, res) => {
             })
         }
     } catch (error) {
-        console.log(error)
+        res.json({
+            error: error,
+            message: "Error in fetching blogs"
+        })
     }
 })
 
-export { getBlogs }
+
+// @desc Get blogs
+// @route Get /api/blogs
+// @access Public
+
+const getBlog = asyncHandler(async (req, res) => {
+    try {
+        const blog = await Blog.findById(req.params.id)
+        if (blog) {
+            const user = await User.findById(blog.user)
+            const date = Date(blog._id.getTimestamp())
+            res.send({
+                ...blog._doc,
+                user: user.userName,
+                date: date
+            })
+        }
+        else {
+            res.status(404)
+            throw new Error("Blog not found")
+        }
+    } catch (error) {
+        res.status(404)
+        res.json({
+            error: error,
+            message: "Blog not found"
+        })
+    }
+})
+
+export { getBlogs, getBlog }
