@@ -2,3 +2,18 @@
     min-height: 100vh;
     font-family: 'Fredoka', sans-serif;
 }
+
+.image-section-blog-page {
+    min-height: 100vh;
+    width: 100%
+}
+
+@media screen and (max-width: 1150px) {
+    .image-section-blog-page {
+        min-height: 40vh;
+    }
+
+    .main-blog-div {
+        min-height: 40vh;
+    }
+}

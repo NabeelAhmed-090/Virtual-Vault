@@ -28,13 +28,13 @@
 
 .list-blog-cols {
     height: 15vh;
-    background-color: lightgray;
+    background-color: #F0F0F0;
     box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.5);
 }
 
 .list-blog-row {
     height: 15vh;
-    background-color: lightgray;
+    background-color: #F0F0F0;
     box-shadow: 4px 4px 8px 1px rgba(0, 0, 0, 0.5);
 }
 

@@ -171,13 +171,14 @@ const SignupForm = ({ login, setLogin }) => {
                                             required
                                             type={type ? "password" : "text"}
                                             placeholder="password"
+                                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
                                         <InputGroup.Text id="inputGroupPrepend" className='cursor' onClick={() => setType(prev => !prev)}>
                                             <FontAwesomeIcon icon={type ? faEye : faEyeSlash} />
                                         </InputGroup.Text>
                                         <Form.Control.Feedback type="invalid">
-                                            password is required
+                                            Please provide a valid password (minimum 8 characters, at least one uppercase letter, one lowercase letter, one number ,and one special character).
                                         </Form.Control.Feedback>
                                     </InputGroup>
                                 </Form.Group>

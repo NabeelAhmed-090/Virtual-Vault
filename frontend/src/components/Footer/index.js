@@ -9,6 +9,11 @@ import './index.css'
 const Footer = () => {
     const [show, setShow] = useState(false);
 
+    const toEmail = "l190916@lhr.nu.edu.pk";
+
+    const openGmailCompose = () => {
+        window.open(`https://mail.google.com/mail/u/0/#inbox?compose=new&to=${toEmail}&view=cm`, '_blank');
+    }
     const tooltip = (message) => (
         <Tooltip>
             {message}
@@ -45,7 +50,7 @@ const Footer = () => {
                                 <p><FontAwesomeIcon icon={faPhone} /></p>
                             </OverlayTrigger>
                             <OverlayTrigger placement="top" overlay={tooltip("nabeelahmedamir@gmail.com")}>
-                                <p><FontAwesomeIcon icon={faEnvelope} /></p>
+                                <p><FontAwesomeIcon icon={faEnvelope} onClick={openGmailCompose} /></p>
                             </OverlayTrigger>
                             <OverlayTrigger placement="top" overlay={tooltip("nabeel-ahmed-amir")}>
                                 <p><FontAwesomeIcon icon={faLinkedin} /></p>

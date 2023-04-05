@@ -28,7 +28,7 @@ const MostViewedCard = ({ id, title, blog, user, imagePath }) => {
                             <Card.Text className='card-text-blog'>
                                 {shortenedBlog}
                             </Card.Text>
-                            <Button variant="dark" className="w-100" onClick={() => handleOnClick()}>Read</Button>
+                            <Button variant="dark" className="w-100 mb-5" onClick={() => handleOnClick()}>Read</Button>
                         </Card.Body>
                     </Col>
                 </Row>

@@ -12,8 +12,8 @@ const getBlogs = asyncHandler(async (req, res) => {
         const blogs = await Blog.find()
         blogs.sort((a, b) => b.totalViews - a.totalViews)
 
-        const mostViewed = blogs.slice(0, 6)
-        const remaining = blogs.slice(6)
+        const mostViewed = blogs.slice(0, 8)
+        const remaining = blogs.slice(8)
 
         remaining.sort((a, b) => a._id.getTimestamp() - b._id.getTimestamp())
 

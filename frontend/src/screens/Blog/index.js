@@ -3,8 +3,6 @@ import { useParams } from 'react-router-dom'
 import axios from "axios"
 import Loader from '../../components/Loader';
 import { Col, Container, Row } from 'react-bootstrap';
-import dummy_blog from '../../data/blog'
-import Image from "react-bootstrap/Image";
 import './index.css'
 
 const Blog = () => {
@@ -17,7 +15,6 @@ const Blog = () => {
     useEffect(() => {
         const fetchBlog = async () => {
             const { data } = await axios.get(`/api/blogs/${id}`)
-            console.log(data)
             setBlog(data)
             setLoading(false)
         }
@@ -25,7 +22,7 @@ const Blog = () => {
         return () => {
             setBlog([])
         }
-    }, [])
+    }, [id])
 
     return (
         <div className={loading ? 'temp-height' : 'main-blog-div'}>
@@ -47,7 +44,7 @@ const Blog = () => {
                     <Container>
                         <Row>
                             <Col>
-                                <div style={{ minHeight: "100vh", width: "100%" }}>
+                                <div className='image-section-blog-page'>
                                     <img src={`${process.env.PUBLIC_URL}${blog.imagePath}`} alt="Blog 1" className='img-fluid' />
                                 </div>
                             </Col>
