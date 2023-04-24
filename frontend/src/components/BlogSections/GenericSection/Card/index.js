@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button, Card, Col, Container, Row } from 'react-bootstrap'
 import './index.css'
 
-const MostViewedCard = ({ id, title, blog, user, imagePath }) => {
+const GenericCard = ({ id, title, blog, user, imagePath }) => {
 
     let history = useNavigate()
 
@@ -19,7 +19,7 @@ const MostViewedCard = ({ id, title, blog, user, imagePath }) => {
                 <Card.Header className='text-center header-card-blog'><b>{title}</b></Card.Header>
                 <Row>
                     <Col className='img-col-blog-col'>
-                        <img src={`${process.env.PUBLIC_URL}${imagePath}`} alt="Blog 1" className='img-fluid img-card-blog' />
+                        <img src={imagePath} alt="Blog 1" className='img-fluid img-card-blog' />
                     </Col>
                 </Row>
                 <Row>
@@ -33,8 +33,8 @@ const MostViewedCard = ({ id, title, blog, user, imagePath }) => {
                     </Col>
                 </Row>
             </Container>
-        </Card >
+        </Card>
     )
 }
 
-export default MostViewedCard
+export default GenericCard

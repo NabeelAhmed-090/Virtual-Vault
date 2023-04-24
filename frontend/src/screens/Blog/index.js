@@ -45,7 +45,7 @@ const Blog = () => {
                         <Row>
                             <Col>
                                 <div className='image-section-blog-page'>
-                                    <img src={`${process.env.PUBLIC_URL}${blog.imagePath}`} alt="Blog 1" className='img-fluid' />
+                                    <img src={blog.imagePath} alt="Blog 1" className='img-fluid' />
                                 </div>
                             </Col>
                         </Row>

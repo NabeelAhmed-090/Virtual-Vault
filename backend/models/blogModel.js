@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
 
+const ImageSchema = new mongoose.Schema({
+    publicId: String,
+    url: String,
+    createdAt: Date,
+});
+
 const blogSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -23,7 +29,7 @@ const blogSchema = mongoose.Schema({
         default: 0
     },
 }, {
-    timetamps: true
+    timestamps: true
 })
 
 const Blog = mongoose.model('Blog', blogSchema)

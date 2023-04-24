@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Blog from '../models/blogModel.js'
 import User from '../models/userModel.js'
-
+import cloudinary from 'cloudinary';
 
 // @desc Get blogs
 // @route Get /api/blogs
@@ -15,7 +15,7 @@ const getBlogs = asyncHandler(async (req, res) => {
         const mostViewed = blogs.slice(0, 8)
         const remaining = blogs.slice(8)
 
-        remaining.sort((a, b) => a._id.getTimestamp() - b._id.getTimestamp())
+        remaining.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp())
 
         const latest = remaining.slice(0, 5)
         const oldArticles = remaining.slice(5)
@@ -44,6 +44,8 @@ const getBlog = asyncHandler(async (req, res) => {
     try {
         const blog = await Blog.findById(req.params.id)
         if (blog) {
+            blog.totalViews += 1
+            await blog.save()
             const user = await User.findById(blog.user)
             const date = Date(blog._id.getTimestamp())
             res.send({
@@ -65,4 +67,46 @@ const getBlog = asyncHandler(async (req, res) => {
     }
 })
 
-export { getBlogs, getBlog }
+
+// function to upload image to cloudinary
+async function uploadImageToCloudinary(image) {
+    try {
+        const result = await cloudinary.uploader.upload(image.path);
+        return result;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Error uploading image to Cloudinary');
+    }
+}
+
+// @desc POST blogs
+// @route POST /api/blogs/create
+// @access Public
+
+const createBlog = asyncHandler(async (req, res) => {
+    const { user, title, blog } = req.body;
+    const image = req.file
+
+    try {
+        const cloudinaryResult = await uploadImageToCloudinary(image);
+
+        const newBlog = new Blog({
+            user: user,
+            title: title,
+            blog: blog,
+            totalViews: 0,
+            imagePath: cloudinaryResult.secure_url
+        });
+
+        const savedBlog = await newBlog.save();
+
+        res.status(201).json(savedBlog);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
+
+export { getBlogs, getBlog, createBlog }

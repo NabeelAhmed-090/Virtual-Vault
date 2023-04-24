@@ -14,16 +14,9 @@ connectDB()
 const importData = async () => {
     try {
         await User.deleteMany()
-        await Blog.deleteMany()
 
-        const createdMany = await User.insertMany(users)
-        const usersLength = createdMany.length
+        await User.insertMany(users)
 
-        const sampleBlogs = blogs.map(blog => {
-            return { ...blog, user: createdMany[(blog.user + 5) % usersLength]._id }
-        })
-
-        await Blog.insertMany(sampleBlogs)
         console.log('Data Imported!'.green.inverse)
         process.exit(0)
     } catch (error) {
@@ -35,8 +28,6 @@ const importData = async () => {
 const destroyData = async () => {
     try {
         await User.deleteMany()
-        await Blog.deleteMany()
-
         console.log('Data Destroyed!'.red.inverse.bold)
         process.exit(0)
     } catch (error) {

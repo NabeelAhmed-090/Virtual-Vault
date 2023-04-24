@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
-import MostViewed from '../../components/BlogSections/MostViewedSection'
+import { Button, Col, Container, Row } from 'react-bootstrap'
 import LatestSection from '../../components/BlogSections/LatestSection'
 import Loader from '../../components/Loader'
+import GenericSection from '../../components/BlogSections/GenericSection'
 import './index.css'
 
 
@@ -40,7 +41,7 @@ const Blogs = () => {
     }, [])
 
     const styles = {
-        backgroundImage: `url(${process.env.PUBLIC_URL}${selected.imagePath})`,
+        backgroundImage: `url(${selected.imagePath})`,
         backgroundSize: "cover",
         backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
@@ -55,8 +56,21 @@ const Blogs = () => {
         <div className={loading ? 'temp-height' : 'blog-main-container'}>
             {loading ? <Loader /> :
                 <>
+                    <Container>
+                        <Row>
+                            <Col className='mt-5'>
+                                <Button variant="dark" className='ml-auto'>
+                                    <a style={{ textDecoration: "none", color: "white" }} href="/blogs/create">
+                                        Write your Own Blog
+                                    </a>
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Container>
                     <LatestSection latest={list} selected={selected} handleListClick={handleListClick} styles={styles} />
-                    <MostViewed mostViewed={mostViewed} />
+                    <GenericSection mostViewed={mostViewed} heading="Most Viewed Blogs" />
+                    <GenericSection mostViewed={oldArticles} heading="Old Articles" />
+
                 </>
             }
         </div>

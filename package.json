@@ -25,12 +25,16 @@
     "homepage": "https://github.com/NabeelAhmed-090/Virtual-Vault#readme",
     "dependencies": {
         "bcryptjs": "^2.4.3",
+        "cloudinary": "^1.36.2",
         "colors": "^1.4.0",
+        "cors": "^2.8.5",
         "dotenv": "^16.0.3",
         "express": "^4.18.2",
         "express-async-handler": "^1.2.0",
         "jsonwebtoken": "^9.0.0",
-        "mongoose": "^7.0.3"
+        "loader": "^2.1.1",
+        "mongoose": "^7.0.3",
+        "multer": "^1.4.5-lts.1"
     },
     "devDependencies": {
         "concurrently": "^7.6.0",
