@@ -28,6 +28,11 @@ const blogSchema = mongoose.Schema({
         required: true,
         default: 0
     },
+    isApproved: {
+        type: Boolean,
+        required: true,
+        default: false
+    }
 }, {
     timestamps: true
 })

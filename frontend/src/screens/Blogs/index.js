@@ -58,8 +58,8 @@ const Blogs = () => {
                 <>
                     <Container>
                         <Row>
-                            <Col className='mt-5'>
-                                <Button variant="dark" className='ml-auto'>
+                            <Col className='mt-5' md={3} lg={3} sm={12} xs={12}>
+                                <Button variant="dark" className='ml-auto w-100'>
                                     <a style={{ textDecoration: "none", color: "white" }} href="/blogs/create">
                                         Write your Own Blog
                                     </a>

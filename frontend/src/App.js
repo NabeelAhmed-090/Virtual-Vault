@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './screens/Home/';
-import Profile from './screens/Profile';
 import Footer from './components/Footer';
 import Login from './screens/Login';
 import Map from './components/Maps';
+import Profile from './screens/Profile';
+import EditProfile from './screens/EditProfile';
 import Blogs from './screens/Blogs';
 import Blog from './screens/Blog';
 import CreateBlog from './screens/BlogCreation';
+
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +25,7 @@ function App() {
             <Route path="/" element={<Login />} exact />
             <Route path="/home" element={<Home />} exact />
             <Route path="/profile" element={<Profile />} exact />
+            <Route path="/profile/edit" element={<EditProfile />} exact />
             <Route path="/blogs" element={<Blogs />} exact />
             <Route path="/blogs/:id" element={<Blog />} exact />
             <Route path="/blogs/create" element={<CreateBlog />} exact />

@@ -34,7 +34,11 @@ const Header = ({ isOpen, setIsOpen }) => {
                 <Container className='p-2'>
                     <Row>
                         <Col className='title-col' md={6} sm={6} lg={6}>
-                            <h3>Virtual Vault</h3>
+                            <h3>
+                                <a style={{ textDecoration: "none", color: "white" }} href="/home">
+                                    Virtual Vault
+                                </a>
+                            </h3>
                         </Col>
                         {
                             userInfo && <Col md={6} sm={6} lg={6}>

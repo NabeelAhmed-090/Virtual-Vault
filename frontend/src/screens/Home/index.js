@@ -40,7 +40,11 @@ const Home = () => {
                                 </h1>
                             </Row>
                             <Row className='mt-5'>
-                                <Button variant='light'>DIVE IN</Button>
+                                <a style={{ textDecoration: "none", color: "black" }} href="/blogs">
+                                    <Button variant='light' className='w-100'>
+                                        DIVE IN
+                                    </Button>
+                                </a>
                             </Row>
                         </Container>
                     </Col>
