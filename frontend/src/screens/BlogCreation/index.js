@@ -37,7 +37,7 @@ function CreateBlog() {
         blogData.append('image', selectedImage);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/blogs/create', blogData, {
+            await axios.post('http://localhost:5000/api/blogs/create', blogData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             setSuccess(true);
@@ -69,7 +69,7 @@ function CreateBlog() {
                             <Col md={12} sm={12} lg={6} style={{ height: "70vh" }}>
                                 {imageUrl ? (
                                     <div style={{ boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.4)", padding: "10px" }} className='mb-5 full-height'>
-                                        <img src={imageUrl} alt="Uploaded image"
+                                        <img src={imageUrl} alt="blog"
                                             style={{
                                                 width: "100%",
                                                 height: "100%"

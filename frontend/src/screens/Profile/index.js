@@ -36,7 +36,6 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserGames = async () => {
             const { data } = await axios.get(`http://localhost:5000/api/games/user_games/${userInfo._id}`)
-            console.log(data)
             setUserGames(data.userGames)
             setGameFetchLoading(false)
         }

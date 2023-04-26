@@ -11,6 +11,7 @@ import Blogs from './screens/Blogs';
 import Blog from './screens/Blog';
 import CreateBlog from './screens/BlogCreation';
 import Search from './screens/Search';
+import Certificate from './components/Certificate';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path="/blogs/:id" element={<Blog />} exact />
             <Route path="/blogs/create" element={<CreateBlog />} exact />
             <Route path="/search" element={<Search />} exact />
+            <Route path="/check" element={<Certificate />} exact />
           </Routes>
         </Router>
         <Footer />

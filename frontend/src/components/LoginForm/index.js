@@ -51,7 +51,7 @@ const LoginForm = ({ login, setLogin }) => {
 
     return (
         <div className={login ? "display main-div" : "hide main-div"}>
-            {loading ? <Loader /> : <>
+            {loading ? <div style={{ height: "30vh" }}><Loader /></div> : <>
                 <Row className='mt-5'>
                     <Col md={12} sm={12} lg={12}>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>

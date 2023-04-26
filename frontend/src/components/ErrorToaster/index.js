@@ -5,34 +5,28 @@ import './index.css'
 
 const ErrorToaster = ({ display, message, error = true }) => {
 
+    const toasterBlock = {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    }
+
     useEffect(() => {
         try {
             if (display) {
                 {
                     error ?
-                        toast.error(message, {
-                            position: "bottom-right",
-                            autoClose: 3000,
-                            hideProgressBar: true,
-                            closeOnClick: false,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        }) : toast.success(message, {
-                            position: "bottom-right",
-                            autoClose: 3000,
-                            hideProgressBar: true,
-                            closeOnClick: false,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        })
+                        toast.error(message, toasterBlock) : toast.success(message, toasterBlock)
                 };
             }
         } catch (error) {
             console.log(error)
         }
-    }, [display, message])
+    }, [display, message, error])
 
     return (
         <div>

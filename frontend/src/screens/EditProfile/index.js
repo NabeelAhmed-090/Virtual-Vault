@@ -90,7 +90,7 @@ const EditProfile = () => {
 
     return (
         <Container style={{ minHeight: "100vh" }}>
-            <div className={loading || detailsLoading ? 'temp-height' : ''}>
+            <div className={loading || detailsLoading || requestLoading ? 'temp-height' : ''}>
                 {(loading || detailsLoading) ? <Loader message={"Loading"} /> : <>
                     <Row className='mt-5'>
                         <Col md={12} sm={12} lg={12}>
