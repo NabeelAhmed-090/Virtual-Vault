@@ -1,21 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap'
-import ErrorToaster from '../ErrorToaster'
-import './index.css'
 
-
-const GameCard = ({ title, price, description, isGameNew, imagePath, createdAt, _id, handleGameDeletion }) => {
-    const [success, setSuccess] = useState(false)
-    const [failure, setFailure] = useState(false)
-    const handleDelete = async () => {
-        setSuccess(false)
-        setFailure(false)
-        const response = await handleGameDeletion(_id)
-        if (response) {
-            setSuccess(true)
-        } else {
-            setFailure(true)
-        }
+const SearchGameCard = ({ _id, title, price, isGameNew, imagePath }) => {
+    let history = useNavigate()
+    const handleViewClick = () => {
+        history(`/search/game?_id=${_id}`);
     }
     return (
         <Card className='mt-1 mb-5 p-2'>
@@ -51,12 +41,10 @@ const GameCard = ({ title, price, description, isGameNew, imagePath, createdAt, 
                         </Col>
                     </Row>
                 </Container>
-                <Button variant="danger" className='w-100 mb-2 button-style-game-card' onClick={handleDelete}>Delete</Button>
+                <Button variant="dark" className='w-100 mb-2 button-style-game-card' onClick={handleViewClick}>View</Button>
             </Card.Body>
-            <ErrorToaster display={!!success} error={false} message={'Game Succesfully Deleted'} />
-            <ErrorToaster display={!!failure} error={true} message={'Something went wrong'} />
         </Card>
     )
 }
 
-export default GameCard
+export default SearchGameCard

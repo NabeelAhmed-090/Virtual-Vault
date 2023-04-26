@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
 import Game from '../models/gameModel.js'
 import cloudinary from 'cloudinary';
+import { ObjectId } from 'mongodb';
 
 
 // function to upload image to cloudinary
@@ -115,4 +116,54 @@ const deleteGame = asyncHandler(async (req, res) => {
 })
 
 
-export { createGame, getGame, getUserGames, deleteGame }
+// @desc Get Search Games
+// @route Get /api/search
+// @access Public
+
+const searchGames = asyncHandler(async (req, res) => {
+    const { pageSize, pageNumber, searchText, userId } = req.body;
+    try {
+        const unfilteredGames = await Game.find()
+        if (unfilteredGames) {
+            unfilteredGames.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp())
+            const games = unfilteredGames.filter(game => game.seller.toString() != userId)
+            if (searchText === "") {
+                const startIndex = (pageNumber - 1) * pageSize;
+                const endIndex = pageNumber * pageSize;
+                const totalGames = games.length;
+                res.send(
+                    {
+                        searchGames: games.slice(startIndex, endIndex),
+                        remainingGames: totalGames - endIndex,
+                        remainingPages: Math.ceil((totalGames - endIndex) / pageSize)
+                    }
+                )
+            } else {
+                const filteredGames = games.filter(game => game.title.toLowerCase().includes(searchText.toLowerCase()))
+                const startIndex = (pageNumber - 1) * pageSize;
+                const endIndex = pageNumber * pageSize;
+                const totalGames = filteredGames.length;
+                res.send(
+                    {
+                        searchGames: filteredGames.slice(startIndex, endIndex),
+                        remainingGames: totalGames - endIndex,
+                        remainingPages: Math.ceil((totalGames - endIndex) / pageSize)
+                    }
+                )
+            }
+        } else {
+            res.json({
+                error: error,
+                message: "Error in fetching games"
+            })
+        }
+    } catch (error) {
+        res.json({
+            error: error,
+            message: "Error in fetching games"
+        })
+    }
+})
+
+
+export { createGame, getGame, getUserGames, deleteGame, searchGames }

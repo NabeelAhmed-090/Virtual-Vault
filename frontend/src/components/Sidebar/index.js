@@ -37,7 +37,7 @@ function Sidebar({ isOpen, handleButtonClick }) {
                     <hr />
                     <Row>
                         <Col>
-                            <a className='options' href='/'>Search <FontAwesomeIcon icon={faMagnifyingGlass} className='icons' /></a>
+                            <a className='options' href='/search'>Search <FontAwesomeIcon icon={faMagnifyingGlass} className='icons' /></a>
                         </Col>
                     </Row>
                     <hr />
@@ -49,7 +49,7 @@ function Sidebar({ isOpen, handleButtonClick }) {
                     <hr />
                     <Row>
                         <Col>
-                            <a className='options' href='/'>Profile <FontAwesomeIcon icon={faUser} className='icons' /></a>
+                            <a className='options' href='/profile'>Profile <FontAwesomeIcon icon={faUser} className='icons' /></a>
                         </Col>
                     </Row>
                     <hr />

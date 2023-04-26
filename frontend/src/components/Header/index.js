@@ -44,10 +44,10 @@ const Header = ({ isOpen, setIsOpen }) => {
                             userInfo && <Col md={6} sm={6} lg={6}>
                                 <div className='options-col'>
                                     <a className='options' href='/blogs' >Blogs <FontAwesomeIcon icon={faBlog} className='icons' /></a>
-                                    <a className='options' href='/'>Search <FontAwesomeIcon icon={faMagnifyingGlass} className='icons' /></a>
+                                    <a className='options' href='/search'>Search <FontAwesomeIcon icon={faMagnifyingGlass} className='icons' /></a>
                                     <a className='options' href='/'>Cart <FontAwesomeIcon icon={faCartShopping} className='icons' /></a>
                                     <a className='options' href='/profile'>Profile <FontAwesomeIcon icon={faUser} className='icons' /></a>
-                                    <a className='options cursor' onClick={() => handleLogout()}>Logout <FontAwesomeIcon icon={faRightFromBracket} className='icons' /></a>
+                                    <a className='options cursor' href="#" onClick={() => handleLogout()}>Logout <FontAwesomeIcon icon={faRightFromBracket} className='icons' /></a>
                                 </div>
                                 <div className='menu-col'>
                                     <button id='menu-button' onClick={() => handleButtonClick()}><FontAwesomeIcon icon={faBars} /> </button>

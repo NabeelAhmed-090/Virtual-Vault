@@ -113,7 +113,8 @@ const GameInfoSection = ({ id, setUserGames }) => {
                             </Col>
                         </Row>
                         <Row className='mt-3'>
-                            <Col md={12} sm={12} lg={12} style={{ display: "flex", justifyContent: "space-between" }}>
+                            <Col md={12} sm={12} lg={12}
+                                style={{ display: "flex", justifyContent: "space-between", height: "50px" }}>
                                 {
                                     selectedTags.map(tag => {
                                         return (
@@ -142,7 +143,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
                             <Col md={6} sm={12} lg={6} style={{ height: "70vh" }} className='mt-2'>
                                 {imageUrl ? (
                                     <div style={{ boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.4)", padding: "10px" }} className='mb-5 full-height'>
-                                        <img src={imageUrl} alt="Uploaded image"
+                                        <img src={imageUrl} alt="game cover"
                                             style={{
                                                 width: "100%",
                                                 height: "100%"
@@ -198,7 +199,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
                                                 type="checkbox"
                                                 label="new game"
                                                 checked={isGameNew}
-                                                onChange={() => handleCheckboxChange()}
+                                                onChange={(e) => handleCheckboxChange(e)}
                                             />
                                         </Col>
                                     </Row>

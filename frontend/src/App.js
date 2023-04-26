@@ -10,6 +10,7 @@ import EditProfile from './screens/EditProfile';
 import Blogs from './screens/Blogs';
 import Blog from './screens/Blog';
 import CreateBlog from './screens/BlogCreation';
+import Search from './screens/Search';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/blogs" element={<Blogs />} exact />
             <Route path="/blogs/:id" element={<Blog />} exact />
             <Route path="/blogs/create" element={<CreateBlog />} exact />
+            <Route path="/search" element={<Search />} exact />
           </Routes>
         </Router>
         <Footer />
