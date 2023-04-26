@@ -121,25 +121,56 @@ const deleteGame = asyncHandler(async (req, res) => {
 // @access Public
 
 const searchGames = asyncHandler(async (req, res) => {
-    const { pageSize, pageNumber, searchText, userId } = req.body;
+    const { pageSize, pageNumber, searchText, userId, isSearching, tags } = req.body;
     try {
         const unfilteredGames = await Game.find()
-        if (unfilteredGames) {
-            unfilteredGames.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp())
-            const games = unfilteredGames.filter(game => game.seller.toString() != userId)
-            if (searchText === "") {
-                const startIndex = (pageNumber - 1) * pageSize;
-                const endIndex = pageNumber * pageSize;
-                const totalGames = games.length;
-                res.send(
-                    {
-                        searchGames: games.slice(startIndex, endIndex),
-                        remainingGames: totalGames - endIndex,
-                        remainingPages: Math.ceil((totalGames - endIndex) / pageSize)
-                    }
-                )
+        if (isSearching) {
+            if (unfilteredGames) {
+                unfilteredGames.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp())
+                const games = unfilteredGames.filter(game => game.seller.toString() != userId)
+                if (searchText === "") {
+                    const startIndex = (pageNumber - 1) * pageSize;
+                    const endIndex = pageNumber * pageSize;
+                    const totalGames = games.length;
+                    res.send(
+                        {
+                            searchGames: games.slice(startIndex, endIndex),
+                            remainingGames: totalGames - endIndex,
+                            remainingPages: Math.ceil((totalGames - endIndex) / pageSize)
+                        }
+                    )
+                } else {
+                    const filteredGames = games.filter(game => game.title.toLowerCase().includes(searchText.toLowerCase()))
+                    const startIndex = (pageNumber - 1) * pageSize;
+                    const endIndex = pageNumber * pageSize;
+                    const totalGames = filteredGames.length;
+                    res.send(
+                        {
+                            searchGames: filteredGames.slice(startIndex, endIndex),
+                            remainingGames: totalGames - endIndex,
+                            remainingPages: Math.ceil((totalGames - endIndex) / pageSize)
+                        }
+                    )
+                }
+
             } else {
-                const filteredGames = games.filter(game => game.title.toLowerCase().includes(searchText.toLowerCase()))
+                res.json({
+                    error: error,
+                    message: "Error in fetching games"
+                })
+            }
+        } else {
+            if (unfilteredGames) {
+                const games = unfilteredGames.filter(game => game.seller.toString() != userId)
+                const filteredGames = games.filter(game => {
+                    for (let tag of tags) {
+                        if (game.tags[0].split(',').includes(String(tag))) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+                filteredGames.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp())
                 const startIndex = (pageNumber - 1) * pageSize;
                 const endIndex = pageNumber * pageSize;
                 const totalGames = filteredGames.length;
@@ -150,12 +181,12 @@ const searchGames = asyncHandler(async (req, res) => {
                         remainingPages: Math.ceil((totalGames - endIndex) / pageSize)
                     }
                 )
+            } else {
+                res.json({
+                    error: error,
+                    message: "Error in fetching games"
+                })
             }
-        } else {
-            res.json({
-                error: error,
-                message: "Error in fetching games"
-            })
         }
     } catch (error) {
         res.json({

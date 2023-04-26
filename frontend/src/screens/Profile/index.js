@@ -58,40 +58,42 @@ const Profile = () => {
             {(loading || gameFetchLoading) ?
                 <div style={{ height: "100vh" }}><Loader message={"Loading"} /> </div> : <>
                     <Row className='mt-5'>
-                        <Col md={3} lg={3} sm={12} xs={12} className='avatar-col p-5'>
-                            <Row style={{ height: "30vh" }} className='p-2'>
-                                <Badge
-                                    bg="dark"
-                                    className="initials-badge rounded-circle avatar-style"
-                                >
-                                    {initials}
-                                </Badge>
-                            </Row>
-                            <Row className='p-2'>
-                                <Col md={12} lg={12} sm={12} xs={12}>
-                                    <h4 className='text-center'>{userName}</h4>
-                                </Col>
-                                <Col md={12} lg={12} sm={12} xs={12}>
-                                    <h6 className='text-center'>{email}</h6>
-                                </Col>
-                                <Col md={12} lg={12} sm={12} xs={12}>
-                                    <h6 className='text-center'>{city}</h6>
-                                </Col>
-                            </Row>
-                            <Row className='mb-2 mt-2 p-2'>
-                                <a
-                                    style={{ textDecoration: "none", color: "white" }}
-                                    href="/profile/edit"
-                                >
-                                    <Button
-                                        className='w-100'
-                                        variant='dark'
+                        <Col md={3} lg={3} sm={12} xs={12} className='avatar-col p-5' style={{ display: "flex", alignItems: "center" }}>
+                            <div>
+                                <Row style={{ height: "30vh" }} className='p-2'>
+                                    <Badge
+                                        bg="dark"
+                                        className="initials-badge rounded-circle avatar-style"
                                     >
-                                        Edit Profile
-                                    </Button>
-                                </a>
+                                        {initials}
+                                    </Badge>
+                                </Row>
+                                <Row className='p-2'>
+                                    <Col md={12} lg={12} sm={12} xs={12}>
+                                        <h4 className='text-center'>{userName}</h4>
+                                    </Col>
+                                    <Col md={12} lg={12} sm={12} xs={12}>
+                                        <h6 className='text-center'>{email}</h6>
+                                    </Col>
+                                    <Col md={12} lg={12} sm={12} xs={12}>
+                                        <h6 className='text-center'>{city}</h6>
+                                    </Col>
+                                </Row>
+                                <Row className='mb-2 mt-2 p-2'>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/profile/edit"
+                                    >
+                                        <Button
+                                            className='w-100'
+                                            variant='dark'
+                                        >
+                                            Edit Profile
+                                        </Button>
+                                    </a>
 
-                            </Row>
+                                </Row>
+                            </div>
                         </Col>
                         <Col md={9} lg={9} sm={12} xs={12}>
                             <Row>
