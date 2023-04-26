@@ -4,8 +4,9 @@ import Loader from '../../../components/Loader'
 import { FaUpload } from 'react-icons/fa';
 import ErrorToaster from '../../../components/ErrorToaster';
 import axios from 'axios';
+import './index.css'
 
-const GameInfoSection = ({ id }) => {
+const GameInfoSection = ({ id, setUserGames }) => {
 
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
@@ -13,17 +14,21 @@ const GameInfoSection = ({ id }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
-    const [isNew, setIsNew] = useState(true);
+    const [isGameNew, setIsGameNew] = useState(true);
 
+    const [possibleTags] = useState(["action", "thriller", "combat", "adventure", "strategy", "simulation", "sports", "racing", "puzzle", "arcade", "platformer", "shooter", "fighting", "stealth", "survival", "horror", "battle royale", "role-playing", "mmo", "open world"]);
+    const [selectedTags, setSelectedTags] = useState([]);
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
     const resetForm = () => {
         setSelectedImage(null)
+        setIsGameNew(true)
         setImageUrl(null)
         setTitle("")
         setDescription("")
         setPrice(0)
+        setSelectedTags([])
     }
 
     const handleImageChange = (event) => {
@@ -41,13 +46,15 @@ const GameInfoSection = ({ id }) => {
         gameData.append('title', title);
         gameData.append('description', description);
         gameData.append('price', price);
-        gameData.append('isNew', isNew);
+        gameData.append('isGameNew', isGameNew);
+        gameData.append('tags', selectedTags)
         gameData.append('image', selectedImage);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/games/create', gameData, {
+            const { data } = await axios.post('http://localhost:5000/api/games/create', gameData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
+            setUserGames(prev => [...prev, data.game])
         } catch (error) {
             console.log(error);
         } finally {
@@ -58,9 +65,20 @@ const GameInfoSection = ({ id }) => {
     };
 
     const handleCheckboxChange = (e) => {
-        setIsNew(e.target.checked);
+        setIsGameNew(e.target.checked);
     };
 
+    const handleTagSelect = (e) => {
+        const value = e.target.value;
+        if (selectedTags.length >= 5) {
+            return;
+        }
+        setSelectedTags([...selectedTags, value]);
+    };
+
+    const handleTagDeselect = (tag) => {
+        setSelectedTags(selectedTags.filter((t) => t !== tag));
+    };
 
     return (
         <Container
@@ -75,8 +93,53 @@ const GameInfoSection = ({ id }) => {
                         <Row className='text-center mt-2' style={{ height: "12vh" }}>
                             <h1>Upload New Game</h1>
                         </Row>
-                        <Row style={{ minHeight: "70vh" }}>
-                            <Col md={12} sm={12} lg={6} style={{ height: "70vh" }}>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId="tag-selector">
+                                    <Form.Label>Select 5 tags</Form.Label>
+                                    <Form.Select multiple onChange={handleTagSelect}>
+                                        {possibleTags.map((tag) => (
+                                            <option
+                                                style={{ cursor: "pointer" }}
+                                                className={selectedTags.includes(tag) ? "selected-tag" : ""}
+                                                key={tag}
+                                                value={tag}
+                                                disabled={selectedTags.includes(tag)}>
+                                                {tag}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row className='mt-3'>
+                            <Col md={12} sm={12} lg={12} style={{ display: "flex", justifyContent: "space-between" }}>
+                                {
+                                    selectedTags.map(tag => {
+                                        return (
+                                            <div
+                                                style={{
+                                                    height: "50px",
+                                                    width: "100px",
+                                                    borderRadius: "50%",
+                                                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    cursor: "pointer"
+                                                }}
+                                                onClick={() => handleTagDeselect(tag)}
+                                                key={`selected ${tag}`}
+                                            >
+                                                <p style={{ fontSize: "10px" }} className='mt-3'>{tag}</p>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </Col>
+                        </Row>
+                        <Row style={{ minHeight: "70vh" }} className='mt-5'>
+                            <Col md={6} sm={12} lg={6} style={{ height: "70vh" }} className='mt-2'>
                                 {imageUrl ? (
                                     <div style={{ boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.4)", padding: "10px" }} className='mb-5 full-height'>
                                         <img src={imageUrl} alt="Uploaded image"
@@ -134,8 +197,8 @@ const GameInfoSection = ({ id }) => {
                                             <Form.Check
                                                 type="checkbox"
                                                 label="new game"
-                                                checked={isNew}
-                                                onChange={handleCheckboxChange}
+                                                checked={isGameNew}
+                                                onChange={() => handleCheckboxChange()}
                                             />
                                         </Col>
                                     </Row>
@@ -155,7 +218,7 @@ const GameInfoSection = ({ id }) => {
                                     </Row>
                                     <Row>
                                         <Col>
-                                            <Button variant='dark' className='mt-5 w-100' onClick={handleSubmit}>
+                                            <Button variant='dark' className='mt-5 w-100' type="button" onClick={handleSubmit}>
                                                 Upload Game
                                             </Button>
                                         </Col>

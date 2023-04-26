@@ -20,7 +20,7 @@ async function uploadImageToCloudinary(image) {
 // @access Public
 
 const createGame = asyncHandler(async (req, res) => {
-    const { seller, title, description, price, isNew } = req.body;
+    const { seller, title, description, price, isGameNew, tags } = req.body;
     const image = req.file
     try {
         const cloudinaryResult = await uploadImageToCloudinary(image);
@@ -30,12 +30,13 @@ const createGame = asyncHandler(async (req, res) => {
             title: title,
             description: description,
             price: price,
-            isNew: isNew,
+            isGameNew: isGameNew,
+            tags: tags,
             imagePath: cloudinaryResult.secure_url
         });
 
         const savedGame = await newGame.save();
-        res.status(201).json(savedGame);
+        res.status(201).json({ game: savedGame });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });

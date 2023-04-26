@@ -5,7 +5,7 @@ import './index.css'
 import ErrorToaster from '../ErrorToaster'
 
 
-const GameCard = ({ title, price, description, isNew, imagePath, createdAt, _id, handleGameDeletion }) => {
+const GameCard = ({ title, price, description, isGame, imagePath, createdAt, _id, handleGameDeletion }) => {
     const [success, setSuccess] = useState(false)
     const [failure, setFailure] = useState(false)
     const handleDelete = async () => {
@@ -41,7 +41,7 @@ const GameCard = ({ title, price, description, isNew, imagePath, createdAt, _id,
                     </Row>
                     <Row>
                         <Col md={6} lg={6} sm={12} className='mt-1'>
-                            {isNew ? (
+                            {isGame ? (
                                 <Badge bg="success">New</Badge>
                             ) : (
                                 <Badge bg="warning">Used</Badge>

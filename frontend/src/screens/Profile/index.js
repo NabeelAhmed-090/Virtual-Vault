@@ -95,7 +95,7 @@ const Profile = () => {
                         </Col>
                         <Col md={9} lg={9} sm={12} xs={12}>
                             <Row>
-                                <GameInfoSection id={userInfo._id} />
+                                <GameInfoSection id={userInfo._id} setUserGames={setUserGames} />
                             </Row>
                         </Col>
                     </Row>

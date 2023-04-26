@@ -21,9 +21,13 @@ const gameSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    isNew: {
+    isGameNew: {
         type: Boolean,
         default: true,
+        required: true
+    },
+    tags: {
+        type: [String],
         required: true
     },
     imagePath: {

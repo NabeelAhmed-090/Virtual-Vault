@@ -34,7 +34,7 @@ const ExistingGameSection = ({ userGames, setUserGames }) => {
                                     title={game.title}
                                     price={game.price}
                                     description={game.description}
-                                    isNew={game.isNew}
+                                    isGame={game.isGame}
                                     imagePath={game.imagePath}
                                     createdAt={game.createdAt}
                                     _id={game._id}
