@@ -39,6 +39,7 @@ const ExistingGameSection = ({ userGames, setUserGames }) => {
                                     createdAt={game.createdAt}
                                     _id={game._id}
                                     handleGameDeletion={handleGameDeletion}
+                                    units={game.units}
                                 />
                             </Col>
                         )

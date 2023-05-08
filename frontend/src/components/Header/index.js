@@ -45,7 +45,7 @@ const Header = ({ isOpen, setIsOpen }) => {
                                 <div className='options-col'>
                                     <a className='options' href='/blogs' >Blogs <FontAwesomeIcon icon={faBlog} className='icons' /></a>
                                     <a className='options' href='/search'>Search <FontAwesomeIcon icon={faMagnifyingGlass} className='icons' /></a>
-                                    <a className='options' href='/'>Cart <FontAwesomeIcon icon={faCartShopping} className='icons' /></a>
+                                    <a className='options' href='/cart'>Cart <FontAwesomeIcon icon={faCartShopping} className='icons' /></a>
                                     <a className='options' href='/profile'>Profile <FontAwesomeIcon icon={faUser} className='icons' /></a>
                                     <a className='options cursor' href="#" onClick={() => handleLogout()}>Logout <FontAwesomeIcon icon={faRightFromBracket} className='icons' /></a>
                                 </div>

@@ -17,7 +17,8 @@ const SearchGamesDisplayArea = (
                                 title={game.title}
                                 price={game.price}
                                 isGameNew={game.isGameNew}
-                                imagePath={game.imagePath} />
+                                imagePath={game.imagePath}
+                                units={game.units} />
                         </Col>
                     )
                 })}

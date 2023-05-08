@@ -1,0 +1,18 @@
+.card-image-height-style {
+    width: 100%;
+    height: 55vh
+}
+
+.main-card-height-style {
+    height: 90vh
+}
+
+@media (max-width: 768px) {
+    .card-image-height-style {
+        height: 40vh
+    }
+
+    .badge-media-style {
+        width: 100%;
+    }
+}

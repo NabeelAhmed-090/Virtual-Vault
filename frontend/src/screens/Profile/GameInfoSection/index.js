@@ -14,6 +14,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
+    const [units, setUnits] = useState(0);
     const [isGameNew, setIsGameNew] = useState(true);
 
     const [possibleTags] = useState(["action", "thriller", "combat", "adventure", "strategy", "simulation", "sports", "racing", "puzzle", "arcade", "platformer", "shooter", "fighting", "stealth", "survival", "horror", "battle royale", "role-playing", "mmo", "open world"]);
@@ -28,6 +29,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
         setTitle("")
         setDescription("")
         setPrice(0)
+        setUnits(0)
         setSelectedTags([])
     }
 
@@ -46,6 +48,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
         gameData.append('title', title);
         gameData.append('description', description);
         gameData.append('price', price);
+        gameData.append('units', units);
         gameData.append('isGameNew', isGameNew);
         gameData.append('tags', selectedTags)
         gameData.append('image', selectedImage);
@@ -167,7 +170,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
                             </Col>
                             <Col md={12} sm={12} lg={6} style={{ height: "75vh" }}>
                                 <Form>
-                                    <Row className="text-center mt-2" style={{ height: "20vh" }}>
+                                    <Row className="text-center" style={{ height: "20vh" }}>
                                         <Col md={6} sm={12} lg={6}>
                                             <Form.Group as={Col} md="12">
                                                 <Form.Label>Title</Form.Label>
@@ -194,7 +197,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col className='mt-2'>
+                                        <Col md={6} sm={12} lg={6} className='mt-2'>
                                             <Form.Check
                                                 type="checkbox"
                                                 label="new game"
@@ -202,8 +205,19 @@ const GameInfoSection = ({ id, setUserGames }) => {
                                                 onChange={(e) => handleCheckboxChange(e)}
                                             />
                                         </Col>
+                                        <Col md={6} sm={12} lg={6}>
+                                            <Form.Group as={Col} md="12">
+                                                <Form.Control
+                                                    className={'shadow-none'}
+                                                    required
+                                                    type="number"
+                                                    placeholder="units"
+                                                    onChange={(e) => setUnits(e.target.value)}
+                                                />
+                                            </Form.Group>
+                                        </Col>
                                     </Row>
-                                    <Row style={{ height: "30vh" }} className='text-center'>
+                                    <Row style={{ height: "30vh" }} className='text-center mt-3'>
                                         <Form.Group as={Col} md="12">
                                             <Form.Label>Description</Form.Label>
                                             <Form.Control

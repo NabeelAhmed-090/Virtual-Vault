@@ -52,8 +52,15 @@ const createGame = asyncHandler(async (req, res) => {
 const getGame = asyncHandler(async (req, res) => {
     try {
         const game = await Game.findById(req.params.id)
-        if (game) {
-            res.send(game)
+        const seller = await User.findById(game.seller)
+        if (game && seller) {
+            res.send({
+                game: game,
+                seller: {
+                    userName: seller.userName,
+                    city: seller.city
+                }
+            })
         }
         else {
             res.status(404)

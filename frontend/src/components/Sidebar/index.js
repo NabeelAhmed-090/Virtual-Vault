@@ -43,7 +43,7 @@ function Sidebar({ isOpen, handleButtonClick }) {
                     <hr />
                     <Row>
                         <Col>
-                            <a className='options' href='/'>Cart <FontAwesomeIcon icon={faCartShopping} className='icons' /></a>
+                            <a className='options' href='/cart'>Cart <FontAwesomeIcon icon={faCartShopping} className='icons' /></a>
                         </Col>
                     </Row>
                     <hr />
