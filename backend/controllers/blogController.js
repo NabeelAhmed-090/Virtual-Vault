@@ -36,8 +36,8 @@ const getBlogs = asyncHandler(async (req, res) => {
 })
 
 
-// @desc Get blogs
-// @route Get /api/blogs
+// @desc Get blog
+// @route Get /api/blogs/:id
 // @access Public
 
 const getBlog = asyncHandler(async (req, res) => {

@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBlog, faMagnifyingGlass, faCartShopping, faUser, faRightFromBracket, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBlog, faMagnifyingGlass, faCartShopping, faUser, faRightFromBracket, faBars, faBell } from '@fortawesome/free-solid-svg-icons'
 import Sidebar from '../Sidebar'
 import './index.css'
 import { logout } from '../../actions/userActions'
+import Notifications from '../Notifications'
 
 
 const Header = ({ isOpen, setIsOpen }) => {
@@ -33,7 +34,7 @@ const Header = ({ isOpen, setIsOpen }) => {
             <div className='navbar-div'>
                 <Container className='p-2'>
                     <Row>
-                        <Col className='title-col' md={6} sm={6} lg={6}>
+                        <Col className='title-col' md={4} sm={6} lg={4}>
                             <h3>
                                 <a style={{ textDecoration: "none", color: "white" }} href="/home">
                                     Virtual Vault
@@ -41,8 +42,9 @@ const Header = ({ isOpen, setIsOpen }) => {
                             </h3>
                         </Col>
                         {
-                            userInfo && <Col md={6} sm={6} lg={6}>
+                            userInfo && <Col md={8} sm={6} lg={8}>
                                 <div className='options-col'>
+                                    <Notifications id={userInfo._id} />
                                     <a className='options' href='/blogs' >Blogs <FontAwesomeIcon icon={faBlog} className='icons' /></a>
                                     <a className='options' href='/search'>Search <FontAwesomeIcon icon={faMagnifyingGlass} className='icons' /></a>
                                     <a className='options' href='/cart'>Cart <FontAwesomeIcon icon={faCartShopping} className='icons' /></a>

@@ -5,6 +5,8 @@ import connectDB from './config/db.js'
 import userRoutes from './routes/userRoutes.js'
 import blogRoutes from './routes/blogRoutes.js'
 import gameRoutes from './routes/gameRoutes.js'
+import notificationRoutes from './routes/notificationsRoutes.js';
+import certificateRoutes from './routes/certificateRoutes.js'
 import { config } from 'cloudinary';
 import cors from 'cors';
 
@@ -30,6 +32,10 @@ const MODE = process.env.NODE_ENV || development
 app.use('/api/users', userRoutes)
 app.use('/api/blogs', blogRoutes)
 app.use('/api/games', gameRoutes)
+app.use('/api/notifications', notificationRoutes)
+app.use('/api/certificate', certificateRoutes)
+
+
 
 
 app.listen(PORT, console.log(`server running in ${MODE} on port ${PORT}...`.yellow.bold))

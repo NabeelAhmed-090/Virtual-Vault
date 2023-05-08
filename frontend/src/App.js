@@ -36,7 +36,7 @@ function App() {
             <Route path="/search" element={<Search />} exact />
             <Route path="/search/game/:id" element={<Game />} exact />
             <Route path="/cart/:id?" element={<Cart />} exact />
-            <Route path="/check" element={<Certificate />} exact />
+            <Route path="/certificate/:id" element={<Certificate />} exact />
           </Routes>
         </Router>
         <Footer />

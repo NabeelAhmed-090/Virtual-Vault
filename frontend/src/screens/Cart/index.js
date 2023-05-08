@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
-import { addToCart } from '../../actions/cartActions'
-import { set } from 'mongoose'
+import { addToCart, removeFromCart } from '../../actions/cartActions'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
 const Cart = () => {
@@ -15,6 +16,7 @@ const Cart = () => {
 
     let history = useNavigate()
 
+
     const location = useLocation()
     const { id } = useParams()
     const qty = new URLSearchParams(location.search).get("qty");
@@ -23,13 +25,23 @@ const Cart = () => {
     const handleContinueShopping = () => {
         history('/search')
     }
+
+    const handleOnDelete = (id) => {
+        dispatch(removeFromCart(id))
+    }
+
     useEffect(() => {
         setTotal(cartItems.reduce((acc, item) => acc + item.price * item.unitsInCart, 0))
-    }, [])
+        const newLocation = { ...location };
+        delete newLocation.search;
+        history(newLocation);
+    }, [cartItems])
+
 
     useEffect(() => {
         if (id && qty) {
             dispatch(addToCart(id, qty))
+            setTotal(cartItems.reduce((acc, item) => acc + item.price * item.unitsInCart, 0))
         }
 
     }, [id, qty])
@@ -39,15 +51,12 @@ const Cart = () => {
         <Container className='justify-content-center'>
             {cartItems.length === 0 &&
                 <Row>
-
-                    (
                     <Row style={{ height: "60vh" }} className='d-flex justify-content-center align-content-center'>
                         <Col md={6} lg={6} sm={12}>
                             <h1 className='text-center'>Cart is empty</h1>
                             <Button variant='dark' className='w-100' onClick={handleContinueShopping}>Continue Shopping</Button>
                         </Col>
                     </Row>
-                    )
                 </Row>
             }
             {
@@ -59,7 +68,7 @@ const Cart = () => {
                         <Row style={{ minHeight: "60vh" }} className='justify-content-center'>
                             <Col md={12} lg={12} sm={12}>
                                 <Row className='mt-5'>
-                                    <Col md={8} lg={8} sm={12}>
+                                    <Col md={7} lg={7} sm={12}>
                                         <h5>Product</h5>
                                     </Col>
                                     <Col md={2} lg={2} sm={12} style={colsStyling}>
@@ -73,7 +82,7 @@ const Cart = () => {
                                 {cartItems.map(item => (
                                     <>
                                         <Row key={item.game} className='mb-5'>
-                                            <Col md={8} lg={8} sm={12} style={{ borderRight: "1px solid black", height: "10vh" }} className='mt-5'>
+                                            <Col md={7} lg={7} sm={12} style={{ borderRight: "1px solid black", height: "10vh" }} className='mt-5'>
                                                 <Row>
                                                     <Col md={3} lg={3} sm={12} >
                                                         <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%' }} />
@@ -88,6 +97,9 @@ const Cart = () => {
                                             </Col>
                                             <Col md={2} lg={2} sm={12} style={colsStyling} className='mt-5'>
                                                 <h5>{item.unitsInCart}</h5>
+                                            </Col>
+                                            <Col md={1} lg={1} sm={12} style={colsStyling} className='mt-5'>
+                                                <Button variant='dark' onClick={() => handleOnDelete(item.game)}><FontAwesomeIcon icon={faTrash} /></Button>
                                             </Col>
                                         </Row>
                                         <hr className='mt-5' />
