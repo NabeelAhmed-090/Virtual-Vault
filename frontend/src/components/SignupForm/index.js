@@ -30,6 +30,11 @@ const SignupForm = ({ login, setLogin }) => {
     const [validated, setValidated] = useState(false);
     const [confirmPasswordValid, setConfirmPasswordValid] = useState(false);
 
+    const [isValidFirstName, setIsValidFirstName] = useState(true)
+    const [isValidLastName, setIsValidLastName] = useState(true)
+    const [isValidCityName, setIsValidCityName] = useState(true)
+
+
 
     const resetForm = () => {
         setEmail("")
@@ -42,6 +47,19 @@ const SignupForm = ({ login, setLogin }) => {
         setValidated(false);
         setConfirmPasswordValid(false)
     }
+
+
+    const handleNameChange = (e, setName, setIsValidName) => {
+        const enteredValue = e.target.value;
+        const regex = /^[A-Za-z]+$/; // Regular expression for alphabets only
+
+        if (enteredValue === '' || regex.test(enteredValue)) {
+            setName(enteredValue);
+            setIsValidName(true);
+        } else {
+            setIsValidName(false);
+        }
+    };
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -123,12 +141,14 @@ const SignupForm = ({ login, setLogin }) => {
                                         className={'shadow-none'}
                                         required
                                         type="text"
-                                        placeholder="enter first name"
-                                        onChange={(e) => setFirstName(e.target.value)}
+                                        placeholder="Enter first name"
+                                        value={firstName}
+                                        onChange={(e) => handleNameChange(e, setFirstName, setIsValidFirstName)}
+                                        isInvalid={!isValidFirstName}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
-                                        First name is required.
+                                        First name is required and should contain only alphabets.
                                     </Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationLastName">
@@ -138,11 +158,13 @@ const SignupForm = ({ login, setLogin }) => {
                                         required
                                         type="text"
                                         placeholder="enter last name"
-                                        onChange={(e) => setLastName(e.target.value)}
+                                        value={lastName}
+                                        onChange={(e) => handleNameChange(e, setLastName, setIsValidLastName)}
+                                        isInvalid={!isValidLastName}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
-                                        Last name is required.
+                                        Last name is required and should contain only alphabets.
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </Row>
@@ -154,11 +176,13 @@ const SignupForm = ({ login, setLogin }) => {
                                         required
                                         type="text"
                                         placeholder="enter city"
-                                        onChange={(e) => setCity(e.target.value)}
+                                        value={city}
+                                        onChange={(e) => handleNameChange(e, setCity, setIsValidCityName)}
+                                        isInvalid={!isValidCityName}
                                     />
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                     <Form.Control.Feedback type="invalid">
-                                        City is required.
+                                        City is required and should contain only alphabets.
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </Row>

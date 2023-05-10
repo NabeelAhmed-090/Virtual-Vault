@@ -11,10 +11,13 @@ const getNotifications = asyncHandler(async (req, res) => {
     try {
         const user = req.params.id;
         const allNotifications = await Notification.find()
-        const notifications = allNotifications.filter((notification) => notification.user.toString() == user)
+        var notifications = allNotifications.filter((notification) => notification.user.toString() == user)
+        notifications = notifications.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp())
+        const unreadNotifications = notifications.filter((notification) => notification.unread == true).length
         if (notifications) {
             res.json({
-                notifications: notifications
+                notifications: notifications,
+                unreadNotifications: unreadNotifications
             })
         } else {
             res.status(404)
@@ -28,4 +31,26 @@ const getNotifications = asyncHandler(async (req, res) => {
     }
 })
 
-export { getNotifications }
+const markAsRead = asyncHandler(async (req, res) => {
+    try {
+        const notification = req.params.id;
+        const markNotification = await Notification.findById(notification)
+        console.log("markNotification", markNotification)
+        if (markNotification) {
+            markNotification.unread = false
+            const updatedNotification = await markNotification.save()
+            res.json(updatedNotification)
+        } else {
+            res.status(404)
+            throw new Error("Notification not found")
+        }
+
+    } catch (error) {
+        res.json({
+            error: error,
+            message: "Error in marking Notificcation"
+        })
+    }
+})
+
+export { getNotifications, markAsRead }

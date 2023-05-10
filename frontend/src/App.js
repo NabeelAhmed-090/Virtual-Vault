@@ -14,6 +14,8 @@ import Search from './screens/Search';
 import Certificate from './components/Certificate';
 import Game from './screens/Game';
 import Cart from './screens/Cart';
+import Payment from './screens/Payment';
+import Admin from './screens/Admin';
 
 
 function App() {
@@ -37,6 +39,8 @@ function App() {
             <Route path="/search/game/:id" element={<Game />} exact />
             <Route path="/cart/:id?" element={<Cart />} exact />
             <Route path="/certificate/:id" element={<Certificate />} exact />
+            <Route path="/payment" element={<Payment />} exact />
+            <Route path="/admin" element={<Admin />} exact />
           </Routes>
         </Router>
         <Footer />

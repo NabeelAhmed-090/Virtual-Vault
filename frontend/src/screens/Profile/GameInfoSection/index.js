@@ -22,6 +22,44 @@ const GameInfoSection = ({ id, setUserGames }) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
+    const [isValidTitle, setIsValidTitle] = useState(true);
+    const [isValidDescription, setIsValidDescription] = useState(true);
+    const [isValidUnits, setIsValidUnits] = useState(true);
+
+    const handleUnitsChange = (e) => {
+        const enteredValue = e.target.value;
+        const parsedValue = parseInt(enteredValue, 10);
+
+        if (!isNaN(parsedValue) && parsedValue >= 0) {
+            setUnits(parsedValue);
+            setIsValidUnits(true);
+        } else {
+            setIsValidUnits(false);
+        }
+    };
+
+    const handleTitleChange = (e) => {
+        const enteredValue = e.target.value;
+
+        if (enteredValue.length <= 20) {
+            setTitle(enteredValue);
+            setIsValidTitle(true);
+        } else {
+            setIsValidTitle(false);
+        }
+    };
+
+    const handleDescriptionChange = (e) => {
+        const enteredValue = e.target.value;
+
+        if (enteredValue.length <= 500) {
+            setDescription(enteredValue);
+            setIsValidDescription(true);
+        } else {
+            setIsValidDescription(false);
+        }
+    };
+
     const resetForm = () => {
         setSelectedImage(null)
         setIsGameNew(true)
@@ -142,8 +180,8 @@ const GameInfoSection = ({ id, setUserGames }) => {
                                 }
                             </Col>
                         </Row>
-                        <Row style={{ minHeight: "70vh" }} className='mt-5'>
-                            <Col md={6} sm={12} lg={6} style={{ height: "70vh" }} className='mt-2'>
+                        <Row style={{ minHeight: "95vh" }} className='mt-5'>
+                            <Col md={6} sm={12} lg={6} style={{ height: "90vh" }} className='mt-2'>
                                 {imageUrl ? (
                                     <div style={{ boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.4)", padding: "10px" }} className='mb-5 full-height'>
                                         <img src={imageUrl} alt="game cover"
@@ -168,7 +206,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
                                     </div>
                                 )}
                             </Col>
-                            <Col md={12} sm={12} lg={6} style={{ height: "75vh" }}>
+                            <Col md={12} sm={12} lg={6} style={{ height: "95vh" }} className='mt-2'>
                                 <Form>
                                     <Row className="text-center" style={{ height: "20vh" }}>
                                         <Col md={6} sm={12} lg={6}>
@@ -179,8 +217,15 @@ const GameInfoSection = ({ id, setUserGames }) => {
                                                     required
                                                     type="text"
                                                     placeholder="enter title"
-                                                    onChange={(e) => setTitle(e.target.value)}
+                                                    value={title}
+                                                    onChange={handleTitleChange}
+                                                    isInvalid={!isValidTitle}
                                                 />
+                                                <Row className='d-flex justify-content-end'>
+                                                    <Col md={6} sm={12} lg={6} className='d-flex justify-content-end'>
+                                                        <pre>{title.length}/20</pre>
+                                                    </Col>
+                                                </Row>
                                             </Form.Group>
                                         </Col>
                                         <Col md={6} sm={12} lg={6}>
@@ -196,8 +241,8 @@ const GameInfoSection = ({ id, setUserGames }) => {
                                             </Form.Group>
                                         </Col>
                                     </Row>
-                                    <Row>
-                                        <Col md={6} sm={12} lg={6} className='mt-2'>
+                                    <Row className='mt-2'>
+                                        <Col md={6} sm={12} lg={6} className='mt-5'>
                                             <Form.Check
                                                 type="checkbox"
                                                 label="new game"
@@ -206,14 +251,19 @@ const GameInfoSection = ({ id, setUserGames }) => {
                                             />
                                         </Col>
                                         <Col md={6} sm={12} lg={6}>
-                                            <Form.Group as={Col} md="12">
+                                            <Form.Group as={Col} md="12" className='mt-5'>
                                                 <Form.Control
                                                     className={'shadow-none'}
                                                     required
                                                     type="number"
                                                     placeholder="units"
-                                                    onChange={(e) => setUnits(e.target.value)}
+                                                    value={units}
+                                                    onChange={handleUnitsChange}
+                                                    isInvalid={!isValidUnits}
                                                 />
+                                                <Form.Control.Feedback type="invalid">
+                                                    Units must be a non-negative number.
+                                                </Form.Control.Feedback>
                                             </Form.Group>
                                         </Col>
                                     </Row>
@@ -226,12 +276,18 @@ const GameInfoSection = ({ id, setUserGames }) => {
                                                 required
                                                 as="textarea"
                                                 placeholder="Enter description"
-                                                onChange={(e) => setDescription(e.target.value)}
                                                 value={description}
+                                                onChange={handleDescriptionChange}
+                                                isInvalid={!isValidDescription}
                                             />
+                                            <Row className='d-flex justify-content-end'>
+                                                <Col md={6} sm={12} lg={6} className='d-flex justify-content-end'>
+                                                    <pre>{description.length}/500</pre>
+                                                </Col>
+                                            </Row>
                                         </Form.Group>
                                     </Row>
-                                    <Row>
+                                    <Row className='mt-2'>
                                         <Col>
                                             <Button variant='dark' className='mt-5 w-100' type="button" onClick={handleSubmit}>
                                                 Upload Game

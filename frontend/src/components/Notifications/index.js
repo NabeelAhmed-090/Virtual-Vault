@@ -9,9 +9,26 @@ const Notifications = ({ id }) => {
     let history = useNavigate()
 
     const [notifications, setNotifications] = useState([])
+    const [unreadCount, setUnreadCount] = useState(0)
 
-    const handleOnClick = (link) => {
-        history(link)
+    const markNotificationAsRead = async (id) => {
+        notifications.forEach(notification => {
+            if (notification.id === id) {
+                notification.unread = false
+                unreadCount > 0 && setUnreadCount(unreadCount - 1)
+            }
+        })
+    }
+
+    const handleOnClick = async (link, id) => {
+        try {
+            console.log(id)
+            await fetch(`http://localhost:5000/api/notifications/mark/${id}`)
+            markNotificationAsRead(id)
+            history(link)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
@@ -19,20 +36,22 @@ const Notifications = ({ id }) => {
             try {
                 const res = await fetch(`http://localhost:5000/api/notifications/${id}`)
                 const data = await res.json()
-                console.log(data)
                 setNotifications(data.notifications)
+                setUnreadCount(data.unreadNotifications)
             } catch (error) {
                 console.log(error)
             }
         }
+        const interval = setInterval(() => {
+            fetchNotifications();
+        }, 3000);
 
-        fetchNotifications()
         return () => {
             setNotifications([])
+            clearInterval(interval);
         }
 
     }, [])
-    const unreadCount = 2
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -56,8 +75,9 @@ const Notifications = ({ id }) => {
                 {unreadCount > 0 && <span className="badge">{unreadCount}</span>}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                {notifications.map((notification) => (
-                    <Dropdown.Item key={notification.id} className='cursor' onClick={() => handleOnClick(notification.link)}>
+
+                {notifications.length !== 0 ? notifications.map((notification) => (
+                    <Dropdown.Item key={notification._id} className='cursor' onClick={() => handleOnClick(notification.link, notification._id)}>
                         <Row style={{ width: "32vw" }}>
                             <Col md={1} sm={12} lg={1}>
                                 <div
@@ -87,7 +107,15 @@ const Notifications = ({ id }) => {
                         </Row>
                         <hr />
                     </Dropdown.Item>
-                ))}
+                )) : (
+                    <Dropdown.Item>
+                        <Row style={{ width: "32vw" }}>
+                            <Col className='text-center'>
+                                <h3>No notifications</h3>
+                            </Col>
+                        </Row>
+                    </Dropdown.Item>
+                )}
             </Dropdown.Menu>
         </Dropdown >
     )

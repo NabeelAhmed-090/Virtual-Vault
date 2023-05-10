@@ -1,15 +1,100 @@
 import asyncHandler from 'express-async-handler'
 import Blog from '../models/blogModel.js'
+import Notification from '../models/notificationModel.js'
 import User from '../models/userModel.js'
 import cloudinary from 'cloudinary';
+
+
+
+// @desc Get All blogs
+// @route Get /api/blogs/all
+// @access Public
+
+const getAllBlogs = asyncHandler(async (req, res) => {
+    try {
+        const blogs = await Blog.find()
+        blogs.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp())
+
+        if (blogs) {
+            res.json({
+                blogs: blogs
+            })
+        }
+    } catch (error) {
+        res.json({
+            error: error,
+            message: "Error in fetching blogs"
+        })
+    }
+})
+
+
+// @desc Get All blogs
+// @route Get /api/blogs/all
+// @access Public
+const getUserBlogs = asyncHandler(async (req, res) => {
+    try {
+        const user = req.params.id;
+        const allBlogs = await Blog.find()
+        var blogs = allBlogs.filter((blog) => blog.user.toString() == user)
+        if (blogs) {
+            res.json({
+                blogs: blogs
+            })
+        }
+    } catch (error) {
+        res.json({
+            error: error,
+            message: "Error in fetching blogs"
+        })
+    }
+})
+
+// @desc PUT Update blog approve status
+// @route Get /api/blogs/approve/:id
+// @access Public
+
+const updateBlogApproval = asyncHandler(async (req, res) => {
+    try {
+        const { id, isApproved } = req.body;
+
+        const blog = await Blog.findById(id)
+        if (blog) {
+            blog.isApproved = isApproved
+            const newNotification = new Notification({
+                user: blog.user,
+                message: isApproved == true ? "Your blog has been approved" : "Your blog has been rejected",
+                unread: true,
+                link: "/blogs/" + blog._id,
+            });
+            await newNotification.save();
+            await blog.save()
+            res.json({
+                blog: blog
+            })
+        }
+        else {
+            res.isApproved(404)
+            res.json({
+                blog: null,
+                message: "Blog not found"
+            })
+        }
+    } catch (error) {
+        res.json({
+            error: error,
+            message: "Error in updating isApproved"
+        })
+    }
+})
 
 // @desc Get blogs
 // @route Get /api/blogs
 // @access Public
-
 const getBlogs = asyncHandler(async (req, res) => {
     try {
-        const blogs = await Blog.find()
+        const unfilteredBlogs = await Blog.find()
+        const blogs = unfilteredBlogs.filter((blog) => blog.isApproved === true)
         blogs.sort((a, b) => b.totalViews - a.totalViews)
 
         const mostViewed = blogs.slice(0, 8)
@@ -109,4 +194,4 @@ const createBlog = asyncHandler(async (req, res) => {
 
 
 
-export { getBlogs, getBlog, createBlog }
+export { getBlogs, getBlog, createBlog, getAllBlogs, updateBlogApproval, getUserBlogs }

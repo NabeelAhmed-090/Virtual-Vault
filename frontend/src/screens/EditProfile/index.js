@@ -36,6 +36,9 @@ const EditProfile = () => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
+    const [isValidFirstName, setIsValidFirstName] = useState(true)
+    const [isValidLastName, setIsValidLastName] = useState(true)
+    const [isValidCityName, setIsValidCityName] = useState(true)
 
     const resetForm = () => {
         setEmail(user.email)
@@ -44,6 +47,19 @@ const EditProfile = () => {
         setLastName(user.lastName)
         setCity(user.city)
     }
+
+
+    const handleNameChange = (e, setName, setIsValidName) => {
+        const enteredValue = e.target.value;
+        const regex = /^[A-Za-z]+$/; // Regular expression for alphabets only
+
+        if (enteredValue === '' || regex.test(enteredValue)) {
+            setName(enteredValue);
+            setIsValidName(true);
+        } else {
+            setIsValidName(false);
+        }
+    };
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -139,13 +155,14 @@ const EditProfile = () => {
                                             className={'shadow-none'}
                                             required
                                             type="text"
-                                            placeholder="enter first name"
-                                            defaultValue={firstName}
-                                            onChange={(e) => setFirstName(e.target.value)}
+                                            placeholder="Enter first name"
+                                            value={firstName}
+                                            onChange={(e) => handleNameChange(e, setFirstName, setIsValidFirstName)}
+                                            isInvalid={!isValidFirstName}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <Form.Control.Feedback type="invalid">
-                                            First name is required.
+                                            First name is required and should contain only alphabets.
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                     <Form.Group as={Col} md="6" controlId="validationLastName">
@@ -155,12 +172,13 @@ const EditProfile = () => {
                                             required
                                             type="text"
                                             placeholder="enter last name"
-                                            defaultValue={lastName}
-                                            onChange={(e) => setLastName(e.target.value)}
+                                            value={lastName}
+                                            onChange={(e) => handleNameChange(e, setLastName, setIsValidLastName)}
+                                            isInvalid={!isValidLastName}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <Form.Control.Feedback type="invalid">
-                                            Last name is required.
+                                            Last name is required and should contain only alphabets.
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                 </Row>
@@ -172,12 +190,13 @@ const EditProfile = () => {
                                             required
                                             type="text"
                                             placeholder="enter city"
-                                            defaultValue={city}
-                                            onChange={(e) => setCity(e.target.value)}
+                                            value={city}
+                                            onChange={(e) => handleNameChange(e, setCity, setIsValidCityName)}
+                                            isInvalid={!isValidCityName}
                                         />
                                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                         <Form.Control.Feedback type="invalid">
-                                            City is required.
+                                            City is required and should contain only alphabets.
                                         </Form.Control.Feedback>
                                     </Form.Group>
                                 </Row>
@@ -189,11 +208,15 @@ const EditProfile = () => {
                                                 className={'shadow-none'}
                                                 type={type ? "password" : "text"}
                                                 placeholder="password"
+                                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                                                 onChange={(e) => setPassword(e.target.value)}
                                             />
                                             <InputGroup.Text id="inputGroupPrepend" className='cursor' onClick={() => setType(prev => !prev)}>
                                                 <FontAwesomeIcon icon={type ? faEye : faEyeSlash} />
                                             </InputGroup.Text>
+                                            <Form.Control.Feedback type="invalid">
+                                                Please provide a valid password (minimum 8 characters, at least one uppercase letter, one lowercase letter, one number ,and one special character).
+                                            </Form.Control.Feedback>
                                         </InputGroup>
                                     </Form.Group>
                                 </Row>

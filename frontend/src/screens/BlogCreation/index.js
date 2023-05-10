@@ -20,6 +20,31 @@ function CreateBlog() {
     const [blog, setBlog] = useState("");
 
 
+    const [isValidTitle, setIsValidTitle] = useState(true);
+    const [isValidBlog, setIsValidBlog] = useState(true);
+
+    const handleBlogChange = (e) => {
+        const enteredValue = e.target.value;
+
+        if (enteredValue.length <= 500) {
+            setBlog(enteredValue);
+            setIsValidBlog(true);
+        } else {
+            setIsValidBlog(false);
+        }
+    };
+
+    const handleTitleChange = (e) => {
+        const enteredValue = e.target.value;
+
+        if (enteredValue.length <= 20) {
+            setTitle(enteredValue);
+            setIsValidTitle(true);
+        } else {
+            setIsValidTitle(false);
+        }
+    };
+
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         setSelectedImage(file);
@@ -29,14 +54,16 @@ function CreateBlog() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        const blogData = new FormData();
-        blogData.append('title', title);
-        blogData.append('blog', blog);
-        blogData.append('user', userInfo._id);
-        blogData.append('image', selectedImage);
-
+        if (title.length === 0 || blog.length === 0 || selectedImage === null) {
+            return;
+        }
         try {
+            setLoading(true);
+            const blogData = new FormData();
+            blogData.append('title', title);
+            blogData.append('blog', blog);
+            blogData.append('user', userInfo._id);
+            blogData.append('image', selectedImage);
             await axios.post('http://localhost:5000/api/blogs/create', blogData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
@@ -101,11 +128,19 @@ function CreateBlog() {
                                                 required
                                                 type="text"
                                                 placeholder="enter title"
-                                                onChange={(e) => setTitle(e.target.value)}
+                                                value={title}
+                                                onChange={handleTitleChange}
+                                                isInvalid={!isValidTitle}
                                             />
+                                            <Row className='d-flex justify-content-end'>
+                                                <Col md={2} sm={12} lg={2} className='d-flex justify-content-end'>
+                                                    <pre>{title.length}/20</pre>
+                                                </Col>
+                                            </Row>
                                         </Form.Group>
                                     </Row>
-                                    <Row style={{ height: "30vh" }} className='text-center'>
+
+                                    <Row style={{ height: "30vh" }} className='text-center mb-2'>
                                         <Form.Group as={Col} md="12">
                                             <Form.Label>Description</Form.Label>
                                             <Form.Control
@@ -114,12 +149,18 @@ function CreateBlog() {
                                                 required
                                                 as="textarea"
                                                 placeholder="Enter description"
-                                                onChange={(e) => setBlog(e.target.value)}
                                                 value={blog}
+                                                onChange={handleBlogChange}
+                                                isInvalid={!isValidBlog}
                                             />
+                                            <Row className='d-flex justify-content-end'>
+                                                <Col md={2} sm={12} lg={2} className='d-flex justify-content-end'>
+                                                    <pre>{blog.length}/500</pre>
+                                                </Col>
+                                            </Row>
                                         </Form.Group>
                                     </Row>
-                                    <Row>
+                                    <Row className='mt-2'>
                                         <Col>
                                             <Button disabled={created} variant='dark' className='mt-5 w-100' onClick={handleSubmit}>
                                                 Create Blog

@@ -16,7 +16,11 @@ const Login = () => {
     const { userInfo } = userLogin
 
     useEffect(() => {
-        if (userInfo) {
+        console.log(userInfo)
+        if (userInfo && userInfo.isAdmin === true) {
+            history("/admin")
+        }
+        else if (userInfo) {
             history("/home")
         }
     }, [userInfo, history])

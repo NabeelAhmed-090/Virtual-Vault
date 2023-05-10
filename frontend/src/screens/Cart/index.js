@@ -135,6 +135,11 @@ const Cart = () => {
                                 <h5>{total + (total * 0.16)} PKR</h5>
                             </Col>
                         </Row>
+                        <Row className='d-flex justify-content-end'>
+                            <Col md={4} sm={12} lg={4} >
+                                <Button variant='dark' className='w-100 mt-5'>Checkout</Button>
+                            </Col>
+                        </Row>
                     </>
                 )
             }

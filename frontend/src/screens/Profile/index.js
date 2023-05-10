@@ -3,11 +3,13 @@ import { Badge, Button, Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserDetails } from '../../actions/userActions'
 import { useNavigate } from 'react-router-dom'
-import './index.css'
 import GameInfoSection from './GameInfoSection'
 import ExistingGameSection from './ExistingGamesSection'
+import BlogsSection from './BlogsSecton'
 import Loader from '../../components/Loader'
 import axios from 'axios'
+import './index.css'
+
 
 const Profile = () => {
 
@@ -24,6 +26,8 @@ const Profile = () => {
     const [city, setCity] = useState("")
     const [gameFetchLoading, setGameFetchLoading] = useState(false)
     const [userGames, setUserGames] = useState([{}])
+    const [userBlogs, setUserBlogs] = useState([{}])
+    const [userCertificates, setUserCertificates] = useState([{}])
 
     const initials = userName.charAt(0).toUpperCase()
 
@@ -33,17 +37,32 @@ const Profile = () => {
         setCity(user.city)
     }
 
+    const handleCertificateClick = async (_id) => {
+        history(`/certificate/${_id}`)
+    }
+
     useEffect(() => {
         const fetchUserGames = async () => {
             const { data } = await axios.get(`http://localhost:5000/api/games/user_games/${userInfo._id}`)
             setUserGames(data.userGames)
             setGameFetchLoading(false)
         }
+        const fetchUserBlogs = async () => {
+            const { data } = await axios.get(`http://localhost:5000/api/blogs/user_blogs/${userInfo._id}`)
+            setUserBlogs(data.blogs)
+        }
+        const fetchUserCertificates = async () => {
+            const { data } = await axios.get(`http://localhost:5000/api/certificate/user_certificates/${userInfo._id}`)
+            setUserCertificates(data.certificates)
+            console.log(data)
+        }
         if (!userInfo) {
             history("/")
         } else {
             setGameFetchLoading(true)
             fetchUserGames()
+            fetchUserBlogs()
+            fetchUserCertificates()
             if (!user || !user.email) {
                 dispatch(getUserDetails('profile', userInfo))
             } else {
@@ -103,6 +122,33 @@ const Profile = () => {
                     <Row>
                         <ExistingGameSection userGames={userGames} setUserGames={setUserGames} />
                     </Row>
+                    <Row>
+                        <BlogsSection userBlogs={userBlogs} history={history} />
+                    </Row>
+                    <Row>
+                        {
+                            userCertificates.length === 0 ? <h1>No Certificates</h1> :
+                                <Col md={12} lg={12} sm={12} xs={12}>
+                                    <Container
+                                        style={{ minHeight: "50vh", boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.75)" }}
+                                        className='mb-5 p-5'
+                                    >
+                                        <div style={{ display: "flex", justifyContent: "center" }}><h1 className='text-center mt-1'>My Certificates</h1></div>
+                                        <Row className='mt-2'>
+                                            {userCertificates.map((certificate) => {
+                                                return (
+                                                    <Col md={6} lg={6} sm={12} xs={12} className='p-2'>
+                                                        <h3 className='cursor' onClick={() => handleCertificateClick(certificate._id)}>* {certificate.title}</h3>
+                                                    </Col>
+                                                )
+                                            })
+                                            }
+                                        </Row>
+                                    </Container>
+                                </Col>
+                        }
+                    </Row>
+
                 </>}
         </Container >
     )
