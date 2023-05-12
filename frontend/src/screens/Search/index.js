@@ -44,7 +44,6 @@ const Search = () => {
     };
 
     useEffect(() => {
-        console.log(userInfo)
         const fetchData = async () => {
             try {
                 if (prevSearch !== searchText) {

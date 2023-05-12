@@ -1,9 +1,15 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
 import Game from '../models/gameModel.js'
+import Transaction from '../models/transactionModel.js';
+import Notification from '../models/notificationModel.js'
 import cloudinary from 'cloudinary';
-import { ObjectId } from 'mongodb';
 
+import stripe from 'stripe';
+const secretKey = "sk_test_51N5u3tDPl5TQVYXyckgRZlINHANcViDlr6Hp2rtkWSdhOhE1Z5h48JDuzd1dc3dJ3PchUkIib8XXNrdGh0ZXWh5U00ucQxRpcN";
+const stripeInstance = stripe(secretKey);
+
+const DOMAIN = 'http://localhost:3000';
 
 // function to upload image to cloudinary
 async function uploadImageToCloudinary(image) {
@@ -21,10 +27,21 @@ async function uploadImageToCloudinary(image) {
 // @access Public
 
 const createGame = asyncHandler(async (req, res) => {
-    const { seller, title, description, price, isGameNew, tags } = req.body;
+    const { seller, title, description, price, isGameNew, tags, units } = req.body;
     const image = req.file
     try {
         const cloudinaryResult = await uploadImageToCloudinary(image);
+
+        const stripeProduct = await stripeInstance.products.create({
+            name: title,
+            images: [cloudinaryResult.secure_url],
+        });
+
+        const stripePrice = await stripeInstance.prices.create({
+            product: stripeProduct.id,
+            unit_amount: price * 100,
+            currency: 'pkr',
+        });
 
         const newGame = new Game({
             seller: seller,
@@ -33,11 +50,14 @@ const createGame = asyncHandler(async (req, res) => {
             price: price,
             isGameNew: isGameNew,
             tags: tags,
-            imagePath: cloudinaryResult.secure_url
+            units: units,
+            imagePath: cloudinaryResult.secure_url,
+            stripeProductId: stripeProduct.id,
+            stripePriceId: stripePrice.id,
         });
 
         const savedGame = await newGame.save();
-        res.status(201).json({ game: savedGame });
+        res.status(200).json({ game: savedGame });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -204,4 +224,104 @@ const searchGames = asyncHandler(async (req, res) => {
 })
 
 
-export { createGame, getGame, getUserGames, deleteGame, searchGames }
+const checkoutSession = asyncHandler(async (req, res) => {
+    const { cartItems, total } = req.body;
+    const line_items = cartItems.map(item => {
+        return {
+            price: item.stripePriceId,
+            quantity: item.unitsInCart
+        }
+    })
+
+    const session = await stripeInstance.checkout.sessions.create({
+        line_items: line_items,
+        mode: 'payment',
+        success_url: `${DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${DOMAIN}?canceled=true`,
+    });
+
+    res.json({
+        url: session.url
+    })
+});
+
+
+const updateGameStatus = asyncHandler(async (req, res) => {
+    const { user } = req.body
+    const sessionID = req.params.id; // Get the session ID from the query parameters
+    try {
+        var totalUnits = 0;
+        var totalAmount = 0;
+        const productIDs = await new Promise((resolve, reject) => {
+            stripeInstance.checkout.sessions.listLineItems(
+                sessionID,
+                (err, lineItems) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        const productIDs = lineItems.data.map((lineItem) => {
+                            totalUnits += lineItem.quantity;
+                            totalAmount += lineItem.amount_total / 100;
+                            return (
+                                {
+                                    id: lineItem.price.product,
+                                    units: lineItem.quantity,
+                                    amount: lineItem.amount_total / 100
+                                }
+                            )
+                        });
+                        resolve(productIDs);
+                    }
+                }
+            );
+        });
+
+        const gameIds = []
+        const unitList = []
+        const priceList = []
+
+        const sellerIds = []
+        const allGames = await Game.find()
+        allGames.forEach((game) => {
+            productIDs.forEach((product) => {
+                if (game.stripeProductId === product.id) {
+                    sellerIds.push(game.seller)
+                    gameIds.push(game._id)
+                    unitList.push(product.units)
+                    priceList.push(product.amount)
+                    game.units -= product.units
+                    game.save()
+                }
+            })
+        })
+
+        const newTransaction = new Transaction({
+            buyer: user,
+            games: gameIds,
+            units: unitList,
+            price: priceList,
+        })
+
+        sellerIds.map(async (sellerId, index) => {
+            const newNotification = new Notification({
+                user: sellerId,
+                message: String(unitList[index]) + " units of game Sold",
+                unread: true,
+                link: "hello"
+            })
+            await newNotification.save()
+        })
+
+        await newTransaction.save()
+        res.json({
+            productIDs: productIDs,
+            totalUnits: totalUnits,
+            totalAmount: totalAmount
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while retrieving product IDs.');
+    }
+})
+
+export { createGame, getGame, getUserGames, deleteGame, searchGames, checkoutSession, updateGameStatus }

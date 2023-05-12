@@ -35,7 +35,6 @@ const markAsRead = asyncHandler(async (req, res) => {
     try {
         const notification = req.params.id;
         const markNotification = await Notification.findById(notification)
-        console.log("markNotification", markNotification)
         if (markNotification) {
             markNotification.unread = false
             const updatedNotification = await markNotification.save()

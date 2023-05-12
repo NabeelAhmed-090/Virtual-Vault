@@ -59,7 +59,6 @@ const Admin = () => {
     }
 
     const handleApproval = async (id, status) => {
-        console.log(status)
         const { data } = await axios.put(`/api/blogs/update`, { id: id, isApproved: status })
         if (data.blog !== null) {
             const updatedBlogs = blogs.map((blog) => {
@@ -68,7 +67,6 @@ const Admin = () => {
                 }
                 return blog
             })
-            console.log(updatedBlogs)
             setBlogs(updatedBlogs)
         }
     }
@@ -77,7 +75,6 @@ const Admin = () => {
         const fetchBlogs = async () => {
             const res = await fetch('/api/blogs/all')
             const data = await res.json()
-            console.log(data)
             setBlogs(data.blogs)
             setLoading(false)
         }

@@ -100,10 +100,6 @@ const EditProfile = () => {
     }, [dispatch, history, userInfo, user])
 
 
-    useEffect(() => {
-        console.log(success)
-    }, [success])
-
     return (
         <Container style={{ minHeight: "100vh" }}>
             <div className={loading || detailsLoading || requestLoading ? 'temp-height' : ''}>

@@ -10,6 +10,7 @@ import certificateRoutes from './routes/certificateRoutes.js'
 import { config } from 'cloudinary';
 import cors from 'cors';
 
+
 dotenv.config()
 
 config({
@@ -17,7 +18,6 @@ config({
     api_key: process.env.API_KEY,
     api_secret: process.env.API_SECRET,
 });
-
 
 connectDB()
 

@@ -5,9 +5,10 @@ const gameSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    buyer: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: null
+    units: {
+        type: Number,
+        required: true,
+        default: 1
     },
     title: {
         type: String,
@@ -34,6 +35,16 @@ const gameSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    stripeProductId: {
+        type: String,
+        required: true,
+        default: ""
+    },
+    stripePriceId: {
+        type: String,
+        required: true,
+        default: ""
+    }
 }, {
     timestamps: true
 })

@@ -8,6 +8,7 @@ import ExistingGameSection from './ExistingGamesSection'
 import BlogsSection from './BlogsSecton'
 import Loader from '../../components/Loader'
 import axios from 'axios'
+import Logo from '../../Images/logo.jpg'
 import './index.css'
 
 
@@ -54,7 +55,6 @@ const Profile = () => {
         const fetchUserCertificates = async () => {
             const { data } = await axios.get(`http://localhost:5000/api/certificate/user_certificates/${userInfo._id}`)
             setUserCertificates(data.certificates)
-            console.log(data)
         }
         if (!userInfo) {
             history("/")
@@ -122,30 +122,37 @@ const Profile = () => {
                     <Row>
                         <ExistingGameSection userGames={userGames} setUserGames={setUserGames} />
                     </Row>
-                    <Row>
-                        <BlogsSection userBlogs={userBlogs} history={history} />
-                    </Row>
+                    {
+                        userBlogs.length !== 0 &&
+                        <Row>
+                            <BlogsSection userBlogs={userBlogs} history={history} />
+                        </Row>
+                    }
                     <Row>
                         {
-                            userCertificates.length === 0 ? <h1>No Certificates</h1> :
-                                <Col md={12} lg={12} sm={12} xs={12}>
-                                    <Container
-                                        style={{ minHeight: "50vh", boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.75)" }}
-                                        className='mb-5 p-5'
-                                    >
-                                        <div style={{ display: "flex", justifyContent: "center" }}><h1 className='text-center mt-1'>My Certificates</h1></div>
-                                        <Row className='mt-2'>
-                                            {userCertificates.map((certificate) => {
-                                                return (
-                                                    <Col md={6} lg={6} sm={12} xs={12} className='p-2'>
-                                                        <h3 className='cursor' onClick={() => handleCertificateClick(certificate._id)}>* {certificate.title}</h3>
+                            userCertificates.length !== 0 && <Col md={12} lg={12} sm={12} xs={12}>
+                                <Container
+                                    style={{ minHeight: "50vh", boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.75)" }}
+                                    className='mb-5 p-5'
+                                >
+                                    <div style={{ display: "flex", justifyContent: "center" }}><h1 className='text-center mt-1'>My Certificates</h1></div>
+                                    <Row className='mt-2'>
+                                        {userCertificates.map((certificate) => {
+                                            return (
+                                                <>
+                                                    <Col md={2} lg={2} sm={4} xs={4} className='p-2' style={{ height: "10vh" }}>
+                                                        <img src={Logo} alt={certificate.title} className='certificate-image' style={{ height: "100%", width: "100%" }} />
                                                     </Col>
-                                                )
-                                            })
-                                            }
-                                        </Row>
-                                    </Container>
-                                </Col>
+                                                    <Col md={4} lg={4} sm={8} xs={8} style={{ height: "10vh" }} className='p-2 d-flex align-items-center'>
+                                                        <h3 className='cursor' onClick={() => handleCertificateClick(certificate._id)}>{certificate.title}</h3>
+                                                    </Col>
+                                                </>
+                                            )
+                                        })
+                                        }
+                                    </Row>
+                                </Container>
+                            </Col>
                         }
                     </Row>
 

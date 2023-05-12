@@ -5,6 +5,7 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import { addToCart, removeFromCart } from '../../actions/cartActions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios'
 
 
 const Cart = () => {
@@ -28,6 +29,16 @@ const Cart = () => {
 
     const handleOnDelete = (id) => {
         dispatch(removeFromCart(id))
+    }
+
+
+    const handleCheckout = async () => {
+        try {
+            const { data } = await axios.post('http://localhost:5000/api/games/create-checkout-session', { cartItems, total })
+            window.location.href = data.url;
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
@@ -112,32 +123,15 @@ const Cart = () => {
                         </Row>
                         <Row className='mt-5'>
                             <Col md={6} sm={6} lg={6}>
-                                <h5>Subtotal</h5>
+                                <h5>TOTAL</h5>
                             </Col>
                             <Col md={6} sm={6} lg={6} className='d-flex justify-content-end'>
                                 <h5>{total} PKR</h5>
                             </Col>
                         </Row>
-                        <Row className='mt-2'>
-                            <Col md={6} sm={6} lg={6}>
-                                <h5>Tax</h5>
-                            </Col>
-                            <Col md={6} sm={6} lg={6} className='d-flex justify-content-end'>
-                                <h5>{total * 0.16} PKR</h5>
-                            </Col>
-                        </Row>
-                        <hr />
-                        <Row className='mt-2'>
-                            <Col md={6} sm={6} lg={6}>
-                                <h5>Total (Incl. Tax)</h5>
-                            </Col>
-                            <Col md={6} sm={6} lg={6} className='d-flex justify-content-end'>
-                                <h5>{total + (total * 0.16)} PKR</h5>
-                            </Col>
-                        </Row>
                         <Row className='d-flex justify-content-end'>
-                            <Col md={4} sm={12} lg={4} >
-                                <Button variant='dark' className='w-100 mt-5'>Checkout</Button>
+                            <Col md={12} sm={12} lg={12} >
+                                <Button variant='dark' className='w-100 mt-5' type="button" onClick={() => handleCheckout()}>Checkout</Button>
                             </Col>
                         </Row>
                     </>

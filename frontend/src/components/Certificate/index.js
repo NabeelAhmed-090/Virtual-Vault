@@ -25,7 +25,6 @@ const Certificate = () => {
     };
 
     useEffect(() => {
-        console.log("ENTERED")
         const fetchCertificate = async () => {
             const { data } = await axios.get(`/api/certificate/${id}`)
             setCertificate(data.certificate)

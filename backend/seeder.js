@@ -10,6 +10,8 @@ import Notification from './models/notificationModel.js'
 import Blog from './models/blogModel.js'
 import connectDB from './config/db.js'
 import notifications from "./data/notifications.js";
+import transactions from "./data/transaction.js";
+import Transaction from "./models/transactionModel.js";
 
 dotenv.config()
 
@@ -19,7 +21,7 @@ const importData = async () => {
     try {
         // await User.deleteMany()
 
-        await Notification.insertMany(notifications)
+        await Transaction.insertMany(transactions)
 
         console.log('Data Imported!'.green.inverse)
         process.exit(0)

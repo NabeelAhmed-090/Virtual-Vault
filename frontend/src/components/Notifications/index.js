@@ -22,7 +22,6 @@ const Notifications = ({ id }) => {
 
     const handleOnClick = async (link, id) => {
         try {
-            console.log(id)
             await fetch(`http://localhost:5000/api/notifications/mark/${id}`)
             markNotificationAsRead(id)
             history(link)
