@@ -14,24 +14,13 @@ const Certificate = () => {
 
     const [certificate, setCertificate] = useState({})
     const [date, setDate] = useState('')
-    const [user, setUser] = useState({})
 
     const [loading, setLoading] = useState(true)
-
-    const capitalizeFirstLetter = (str) => {
-        return str.toLowerCase().split(' ').map((word) => {
-            return word.charAt(0).toUpperCase() + word.slice(1);
-        }).join(' ');
-    };
 
     useEffect(() => {
         const fetchCertificate = async () => {
             const { data } = await axios.get(`/api/certificate/${id}`)
             setCertificate(data.certificate)
-            setUser({
-                ...data.user,
-                lastName: capitalizeFirstLetter(data.user.lastName)
-            })
             const date = new Date(data.certificate.createdAt);
             const formattedDate = date.toLocaleDateString("en-US", {
                 day: "numeric",
@@ -94,9 +83,7 @@ const Certificate = () => {
                                 <Row className='mt-5'>
                                     <Col>
                                         <p className="text-center">
-                                            This certificate is presented to <b><b>Mr/Mrs {user.lastName}</b></b> in recognition of their outstanding performance and unwavering commitment to excellence in sales.
-                                            Through hard work, dedication, and a customer-centric approach, <b>Mr/Mrs {user.lastName}</b> has demonstrated exceptional sales skills and consistently exceeded expectations. Their ability to understand the needs of their clients and provide them with the best solutions is truly commendable.
-                                            We are proud to recognize <b>Mr/Mrs {user.lastName}</b> for their exceptional performance, and we believe that they truly deserve this Certificate of Excellence.
+                                            {certificate.message}
                                         </p>
                                     </Col>
                                 </Row>

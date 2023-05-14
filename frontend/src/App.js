@@ -11,7 +11,7 @@ import Blogs from './screens/Blogs';
 import Blog from './screens/Blog';
 import CreateBlog from './screens/BlogCreation';
 import Search from './screens/Search';
-import Certificate from './components/Certificate';
+import Certificate from './screens/Certificate';
 import Game from './screens/Game';
 import Cart from './screens/Cart';
 import Admin from './screens/Admin';

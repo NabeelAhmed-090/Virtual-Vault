@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Badge, Button, Col, Container, Row } from 'react-bootstrap'
+import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserDetails } from '../../actions/userActions'
 import { useNavigate } from 'react-router-dom'
+import { Badge, Button, Col, Container, Row } from 'react-bootstrap'
+import { getUserDetails } from '../../actions/userActions'
+import Loader from '../../components/Loader'
 import GameInfoSection from './GameInfoSection'
 import ExistingGameSection from './ExistingGamesSection'
 import BlogsSection from './BlogsSecton'
-import Loader from '../../components/Loader'
-import axios from 'axios'
-import Logo from '../../Images/logo.jpg'
+import CertificateSection from './CertificateSection'
 import './index.css'
+
 
 
 const Profile = () => {
@@ -38,9 +39,6 @@ const Profile = () => {
         setCity(user.city)
     }
 
-    const handleCertificateClick = async (_id) => {
-        history(`/certificate/${_id}`)
-    }
 
     useEffect(() => {
         const fetchUserGames = async () => {
@@ -129,33 +127,8 @@ const Profile = () => {
                         </Row>
                     }
                     <Row>
-                        {
-                            userCertificates.length !== 0 && <Col md={12} lg={12} sm={12} xs={12}>
-                                <Container
-                                    style={{ minHeight: "50vh", boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.75)" }}
-                                    className='mb-5 p-5'
-                                >
-                                    <div style={{ display: "flex", justifyContent: "center" }}><h1 className='text-center mt-1'>My Certificates</h1></div>
-                                    <Row className='mt-2'>
-                                        {userCertificates.map((certificate) => {
-                                            return (
-                                                <>
-                                                    <Col md={2} lg={2} sm={4} xs={4} className='p-2' style={{ height: "10vh" }}>
-                                                        <img src={Logo} alt={certificate.title} className='certificate-image' style={{ height: "100%", width: "100%" }} />
-                                                    </Col>
-                                                    <Col md={4} lg={4} sm={8} xs={8} style={{ height: "10vh" }} className='p-2 d-flex align-items-center'>
-                                                        <h3 className='cursor' onClick={() => handleCertificateClick(certificate._id)}>{certificate.title}</h3>
-                                                    </Col>
-                                                </>
-                                            )
-                                        })
-                                        }
-                                    </Row>
-                                </Container>
-                            </Col>
-                        }
+                        <CertificateSection userCertificates={userCertificates} />
                     </Row>
-
                 </>}
         </Container >
     )
