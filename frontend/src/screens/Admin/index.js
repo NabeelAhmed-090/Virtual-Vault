@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { Badge, Button, Col, Container, Row } from 'react-bootstrap'
+import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap'
 import Loader from '../../components/Loader'
 
 const Admin = () => {
 
+    const BLOGS = 'BLOGS'
+    const SELLERS = 'SELLERS'
+
     let history = useNavigate()
 
+    const [display, setDisplay] = useState(BLOGS)
+    const [sellers, setSellers] = useState([])
     // const [blogs, setBlogs] = useState([
     //     {
     //         blog: "Tom Clancy's Ghost Recon Breakpoint is an online-only tactical shooter video game developed by Ubisoft Paris and published by Ubisoft. The game was released worldwide on 4 October 2019 for PlayStation 4, Windows, and Xbox One, and on 18 December 2019 for Stadia.",
@@ -49,6 +54,7 @@ const Admin = () => {
     const [blogs, setBlogs] = useState([])
     const [loading, setLoading] = useState(true)
 
+
     const formatDate = (timestamp) => {
         const date = new Date(timestamp);
         return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -72,6 +78,11 @@ const Admin = () => {
     }
 
     useEffect(() => {
+        const fetchSellers = async () => {
+            const { data } = await axios.get('/api/sales')
+            console.log(data.sellers)
+            setSellers(data.sellers)
+        }
         const fetchBlogs = async () => {
             const res = await fetch('/api/blogs/all')
             const data = await res.json()
@@ -80,10 +91,12 @@ const Admin = () => {
         }
         setLoading(true)
         fetchBlogs()
+        fetchSellers()
+        setLoading(false)
 
-        return () => {
-            setBlogs([])
-        }
+        // return () => {
+        //     setBlogs([])
+        // }
     }, [])
 
     return (
@@ -92,10 +105,38 @@ const Admin = () => {
                 loading ? <div style={{ height: "80vh" }}> <Loader /> </div> :
                     (
                         <>
+                            <Container>
+                                <Row>
+                                    <Col md={12} lg={12} sm={12}>
+                                        <h1 className='text-center mt-3'>Admin Panel</h1>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col md={6} lg={6} sm={12}>
+                                        <Button
+                                            variant="dark"
+                                            className='mt-3 w-100'
+                                            onClick={() => setDisplay(BLOGS)}
+                                        >
+                                            Review Blogs
+                                        </Button>
+                                    </Col>
+                                    <Col md={6} lg={6} sm={12}>
+                                        <Button
+                                            variant="dark"
+                                            className='mt-3 w-100'
+                                            onClick={() => setDisplay(SELLERS)}
+                                        >
+                                            Review Sellers
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Container>
+
                             {
-                                blogs.map((blog) => {
+                                display === BLOGS && blogs.map((blog) => {
                                     return (
-                                        <Container className='p-2 mt-2' style={{ boxShadow: "2px 2px 4px rgba(0,0,0,0.75)" }}>
+                                        <Container className='p-2 mt-5' style={{ boxShadow: "2px 2px 8px rgba(0,0,0,0.75)" }}>
                                             <Row>
                                                 <Col md={3} lg={3} sm={12} >
                                                     <img src={blog.imagePath} alt={blog.title} style={{ width: '100%', height: '100%' }} />
@@ -145,6 +186,75 @@ const Admin = () => {
                                         </Container>
                                     )
                                 })
+                            }
+                            {
+
+                                display === SELLERS &&
+                                (
+                                    <Container>
+                                        <Row className='mt-5'>
+                                            {
+                                                sellers.map((seller) => {
+                                                    return (
+                                                        <Col md={4} lg={4} sm={12} xs={12} className='mt-1 mb-5 p-2'>
+                                                            <Card className='mt-1 mb-5 p-2' style={{ height: "55vh" }}>
+                                                                <Card.Body className="d-flex flex-column justify-content-between">
+                                                                    <Container>
+                                                                        <Row className='d-flex justify-content-center'>
+                                                                            <Col md={8} lg={8} sm={12} xs={12} style={{ height: "20vh" }}>
+                                                                                <Badge
+                                                                                    bg="dark"
+                                                                                    className="w-100 initials-badge rounded-circle avatar-style"
+                                                                                >
+                                                                                    {seller.user.userName.charAt(0).toUpperCase()}
+                                                                                </Badge>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row>
+                                                                            <Col md={12} lg={12} sm={12} className='text-center mt-2'>
+                                                                                <h6><Card.Title><b>{seller.user.userName}</b></Card.Title></h6>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row>
+                                                                            <Col md={12} lg={12} sm={12} className='mt-3 text-center'>
+                                                                                <h6><Card.Text><b>{seller.user.city}</b></Card.Text></h6>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row className='mt-3'>
+                                                                            <Col md={6} lg={6} sm={6}>
+                                                                                <h6><Card.Text><b>Amount</b></Card.Text></h6>
+                                                                            </Col>
+                                                                            <Col md={6} lg={6} sm={6} className='text-end'>
+                                                                                <h6><Card.Text><b>{seller.amount}</b></Card.Text></h6>
+                                                                            </Col>
+                                                                        </Row>
+                                                                        <Row className='mt-3'>
+                                                                            <Col md={6} lg={6} sm={6}>
+                                                                                <h6><Card.Text><b>Units Sold</b></Card.Text></h6>
+                                                                            </Col>
+                                                                            <Col md={6} lg={6} sm={6} className='text-end'>
+                                                                                <h6><Card.Text><b>{seller.units}</b></Card.Text></h6>
+                                                                            </Col>
+                                                                        </Row>
+                                                                    </Container>
+                                                                    <div className="mt-auto">
+                                                                        <Button variant="success" className='w-100 mb-2 button-style-game-card'>Grant Certificate</Button>
+                                                                    </div>
+                                                                </Card.Body>
+                                                            </Card>
+                                                        </Col>
+                                                    )
+                                                })
+                                            }
+                                        </Row>
+                                        <Row>
+                                            <Col md={12} lg={12} sm={12} className='text-center'>
+                                                <Button variant="dark" className='w-100 mb-2'>Reset Record</Button>
+                                            </Col>
+                                        </Row>
+                                    </Container>
+                                )
+
                             }
                         </>
                     )

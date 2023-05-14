@@ -17,15 +17,8 @@ function HomePageCard({ game }) {
             <Card.Body className='card-body d-flex flex-column'>
                 <Container className="card-body-container">
                     <Row>
-                        <Col className="title-text" md={6} lg={6} sm={12}>
+                        <Col className="text-center" md={12} lg={12} sm={12}>
                             <h6><Card.Title><b>{game.title}</b></Card.Title></h6>
-                        </Col>
-                        <Col className="owner-text" md={6} lg={6} sm={12}>
-                            <h6>
-                                <Card.Text>
-                                    <b>{game.price}</b>
-                                </Card.Text>
-                            </h6>
                         </Col>
                     </Row>
                 </Container>

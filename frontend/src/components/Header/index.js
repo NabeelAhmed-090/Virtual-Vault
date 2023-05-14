@@ -5,9 +5,10 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBlog, faMagnifyingGlass, faCartShopping, faUser, faRightFromBracket, faBars, faBell } from '@fortawesome/free-solid-svg-icons'
 import Sidebar from '../Sidebar'
-import './index.css'
 import { logout } from '../../actions/userActions'
 import Notifications from '../Notifications'
+import './index.css'
+
 
 
 const Header = ({ isOpen, setIsOpen }) => {
@@ -29,7 +30,7 @@ const Header = ({ isOpen, setIsOpen }) => {
     return (
         <>
             {
-                userInfo && userInfo.isAdmin == false && <Sidebar isOpen={isOpen} handleButtonClick={handleButtonClick} />
+                userInfo && userInfo.isAdmin === false && <Sidebar isOpen={isOpen} handleButtonClick={handleButtonClick} />
             }
             <div className='navbar-div'>
                 <Container className='p-2'>
@@ -42,7 +43,14 @@ const Header = ({ isOpen, setIsOpen }) => {
                             </h3>
                         </Col>
                         {
-                            userInfo && userInfo.isAdmin == false && <Col md={8} sm={6} lg={8}>
+                            userInfo && userInfo.isAdmin === true && (
+                                <Col md={8} sm={6} lg={8} className='d-flex justify-content-end'>
+                                    <a className='options cursor' href="#" onClick={() => handleLogout()}>Logout <FontAwesomeIcon icon={faRightFromBracket} className='icons' /></a>
+                                </Col>
+                            )
+                        }
+                        {
+                            userInfo && userInfo.isAdmin === false && <Col md={8} sm={6} lg={8}>
                                 <div className='options-col'>
                                     <Notifications id={userInfo._id} />
                                     <a className='options' href='/blogs' >Blogs <FontAwesomeIcon icon={faBlog} className='icons' /></a>
@@ -58,7 +66,7 @@ const Header = ({ isOpen, setIsOpen }) => {
                         }
                     </Row>
                 </Container>
-            </div>
+            </div >
         </>
     )
 }

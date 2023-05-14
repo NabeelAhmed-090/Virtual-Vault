@@ -6,6 +6,8 @@ import Notification from '../models/notificationModel.js'
 import cloudinary from 'cloudinary';
 
 import stripe from 'stripe';
+import Sales from '../models/salesModel.js';
+import mongoose from 'mongoose';
 const secretKey = "sk_test_51N5u3tDPl5TQVYXyckgRZlINHANcViDlr6Hp2rtkWSdhOhE1Z5h48JDuzd1dc3dJ3PchUkIib8XXNrdGh0ZXWh5U00ucQxRpcN";
 const stripeInstance = stripe(secretKey);
 
@@ -308,9 +310,24 @@ const updateGameStatus = asyncHandler(async (req, res) => {
                 message: String(unitList[index]) + " units of game Sold",
                 unread: true,
                 link: "hello"
-            })
-            await newNotification.save()
-        })
+            });
+            const sellerObjectId = mongoose.Types.ObjectId(sellerId);
+            const sale = await Sales.findOne({ seller: sellerObjectId });
+            console.log(sale);
+            if (sale) {
+                sale.unitsSold += unitList[index];
+                sale.amount += priceList[index];
+                await Sales.updateOne({ _id: sale._id }, sale);
+            } else {
+                const newSale = new Sales({
+                    seller: sellerId,
+                    unitsSold: unitList[index],
+                    amount: priceList[index]
+                });
+                await newSale.save();
+            }
+            await newNotification.save();
+        });
 
         await newTransaction.save()
         res.json({
@@ -332,8 +349,16 @@ const updateGameStatus = asyncHandler(async (req, res) => {
 const getLatestGames = asyncHandler(async (req, res) => {
     try {
         const games = await Game.find({}).sort({ createdAt: -1 }).limit(3)
+        const responseGames = games.map(game => {
+            return {
+                id: game._id,
+                title: game.title,
+                image: game.image,
+                tags: game.tags
+            }
+        })
         if (games) {
-            res.send({ games: games })
+            res.send({ games: responseGames })
         }
         else {
             res.status(404)

@@ -29,13 +29,14 @@ const Home = () => {
     return (
         <>
             {
-                loading ? <div style={{ height: "60vh" }}>
+                loading ? <div style={{ height: "80vh" }}>
                     <Loader />
                 </div> : (
                     <>
                         <ControlledCarousel />
                         <div className='blog-container'>
-                            <Row>
+
+                            <Row style={{ borderTop: "3px solid silver" }}>
                                 <Col md={4} sm={12} lg={4} className="p-5" style={{ color: "white", display: "flex", justifyContent: 'center', alignItems: "center", textAlign: "center" }}>
                                     <Container>
                                         <Row>

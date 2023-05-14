@@ -18,10 +18,6 @@
     height: 25vh;
 }
 
-.owner-text {
-    text-align: right;
-}
-
 @media only screen and (max-width: 800px) {
 
     .owner-text,

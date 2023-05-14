@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import Loader from '../../components/Loader'
-import { emptyCart } from '../../actions/cartActions'
 
 const PurchaseSuccessful = () => {
 
@@ -32,7 +31,7 @@ const PurchaseSuccessful = () => {
             const newLocation = { ...location };
             delete newLocation.search;
             history(newLocation);
-            dispatch(emptyCart())
+            // dispatch(emptyCart())
         }
     }, [session_id])
 
