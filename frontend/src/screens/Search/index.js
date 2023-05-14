@@ -86,7 +86,7 @@ const Search = () => {
     return (
         <div>
             {loading ? <div style={{ height: "100vh" }}>
-                <Loader />
+                <Loader message="Fetching Games..." />
             </div> : <>
                 {
                     isSearching ? (
@@ -173,7 +173,7 @@ const Search = () => {
                     )
                 }
                 {
-                    gamesData.length === 0 ? <h1 className='text-center mt-5'>No Game Available</h1> : <SearchGamesDisplayArea gamesData={gamesData} />
+                    gamesData.length === 0 ? <h1 className='text-center mt-5' style={{ height: "100vh" }}>No Game Available</h1> : <SearchGamesDisplayArea gamesData={gamesData} />
                 }
                 <Container>
                     <Row style={{ display: "flex", justifyContent: "end" }} className='mt-5'>

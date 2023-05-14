@@ -133,7 +133,7 @@ const Admin = () => {
                                                             {
                                                                 blog.isApproved === false
                                                                     ? <Button variant="success" className="mt-2 w-100" onClick={() => handleApproval(blog._id, true)}>Approve</Button>
-                                                                    : <Button variant="danger" className="mt-2 w-100" onClick={() => handleApproval(blog._id, false)}>Disapprove</Button>
+                                                                    : <Button variant="danger" className="mt-2 w-100" onClick={() => handleApproval(blog._id, false)}>Unapprove</Button>
                                                             }
                                                         </Col>
                                                         <Col md={6} lg={6} sm={12}>

@@ -22,7 +22,7 @@ const ExistingGameSection = ({ userGames, setUserGames }) => {
     return (
         <Container
             style={{ minHeight: "50vh", boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.75)" }}
-            className='mb-5 p-5'
+            className='mb-5'
         >
             <h1 className='text-center mt-3'>My Games Currently On Sale</h1>
             <Row className='mt-3'>

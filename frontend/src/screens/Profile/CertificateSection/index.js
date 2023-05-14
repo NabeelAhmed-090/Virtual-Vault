@@ -19,7 +19,7 @@ const CertificateSection = ({ userCertificates }) => {
                         style={{ minHeight: "50vh", boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.75)" }}
                         className='mb-5 p-5'
                     >
-                        <div style={{ display: "flex", justifyContent: "center" }}><h1 className='text-center mt-1'>My Certificates</h1></div>
+                        <div className='d-flex flex-column justify-content-center h-100'><h1 className='text-center mt-1'>My Certificates</h1></div>
                         <Row className='mt-5'>
                             {userCertificates.map((certificate) => {
                                 return (

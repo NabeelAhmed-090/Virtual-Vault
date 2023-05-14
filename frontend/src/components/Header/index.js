@@ -29,7 +29,7 @@ const Header = ({ isOpen, setIsOpen }) => {
     return (
         <>
             {
-                userInfo && <Sidebar isOpen={isOpen} handleButtonClick={handleButtonClick} />
+                userInfo && userInfo.isAdmin == false && <Sidebar isOpen={isOpen} handleButtonClick={handleButtonClick} />
             }
             <div className='navbar-div'>
                 <Container className='p-2'>
@@ -42,7 +42,7 @@ const Header = ({ isOpen, setIsOpen }) => {
                             </h3>
                         </Col>
                         {
-                            userInfo && <Col md={8} sm={6} lg={8}>
+                            userInfo && userInfo.isAdmin == false && <Col md={8} sm={6} lg={8}>
                                 <div className='options-col'>
                                     <Notifications id={userInfo._id} />
                                     <a className='options' href='/blogs' >Blogs <FontAwesomeIcon icon={faBlog} className='icons' /></a>

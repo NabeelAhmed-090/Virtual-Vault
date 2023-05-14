@@ -54,7 +54,7 @@ const Blogs = () => {
 
     return (
         <div className={loading ? 'temp-height' : 'blog-main-container'}>
-            {loading ? <Loader /> :
+            {loading ? <Loader message="Fetching Blogs..." /> :
                 <>
                     <Container>
                         <Row>
@@ -64,16 +64,16 @@ const Blogs = () => {
                                         Write your Own Blog
                                     </a>
                                 </Button>
-                            </Col>
-                        </Row>
-                    </Container>
+                            </Col >
+                        </Row >
+                    </Container >
                     <LatestSection latest={list} selected={selected} handleListClick={handleListClick} styles={styles} />
                     <GenericSection mostViewed={mostViewed} heading="Most Viewed Blogs" />
                     <GenericSection mostViewed={oldArticles} heading="Old Articles" />
 
                 </>
             }
-        </div>
+        </div >
     )
 }
 export default Blogs

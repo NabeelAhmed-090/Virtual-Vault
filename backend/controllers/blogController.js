@@ -13,6 +13,7 @@ import cloudinary from 'cloudinary';
 const getAllBlogs = asyncHandler(async (req, res) => {
     try {
         const blogs = await Blog.find()
+
         blogs.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp())
 
         if (blogs) {

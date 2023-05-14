@@ -26,7 +26,7 @@ const Blog = () => {
 
     return (
         <div className={loading ? 'temp-height' : 'main-blog-div'}>
-            {loading ? <Loader /> :
+            {loading ? <Loader message='Fetching Blog...' /> :
                 <>
                     <Container className='mt-5'>
                         <Row>

@@ -324,4 +324,28 @@ const updateGameStatus = asyncHandler(async (req, res) => {
     }
 })
 
-export { createGame, getGame, getUserGames, deleteGame, searchGames, checkoutSession, updateGameStatus }
+
+// @desc Get Latest Games
+// @route Get /api/games/latest
+// @access Public
+
+const getLatestGames = asyncHandler(async (req, res) => {
+    try {
+        const games = await Game.find({}).sort({ createdAt: -1 }).limit(3)
+        if (games) {
+            res.send({ games: games })
+        }
+        else {
+            res.status(404)
+            res.send(null)
+        }
+    } catch (error) {
+        res.status(404)
+        res.json({
+            error: error,
+            message: "Error in fetching games"
+        })
+    }
+})
+
+export { createGame, getGame, getUserGames, deleteGame, searchGames, checkoutSession, updateGameStatus, getLatestGames }

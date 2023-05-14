@@ -1,6 +1,6 @@
 import express from 'express'
 import multer from 'multer';
-import { createGame, getGame, getUserGames, deleteGame, searchGames, checkoutSession, updateGameStatus } from '../controllers/gameController.js';
+import { createGame, getGame, getUserGames, deleteGame, searchGames, checkoutSession, updateGameStatus, getLatestGames } from '../controllers/gameController.js';
 
 const router = express.Router()
 
@@ -15,6 +15,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+router.get('/latest', getLatestGames)
 router.post('/create', upload.single('image'), createGame);
 router.get('/user_games/:seller', getUserGames);
 router.get('/:id', getGame);
@@ -22,6 +23,7 @@ router.delete('/delete/:id', deleteGame);
 router.post('/search', searchGames)
 router.post('/create-checkout-session', checkoutSession)
 router.put('/update-games-status/:id', updateGameStatus)
+
 
 
 

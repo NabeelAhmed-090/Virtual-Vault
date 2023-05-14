@@ -174,7 +174,7 @@ const Profile = () => {
                         {
                             display === GAMES &&
                             (
-                                <Row className='mt-5'>
+                                <Row className='mt-5 w-100'>
                                     <Col md={12} lg={12} sm={12} xs={12}>
                                         <ExistingGameSection userGames={userGames} setUserGames={setUserGames} />
                                     </Col>
