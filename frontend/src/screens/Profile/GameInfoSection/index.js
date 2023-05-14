@@ -132,9 +132,9 @@ const GameInfoSection = ({ id, setUserGames }) => {
                 (
                     <>
                         <Row className='text-center mt-2' style={{ height: "12vh" }}>
-                            <h1>Upload New Game</h1>
+                            <h1 className='mt-4'>Upload New Game</h1>
                         </Row>
-                        <Row>
+                        <Row className='mt-2'>
                             <Col>
                                 <Form.Group controlId="tag-selector">
                                     <Form.Label>Select 5 tags</Form.Label>

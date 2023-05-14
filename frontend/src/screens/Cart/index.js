@@ -41,6 +41,10 @@ const Cart = () => {
         }
     }
 
+    const _handleCheckout = async () => {
+        history(`/checkout/address/${total}`)
+    }
+
     useEffect(() => {
         setTotal(cartItems.reduce((acc, item) => acc + item.price * item.unitsInCart, 0))
         const newLocation = { ...location };
@@ -131,7 +135,7 @@ const Cart = () => {
                         </Row>
                         <Row className='d-flex justify-content-end'>
                             <Col md={12} sm={12} lg={12} >
-                                <Button variant='dark' className='w-100 mt-5' type="button" onClick={() => handleCheckout()}>Checkout</Button>
+                                <Button variant='dark' className='w-100 mt-5' type="button" onClick={() => _handleCheckout()}>Checkout</Button>
                             </Col>
                         </Row>
                     </>

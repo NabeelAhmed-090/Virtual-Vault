@@ -7,6 +7,7 @@ import blogRoutes from './routes/blogRoutes.js'
 import gameRoutes from './routes/gameRoutes.js'
 import notificationRoutes from './routes/notificationsRoutes.js';
 import certificateRoutes from './routes/certificateRoutes.js'
+import deliveryRoutes from './routes/deliveryRoutes.js'
 import { config } from 'cloudinary';
 import cors from 'cors';
 
@@ -34,6 +35,7 @@ app.use('/api/blogs', blogRoutes)
 app.use('/api/games', gameRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/certificate', certificateRoutes)
+app.use('/api/delivery', deliveryRoutes)
 
 
 

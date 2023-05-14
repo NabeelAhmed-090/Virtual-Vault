@@ -16,6 +16,7 @@ import Game from './screens/Game';
 import Cart from './screens/Cart';
 import Admin from './screens/Admin';
 import PurchaseSuccessful from './screens/PurchaseSuccessful';
+import DeliveryInfo from './screens/DeliveryInfo';
 
 
 function App() {
@@ -37,9 +38,10 @@ function App() {
             <Route path="/blogs/create" element={<CreateBlog />} exact />
             <Route path="/search" element={<Search />} exact />
             <Route path="/search/game/:id" element={<Game />} exact />
-            <Route path="/cart/:id?" element={<Cart />} exact />
             <Route path="/certificate/:id" element={<Certificate />} exact />
             <Route path="/admin" element={<Admin />} exact />
+            <Route path="/cart/:id?" element={<Cart />} exact />
+            <Route path="/checkout/address/:total" element={<DeliveryInfo />} exact />
             <Route path="/success" element={<PurchaseSuccessful />} />
           </Routes>
         </Router>

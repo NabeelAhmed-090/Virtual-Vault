@@ -15,6 +15,11 @@ import './index.css'
 
 const Profile = () => {
 
+    const UPLOAD = "UPLOAD"
+    const CERTIFICATES = "CERTIFICATES"
+    const BLOGS = "BLOGS"
+    const GAMES = "GAMES"
+
     let history = useNavigate()
     let dispatch = useDispatch()
 
@@ -27,6 +32,7 @@ const Profile = () => {
     const [userName, setUserName] = useState("")
     const [city, setCity] = useState("")
     const [gameFetchLoading, setGameFetchLoading] = useState(false)
+    const [display, setDisplay] = useState(UPLOAD)
     const [userGames, setUserGames] = useState([{}])
     const [userBlogs, setUserBlogs] = useState([{}])
     const [userCertificates, setUserCertificates] = useState([{}])
@@ -72,30 +78,37 @@ const Profile = () => {
     return (
         <Container>
             {(loading || gameFetchLoading) ?
-                <div style={{ height: "100vh" }}><Loader message={"Loading"} /> </div> : <>
-                    <Row className='mt-5'>
-                        <Col md={3} lg={3} sm={12} xs={12} className='avatar-col p-5' style={{ display: "flex", alignItems: "center" }}>
-                            <div>
-                                <Row style={{ height: "30vh" }} className='p-2'>
-                                    <Badge
-                                        bg="dark"
-                                        className="initials-badge rounded-circle avatar-style"
-                                    >
-                                        {initials}
-                                    </Badge>
-                                </Row>
-                                <Row className='p-2'>
-                                    <Col md={12} lg={12} sm={12} xs={12}>
-                                        <h4 className='text-center'>{userName}</h4>
-                                    </Col>
-                                    <Col md={12} lg={12} sm={12} xs={12}>
-                                        <h6 className='text-center'>{email}</h6>
-                                    </Col>
-                                    <Col md={12} lg={12} sm={12} xs={12}>
-                                        <h6 className='text-center'>{city}</h6>
-                                    </Col>
-                                </Row>
-                                <Row className='mb-2 mt-2 p-2'>
+                <div style={{ height: "100vh" }}><Loader message={"Loading"} /> </div> :
+                (
+                    <Container className='avatar-col p-5 mt-5'>
+                        <Row className='d-flex justify-content-center'>
+                            <Col md={4} lg={4} sm={12} xs={12} style={{ height: "35vh" }}>
+                                <Badge
+                                    bg="dark"
+                                    className="w-100 initials-badge rounded-circle avatar-style"
+                                >
+                                    {initials}
+                                </Badge>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={12} lg={12} sm={12} xs={12}>
+                                <h4 className='text-center'>{userName}</h4>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={12} lg={12} sm={12} xs={12}>
+                                <h6 className='text-center'>{email}</h6>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={12} lg={12} sm={12} xs={12}>
+                                <h6 className='text-center'>{city}</h6>
+                            </Col>
+                        </Row>
+                        <div className='w-100 d-flex flex-column justify-content-center align-items-center'>
+                            <Row className='mb-2 mt-2 p-2 w-100 d-flex justify-content-center'>
+                                <Col md={4} lg={4} sm={12}>
                                     <a
                                         style={{ textDecoration: "none", color: "white" }}
                                         href="/profile/edit"
@@ -107,29 +120,98 @@ const Profile = () => {
                                             Edit Profile
                                         </Button>
                                     </a>
-
-                                </Row>
-                            </div>
-                        </Col>
-                        <Col md={9} lg={9} sm={12} xs={12}>
-                            <Row>
-                                <GameInfoSection id={userInfo._id} setUserGames={setUserGames} />
+                                </Col>
                             </Row>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <ExistingGameSection userGames={userGames} setUserGames={setUserGames} />
-                    </Row>
-                    {
-                        userBlogs.length !== 0 &&
-                        <Row>
-                            <BlogsSection userBlogs={userBlogs} history={history} />
-                        </Row>
-                    }
-                    <Row>
-                        <CertificateSection userCertificates={userCertificates} />
-                    </Row>
-                </>}
+                            <Row className='w-100 mt-2'>
+                                <Col md={3} lg={3} sm={12} className='mt-3'>
+                                    <Button
+                                        className='w-100'
+                                        variant='dark'
+                                        onClick={() => setDisplay(UPLOAD)}
+                                    >
+                                        Upload New Game
+                                    </Button>
+                                </Col>
+                                <Col md={3} lg={3} sm={12} className='mt-3'>
+                                    <Button
+                                        className='w-100'
+                                        variant='dark'
+                                        onClick={() => setDisplay(GAMES)}
+                                    >
+                                        View My Games
+                                    </Button>
+                                </Col>
+                                <Col md={3} lg={3} sm={12} className='mt-3'>
+                                    <Button
+                                        className='w-100'
+                                        variant='dark'
+                                        onClick={() => setDisplay(BLOGS)}
+                                    >
+                                        View My Blogs
+                                    </Button>
+                                </Col>
+                                <Col md={3} lg={3} sm={12} className='mt-3'>
+                                    <Button
+                                        className='w-100'
+                                        variant='dark'
+                                        onClick={() => setDisplay(CERTIFICATES)}
+                                    >
+                                        View My Certificates
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </div>
+                        {
+                            display === UPLOAD &&
+                            (
+                                <Row className='mt-5'>
+                                    <Col md={12} lg={12} sm={12} xs={12}>
+                                        <GameInfoSection id={userInfo._id} setUserGames={setUserGames} />
+                                    </Col>
+                                </Row>
+                            )
+                        }
+                        {
+                            display === GAMES &&
+                            (
+                                <Row className='mt-5'>
+                                    <Col md={12} lg={12} sm={12} xs={12}>
+                                        <ExistingGameSection userGames={userGames} setUserGames={setUserGames} />
+                                    </Col>
+                                </Row>
+                            )
+                        }
+                        {
+                            display === BLOGS && (
+                                <Row className='mt-5'>
+                                    <Col md={12} lg={12} sm={12} xs={12}>
+                                        {
+                                            userBlogs.length !== 0 ?
+                                                <BlogsSection userBlogs={userBlogs} history={history} />
+                                                : <h4 className='text-center'>No Blogs Found</h4>
+
+                                        }
+                                    </Col>
+                                </Row>
+                            )
+                        }
+                        {
+                            display === CERTIFICATES && (
+                                <Row className='mt-5'>
+                                    <Col md={12} lg={12} sm={12} xs={12}>
+                                        {
+                                            userCertificates.length !== 0 ?
+                                                <CertificateSection userCertificates={userCertificates} />
+                                                : <h4 className='text-center'>No Certificates Found</h4>
+                                        }
+                                    </Col>
+                                </Row>
+                            )
+                        }
+
+                    </Container>
+                )
+            }
         </Container >
     )
 }

@@ -20,7 +20,7 @@ const CertificateSection = ({ userCertificates }) => {
                         className='mb-5 p-5'
                     >
                         <div style={{ display: "flex", justifyContent: "center" }}><h1 className='text-center mt-1'>My Certificates</h1></div>
-                        <Row className='mt-2'>
+                        <Row className='mt-5'>
                             {userCertificates.map((certificate) => {
                                 return (
                                     <>
