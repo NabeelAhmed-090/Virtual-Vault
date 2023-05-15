@@ -1,11 +1,11 @@
 .loader {
-    width: 100px;
-    height: 100px;
+  width: 100px;
+  height: 100px;
 }
 
 .loader-div {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

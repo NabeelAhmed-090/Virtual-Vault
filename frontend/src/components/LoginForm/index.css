@@ -1,12 +1,12 @@
 .missing-field {
-    outline: red;
-    border: 1px solid red;
+  outline: red;
+  border: 1px solid red;
 }
 
 .main-div {
-    min-height: 30vh;
+  min-height: 30vh;
 }
 
 .credentials {
-    color: red;
+  color: red;
 }

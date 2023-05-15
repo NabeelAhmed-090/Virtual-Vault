@@ -1,66 +1,66 @@
 .navbar-div {
-    background-color: black;
-    width: 100%;
-    color: white
+  background-color: black;
+  width: 100%;
+  color: white;
 }
 
 .options-col {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .menu-col {
-    display: none;
+  display: none;
 }
 
 #menu-button {
-    cursor: pointer;
-    background-color: transparent;
-    color: white;
-    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
 }
 
 #sidebar-div {
-    display: none;
+  display: none;
 }
 
 .icons {
-    font-size: medium;
-    margin-left: 5px;
+  font-size: medium;
+  margin-left: 5px;
 }
 
 .options {
-    font-size: large;
-    text-decoration: none;
-    color: white;
+  font-size: large;
+  text-decoration: none;
+  color: white;
 }
 
 .options:hover {
-    color: white;
+  color: white;
 }
 
 @media only screen and (max-width: 1000px) {
-    .options-col {
-        display: none;
-    }
+  .options-col {
+    display: none;
+  }
 
-    .menu-col {
-        display: flex;
-        height: 100%;
-        align-items: center;
-        justify-content: right;
-    }
+  .menu-col {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: right;
+  }
 
-    #sidebar-div {
-        display: block;
-    }
+  #sidebar-div {
+    display: block;
+  }
 }
 
 @media only screen and (max-width: 600px) {
-    .title-col {
-        display: flex;
-        justify-content: center;
-    }
+  .title-col {
+    display: flex;
+    justify-content: center;
+  }
 }

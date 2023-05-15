@@ -1,19 +1,19 @@
 .carousel-style {
-    height: 80vh;
+  height: 80vh;
 }
 
 .carousel-img {
-    min-width: 100%;
-    max-height: 80vh;
-    max-width: none;
+  min-width: 100%;
+  max-height: 80vh;
+  max-width: none;
 }
 
 @media screen and (max-width: 1150px) {
-    .carousel-style {
-        height: 100%;
-    }
+  .carousel-style {
+    height: 100%;
+  }
 
-    .carousel-img {
-        height: 100vh;
-    }
+  .carousel-img {
+    height: 100vh;
+  }
 }

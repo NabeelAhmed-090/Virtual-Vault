@@ -1,32 +1,32 @@
 .footer-div {
-    min-height: 350px;
-    background-color: black;
-    color: white;
+  min-height: 350px;
+  background-color: black;
+  color: white;
 }
 
 .first-container {
-    height: 250px;
+  height: 250px;
 }
 
 .second-container {
-    height: 100px;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 100px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .first-row {
-    text-align: center;
+  text-align: center;
 }
 
 .icons-col-section {
-    display: flex;
-    justify-content: space-between
+  display: flex;
+  justify-content: space-between;
 }
 
 @media only screen and (max-width: 766px) {
-    .copyright {
-        text-align: center;
-    }
+  .copyright {
+    text-align: center;
+  }
 }

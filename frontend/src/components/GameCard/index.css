@@ -1,17 +1,17 @@
 .price-style {
-    text-align: right;
+  text-align: right;
 }
 
 .button-style-game-card {
-    margin-top: 5vh;
+  margin-top: 5vh;
 }
 
 @media only screen and (max-width: 800px) {
-    .price-style {
-        text-align: left;
-    }
+  .price-style {
+    text-align: left;
+  }
 
-    .button-style-game-card {
-        margin-top: 0;
-    }
+  .button-style-game-card {
+    margin-top: 0;
+  }
 }

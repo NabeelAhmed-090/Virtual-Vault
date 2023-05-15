@@ -1,37 +1,37 @@
 .login-main-div {
-    width: 100%;
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .display {
-    display: block;
+  display: block;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 .switch {
-    cursor: pointer;
-    font-weight: bolder;
-    background-color: transparent;
-    border: none;
+  cursor: pointer;
+  font-weight: bolder;
+  background-color: transparent;
+  border: none;
 }
 
 .login-box {
-    width: 35%;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+  width: 35%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
 }
 
 .login-heading {
-    text-align: center;
+  text-align: center;
 }
 
 @media screen and (max-width: 1150px) {
-    .login-box {
-        width: 80%;
-    }
+  .login-box {
+    width: 80%;
+  }
 }
