@@ -1,22 +1,25 @@
 import mongoose from "mongoose";
 
-const certificateSchema = mongoose.Schema({
+const certificateSchema = mongoose.Schema(
+  {
     user: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: null
+      type: mongoose.Schema.Types.ObjectId,
+      default: null,
     },
     title: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     message: {
-        type: String,
-        required: true,
-    }
-}, {
-    timestamps: true
-})
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const Certificate = mongoose.model('Certificate', certificateSchema)
+const Certificate = mongoose.model("Certificate", certificateSchema);
 
-export default Certificate
+export default Certificate;

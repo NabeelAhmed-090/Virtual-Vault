@@ -1,25 +1,28 @@
 import mongoose from "mongoose";
 
-const salesSchema = mongoose.Schema({
+const salesSchema = mongoose.Schema(
+  {
     seller: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: null,
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      default: null,
+      required: true,
     },
     unitsSold: {
-        type: Number,
-        default: null,
-        required: true
+      type: Number,
+      default: null,
+      required: true,
     },
     amount: {
-        type: Number,
-        default: null,
-        required: true
+      type: Number,
+      default: null,
+      required: true,
     },
-}, {
-    timestamps: true
-})
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const Sales = mongoose.model('Sales', salesSchema)
+const Sales = mongoose.model("Sales", salesSchema);
 
-export default Sales
+export default Sales;

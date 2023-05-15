@@ -1,9 +1,12 @@
-import express from 'express'
-import { getNotifications, markAsRead } from '../controllers/notificationController.js'
+import express from "express";
+import {
+  getNotifications,
+  markAsRead,
+} from "../controllers/notificationController.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/:id', getNotifications)
-router.get('/mark/:id', markAsRead)
+router.get("/:id", getNotifications);
+router.get("/mark/:id", markAsRead);
 
-export default router
+export default router;
