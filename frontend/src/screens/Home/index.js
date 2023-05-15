@@ -6,23 +6,35 @@ import ControlledCarousel from '../../components/HomePageCarousel'
 import BlogBackground from '../../Images/home_blog_2.jpg'
 import './index.css'
 import Loader from '../../components/Loader'
+import { useSelector } from 'react-redux'
+import GameSuggestions from '../../components/GameSuggestion'
 
 const Home = () => {
 
     const [games, setGames] = useState([])
+    const [suggestionGames, setSuggestionGames] = useState([])
     const [loading, setLoading] = useState(true)
+
+    const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin
 
     useEffect(() => {
         window.scrollTo(0, 0)
+        const fetchSuggestionGames = async () => {
+            const { data } = await axios.get(`http://localhost:5000/api/games/suggest/${userInfo._id}`)
+            setSuggestionGames(data.games)
+        }
         const fetchLatestGames = async () => {
             try {
                 const { data } = await axios.get('http://localhost:5000/api/games/latest')
                 setGames(data.games)
-                setLoading(false)
             } catch (error) {
                 console.log(error)
+            } finally {
+                setLoading(false)
             }
         }
+        fetchSuggestionGames()
         fetchLatestGames()
     }, [])
 
@@ -34,8 +46,10 @@ const Home = () => {
                 </div> : (
                     <>
                         <ControlledCarousel />
-                        <div className='blog-container'>
-
+                        {
+                            suggestionGames.length > 0 && <GameSuggestions suggestionGames={suggestionGames} />
+                        }
+                        <div className={suggestionGames.length > 0 ? 'blog-container mt-5' : 'blog-container'}>
                             <Row style={{ borderTop: "3px solid silver" }}>
                                 <Col md={4} sm={12} lg={4} className="p-5" style={{ color: "white", display: "flex", justifyContent: 'center', alignItems: "center", textAlign: "center" }}>
                                     <Container>
@@ -61,7 +75,7 @@ const Home = () => {
                         <Container>
                             <Row className='text-center mt-5'>
                                 <h1 style={{ fontWeight: "bolder" }}>
-                                    Latest Game On The Market
+                                    Latest Games On The Market
                                 </h1>
                             </Row>
                             <Row className='mt-5 w-100'>

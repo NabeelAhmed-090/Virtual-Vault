@@ -41,7 +41,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
     const handleTitleChange = (e) => {
         const enteredValue = e.target.value;
 
-        if (enteredValue.length <= 20) {
+        if (enteredValue.length <= 40) {
             setTitle(enteredValue);
             setIsValidTitle(true);
         } else {
@@ -223,7 +223,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
                                                 />
                                                 <Row className='d-flex justify-content-end'>
                                                     <Col md={6} sm={12} lg={6} className='d-flex justify-content-end'>
-                                                        <pre>{title.length}/20</pre>
+                                                        <pre>{title.length}/40</pre>
                                                     </Col>
                                                 </Row>
                                             </Form.Group>

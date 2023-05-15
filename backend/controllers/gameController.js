@@ -303,26 +303,49 @@ const updateGameStatus = asyncHandler(async (req, res) => {
             units: unitList,
             price: priceList,
         })
-
-        sellerIds.map(async (sellerId, index) => {
-            const newNotification = new Notification({
-                user: sellerId,
-                message: String(unitList[index]) + " units of game Sold",
-                unread: true,
-                link: "hello"
-            });
-            const sellerObjectId = mongoose.Types.ObjectId(sellerId);
-            const sale = await Sales.findOne({ seller: sellerObjectId });
-            console.log(sale);
-            if (sale) {
-                sale.unitsSold += unitList[index];
-                sale.amount += priceList[index];
-                await Sales.updateOne({ _id: sale._id }, sale);
-            } else {
-                const newSale = new Sales({
+        const combinedSellerIds = []
+        sellerIds.forEach((sellerId, index) => {
+            var found = false
+            combinedSellerIds.forEach((combinedSellerId) => {
+                if (combinedSellerId.seller.toString() == sellerId.toString()) {
+                    combinedSellerId.unitsSold += unitList[index]
+                    combinedSellerId.amount += priceList[index]
+                    found = true
+                }
+            })
+            if (found == false) {
+                combinedSellerIds.push({
                     seller: sellerId,
                     unitsSold: unitList[index],
                     amount: priceList[index]
+                })
+            }
+        })
+
+        combinedSellerIds.map(async (sellerId, index) => {
+            const newNotification = await new Notification({
+                user: sellerId.seller,
+                message: String(unitList[index]) + " units of game Sold",
+                unread: true,
+                link: "#"
+            });
+            const unfilteredSales = await Sales.find({});
+            var sale = null
+            unfilteredSales.forEach(sales => {
+                if (sales.seller.toString() == sellerId.seller.toString()) {
+                    sale = sales
+                }
+            })
+
+            if (sale !== null) {
+                sale.unitsSold += sellerId.unitsSold;
+                sale.amount += sellerId.amount;
+                await Sales.updateOne({ _id: sale._id }, sale);
+            } else {
+                const newSale = await new Sales({
+                    seller: sellerId.seller,
+                    unitsSold: sellerId.unitsSold,
+                    amount: sellerId.amount
                 });
                 await newSale.save();
             }
@@ -353,7 +376,7 @@ const getLatestGames = asyncHandler(async (req, res) => {
             return {
                 id: game._id,
                 title: game.title,
-                image: game.image,
+                imagePath: game.imagePath,
                 tags: game.tags
             }
         })
@@ -373,4 +396,71 @@ const getLatestGames = asyncHandler(async (req, res) => {
     }
 })
 
-export { createGame, getGame, getUserGames, deleteGame, searchGames, checkoutSession, updateGameStatus, getLatestGames }
+
+// @desc Update game
+// @route PUT /api/games/update/:id
+// @access Public
+
+const updateGame = asyncHandler(async (req, res) => {
+    const { id } = req.body
+    if (id) {
+        const game = await Game.findById(id)
+        if (game) {
+            game.units = req.body.units || game.units
+            game.price = req.body.price || game.price
+            game.isGameNew = req.body.isGameNew || game.isGameNew
+
+            const updatedGame = await game.save()
+            res.json({
+                game: updatedGame
+            })
+        }
+    }
+    else {
+        res.status(404)
+        throw new Error("Game not found")
+    }
+})
+
+
+// @desc Suggest User Games
+// @route PUT /api/games/suggest/:id
+// @access Public
+
+const suggestUserGames = asyncHandler(async (req, res) => {
+    const seller = req.params.seller
+    if (seller) {
+        const Usergames = await Game.find({ seller })
+        const latestGames = await Game.find({}).sort({ createdAt: -1 }).limit(10);
+        const suggestedGames = [];
+
+        latestGames.forEach(game => {
+            const gameTags = game.tags[0].split(",");
+            let matchingTagsCount = 0;
+
+            Usergames.forEach(userGame => {
+                const userGameTags = userGame.tags[0].split(",");
+                const matchingTags = gameTags.filter(tag => userGameTags.includes(tag));
+                matchingTagsCount += matchingTags.length;
+            });
+            if (matchingTagsCount >= 4) {
+                suggestedGames.push({
+                    game: game,
+                    count: matchingTagsCount
+                });
+            }
+        });
+
+        suggestedGames.sort((a, b) => a.count - b.count);
+        res.json({
+            games: suggestedGames.splice(4, suggestedGames.length - 6)
+        })
+    }
+    else {
+        res.status(404)
+        throw new Error("Game not found")
+    }
+})
+
+
+export { createGame, getGame, getUserGames, deleteGame, searchGames, checkoutSession, updateGameStatus, getLatestGames, updateGame, suggestUserGames }

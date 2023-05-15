@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap'
 import Loader from '../../components/Loader'
+import { set } from 'mongoose'
 
 const Admin = () => {
 
@@ -77,10 +78,25 @@ const Admin = () => {
         }
     }
 
+    const handleGrantCertificate = async (id) => {
+        try {
+            setLoading(true)
+            const { data } = await axios.post(`http://localhost:5000/api/certificate/grant`,
+                {
+                    id: id,
+                    title: "Excellent Seller",
+                    message: "This certificate is presented to Mr/Mrs Arshad in recognition of their outstanding performance and unwavering commitment to excellence in sales. Through hard work, dedication, and a customer-centric approach, Mr/Mrs Arshad has demonstrated exceptional sales skills and consistently exceeded expectations. Their ability to understand the needs of their clients and provide them with the best solutions is truly commendable. We are proud to recognize Mr/Mrs Arshad for their exceptional performance, and we believe that they truly deserve this Certificate of Excellence."
+                }
+            )
+            setLoading(false)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         const fetchSellers = async () => {
             const { data } = await axios.get('/api/sales')
-            console.log(data.sellers)
             setSellers(data.sellers)
         }
         const fetchBlogs = async () => {
@@ -197,7 +213,7 @@ const Admin = () => {
                                                 sellers.map((seller) => {
                                                     return (
                                                         <Col md={4} lg={4} sm={12} xs={12} className='mt-1 mb-5 p-2'>
-                                                            <Card className='mt-1 mb-5 p-2' style={{ height: "55vh" }}>
+                                                            <Card className='mt-1 mb-5 p-2' style={{ height: "80vh" }}>
                                                                 <Card.Body className="d-flex flex-column justify-content-between">
                                                                     <Container>
                                                                         <Row className='d-flex justify-content-center'>
@@ -238,7 +254,7 @@ const Admin = () => {
                                                                         </Row>
                                                                     </Container>
                                                                     <div className="mt-auto">
-                                                                        <Button variant="success" className='w-100 mb-2 button-style-game-card'>Grant Certificate</Button>
+                                                                        <Button variant="success" className='w-100 mb-2 button-style-game-card' onClick={() => handleGrantCertificate(seller.user)}>Grant Certificate</Button>
                                                                     </div>
                                                                 </Card.Body>
                                                             </Card>
@@ -246,11 +262,6 @@ const Admin = () => {
                                                     )
                                                 })
                                             }
-                                        </Row>
-                                        <Row>
-                                            <Col md={12} lg={12} sm={12} className='text-center'>
-                                                <Button variant="dark" className='w-100 mb-2'>Reset Record</Button>
-                                            </Col>
                                         </Row>
                                     </Container>
                                 )

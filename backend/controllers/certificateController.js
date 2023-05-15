@@ -51,4 +51,29 @@ const getUserCertificate = asyncHandler(async (req, res) => {
     }
 })
 
-export { getCertificate, getUserCertificate }
+
+// @desc POST Grant Certificate
+// @route POST /api/certificate/grant
+// @access Public
+
+const grantCertificate = asyncHandler(async (req, res) => {
+    const { id, title, message } = req.body
+    try {
+        const newCertificate = new Certificate({
+            user: id,
+            title: title,
+            message: message
+        })
+        await newCertificate.save()
+        res.json({
+            certificate: newCertificate
+        })
+    } catch (error) {
+        res.json({
+            error: error,
+            message: "Error in fetching Certificates"
+        })
+    }
+})
+
+export { getCertificate, getUserCertificate, grantCertificate }

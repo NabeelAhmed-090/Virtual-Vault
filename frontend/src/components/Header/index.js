@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBlog, faMagnifyingGlass, faCartShopping, faUser, faRightFromBracket, faBars, faBell } from '@fortawesome/free-solid-svg-icons'
 import Sidebar from '../Sidebar'
 import { logout } from '../../actions/userActions'
+import { emptyCart } from '../../actions/cartActions'
 import Notifications from '../Notifications'
 import './index.css'
 
@@ -24,6 +25,7 @@ const Header = ({ isOpen, setIsOpen }) => {
 
 
     const handleLogout = async () => {
+        dispatch(emptyCart())
         dispatch(logout())
         history("/")
     }

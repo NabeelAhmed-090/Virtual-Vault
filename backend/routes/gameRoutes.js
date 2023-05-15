@@ -1,6 +1,17 @@
 import express from 'express'
 import multer from 'multer';
-import { createGame, getGame, getUserGames, deleteGame, searchGames, checkoutSession, updateGameStatus, getLatestGames } from '../controllers/gameController.js';
+import {
+    createGame,
+    getGame,
+    getUserGames,
+    deleteGame,
+    searchGames,
+    checkoutSession,
+    updateGameStatus,
+    getLatestGames,
+    updateGame,
+    suggestUserGames
+} from '../controllers/gameController.js';
 
 const router = express.Router()
 
@@ -23,6 +34,8 @@ router.delete('/delete/:id', deleteGame);
 router.post('/search', searchGames)
 router.post('/create-checkout-session', checkoutSession)
 router.put('/update-games-status/:id', updateGameStatus)
+router.put('/update/:id', updateGame)
+router.get('/suggest/:seller', suggestUserGames)
 
 
 
