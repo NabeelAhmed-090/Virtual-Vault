@@ -8,8 +8,7 @@ import cloudinary from 'cloudinary';
 import stripe from 'stripe';
 import Sales from '../models/salesModel.js';
 
-const secretKey =
-  'sk_test_51N5u3tDPl5TQVYXyckgRZlINHANcViDlr6Hp2rtkWSdhOhE1Z5h48JDuzd1dc3dJ3PchUkIib8XXNrdGh0ZXWh5U00ucQxRpcN';
+const secretKey = ''
 const stripeInstance = stripe(secretKey);
 
 const DOMAIN = 'http://localhost:3000';
