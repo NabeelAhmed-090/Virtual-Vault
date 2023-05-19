@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Badge, Button, Card, Col, Container, Row } from "react-bootstrap";
-import ErrorToaster from "../ErrorToaster";
-import RestockPopup from "../RestockPopup";
-import "./index.css";
+import React, { useState } from 'react';
+import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap';
+import ErrorToaster from '../ErrorToaster';
+import RestockPopup from '../RestockPopup';
+import './index.css';
 
 const GameCard = ({
   title,
@@ -13,7 +13,7 @@ const GameCard = ({
   createdAt,
   _id,
   handleGameDeletion,
-  units,
+  units
 }) => {
   const [success, setSuccess] = useState(false);
   const [failure, setFailure] = useState(false);
@@ -51,10 +51,10 @@ const GameCard = ({
             variant="top"
             src={imagePath}
             style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center",
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center'
             }}
           />
         </div>
@@ -125,16 +125,8 @@ const GameCard = ({
             </Col>
           </Row>
         </Card.Body>
-        <ErrorToaster
-          display={!!success}
-          error={false}
-          message={"Game Successfully Deleted"}
-        />
-        <ErrorToaster
-          display={!!failure}
-          error={true}
-          message={"Something went wrong"}
-        />
+        <ErrorToaster display={!!success} error={false} message={'Game Successfully Deleted'} />
+        <ErrorToaster display={!!failure} error={true} message={'Something went wrong'} />
       </Card>
     </>
   );

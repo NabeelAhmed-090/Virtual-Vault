@@ -1,13 +1,13 @@
-import React from "react";
-import { Badge, Button, Col, Container, Row } from "react-bootstrap";
+import React from 'react';
+import { Badge, Button, Col, Container, Row } from 'react-bootstrap';
 
 const BlogsSection = ({ userBlogs, history }) => {
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
-    return date.toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
+    return date.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
     });
   };
 
@@ -19,16 +19,16 @@ const BlogsSection = ({ userBlogs, history }) => {
     <Col md={12} lg={12} sm={12} xs={12}>
       <Container
         style={{
-          minHeight: "50vh",
-          boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.75)",
+          minHeight: '50vh',
+          boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.75)'
         }}
         className="mb-5 p-5"
       >
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
           <h1 className="text-center mt-1">My Blogs</h1>
@@ -41,14 +41,14 @@ const BlogsSection = ({ userBlogs, history }) => {
               <Container
                 key={blog._id}
                 className="p-2 mt-2"
-                style={{ boxShadow: "2px 2px 4px rgba(0,0,0,0.75)" }}
+                style={{ boxShadow: '2px 2px 4px rgba(0,0,0,0.75)' }}
               >
                 <Row>
                   <Col md={3} lg={3} sm={12}>
                     <img
                       src={blog.imagePath}
                       alt={blog.title}
-                      style={{ width: "100%", height: "100%" }}
+                      style={{ width: '100%', height: '100%' }}
                     />
                   </Col>
                   <Col md={9} lg={9} sm={12}>
@@ -60,13 +60,9 @@ const BlogsSection = ({ userBlogs, history }) => {
                       </Col>
                       <Col md={4} lg={4} sm={12}>
                         {blog.isApproved === false ? (
-                          <Badge bg="danger badge-media-style py-2">
-                            not approved
-                          </Badge>
+                          <Badge bg="danger badge-media-style py-2">not approved</Badge>
                         ) : (
-                          <Badge bg="success badge-media-style py-2">
-                            approved
-                          </Badge>
+                          <Badge bg="success badge-media-style py-2">approved</Badge>
                         )}
                       </Col>
                     </Row>
@@ -87,7 +83,7 @@ const BlogsSection = ({ userBlogs, history }) => {
                     <Row>
                       <Col>
                         <h6>
-                          <b>User</b> : {blog.user}{" "}
+                          <b>User</b> : {blog.user}{' '}
                         </h6>
                       </Col>
                     </Row>

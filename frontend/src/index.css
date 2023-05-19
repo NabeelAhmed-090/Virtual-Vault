@@ -5,12 +5,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* font-family: 'Roboto', sans-serif; */
   /* font-family: 'Teko', sans-serif; */
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
 }
 
 code {
   /* font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace; */
-  font-family: "Teko", sans-serif;
+  font-family: 'Teko', sans-serif;
 }
 
 .text-center {

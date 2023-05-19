@@ -1,17 +1,9 @@
-import axios from "axios";
-import {
-  CART_ADD_ITEM,
-  CART_REMOVE_ITEM,
-  CART_SAVE_PAYMENT_METHOD,
-  CART_SAVE_SHIPPING_ADDRESS,
-  EMPTY_CART,
-} from "../constants/cartConstants";
+import axios from 'axios';
+import { CART_ADD_ITEM, CART_REMOVE_ITEM, EMPTY_CART } from '../constants/cartConstants';
 
 export const addToCart = (gameId, qty) => async (dispatch, getState) => {
   try {
-    const { data } = await axios.get(
-      `http://localhost:5000/api/games/${gameId}`
-    );
+    const { data } = await axios.get(`http://localhost:5000/api/games/${gameId}`);
     dispatch({
       type: CART_ADD_ITEM,
       payload: {
@@ -22,13 +14,10 @@ export const addToCart = (gameId, qty) => async (dispatch, getState) => {
         units: data.game.units,
         stripePriceId: data.game.stripePriceId,
         stripeProductId: data.game.stripeProductId,
-        unitsInCart: qty,
-      },
+        unitsInCart: qty
+      }
     });
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(getState().cart.cartItems)
-    );
+    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
   } catch (error) {
     console.log(error);
   }
@@ -37,15 +26,15 @@ export const addToCart = (gameId, qty) => async (dispatch, getState) => {
 export const removeFromCart = (gameId) => (dispatch, getState) => {
   dispatch({
     type: CART_REMOVE_ITEM,
-    payload: gameId,
+    payload: gameId
   });
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 };
 
-export const emptyCart = () => (dispatch, getState) => {
+export const emptyCart = () => (dispatch) => {
   dispatch({
     type: EMPTY_CART,
-    payload: null,
+    payload: null
   });
-  localStorage.setItem("cartItems", []);
+  localStorage.setItem('cartItems', []);
 };

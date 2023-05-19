@@ -1,8 +1,8 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
-import Loader from "../../components/Loader";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { useNavigate, useParams } from 'react-router-dom';
+import Loader from '../../components/Loader';
 
 const Game = () => {
   let { id } = useParams();
@@ -20,7 +20,7 @@ const Game = () => {
       const { data } = await axios.get(`/api/games/${id}`);
       setGame(data.game);
       setSeller(data.seller);
-      setTags(data.game.tags[0].split(","));
+      setTags(data.game.tags[0].split(','));
       setLoading(false);
     };
     fetchGame();
@@ -36,7 +36,7 @@ const Game = () => {
   return (
     <>
       {loading ? (
-        <div style={{ height: "60vh" }}>
+        <div style={{ height: '60vh' }}>
           <Loader message="Fetching Game..." />
         </div>
       ) : (
@@ -46,7 +46,7 @@ const Game = () => {
               <img
                 src={game.imagePath}
                 alt={game.title}
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: '100%', height: '100%' }}
               />
             </Col>
             <Col md={6} sm={12} lg={6}>
@@ -57,12 +57,7 @@ const Game = () => {
                 <Col md={6} sm={12} lg={6}>
                   <h5>{seller.userName}</h5>
                 </Col>
-                <Col
-                  md={6}
-                  sm={12}
-                  lg={6}
-                  className="d-flex justify-content-end"
-                >
+                <Col md={6} sm={12} lg={6} className="d-flex justify-content-end">
                   <h5>{seller.city}</h5>
                 </Col>
               </Row>
@@ -74,34 +69,29 @@ const Game = () => {
                 <Col md={6} sm={12} lg={6}>
                   <h5>{game.title}</h5>
                 </Col>
-                <Col
-                  md={6}
-                  sm={12}
-                  lg={6}
-                  className="d-flex justify-content-end"
-                >
+                <Col md={6} sm={12} lg={6} className="d-flex justify-content-end">
                   <h5>{game.price}</h5>
                 </Col>
               </Row>
               <Row className="mt-3">
                 {tags.map((tag) => {
                   return (
-                    <Col style={{ display: "flex", justifyContent: "center" }}>
+                    <Col key={tag} style={{ display: 'flex', justifyContent: 'center' }}>
                       <div
                         style={{
-                          height: "50px",
-                          width: "100px",
-                          borderRadius: "50%",
-                          backgroundColor: "rgba(0, 0, 0, 0.1)",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          cursor: "pointer",
+                          height: '50px',
+                          width: '100px',
+                          borderRadius: '50%',
+                          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          cursor: 'pointer'
                         }}
                         className="mt-2"
                         key={`selected ${tag}`}
                       >
-                        <p style={{ fontSize: "10px" }} className="mt-3">
+                        <p style={{ fontSize: '10px' }} className="mt-3">
                           {tag}
                         </p>
                       </div>

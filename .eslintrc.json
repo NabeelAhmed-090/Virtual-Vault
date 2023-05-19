@@ -1,0 +1,23 @@
+{
+  "env": {
+    "node": true
+  },
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "overrides": [
+    {
+      "files": ["**/*.js"],
+      "env": {
+        "node": true
+      },
+      "parserOptions": {
+        "ecmaVersion": 2021,
+        "sourceType": "module"
+      },
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ],
+  "plugins": [],
+  "rules": {}
+}

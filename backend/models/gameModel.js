@@ -1,57 +1,57 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const gameSchema = mongoose.Schema(
   {
     seller: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      required: true
     },
     units: {
       type: Number,
       required: true,
-      default: 1,
+      default: 1
     },
     title: {
       type: String,
-      required: true,
+      required: true
     },
     description: {
       type: String,
-      required: true,
+      required: true
     },
     price: {
       type: Number,
-      required: true,
+      required: true
     },
     isGameNew: {
       type: Boolean,
       default: true,
-      required: true,
+      required: true
     },
     tags: {
       type: [String],
-      required: true,
+      required: true
     },
     imagePath: {
       type: String,
-      required: true,
+      required: true
     },
     stripeProductId: {
       type: String,
       required: true,
-      default: "",
+      default: ''
     },
     stripePriceId: {
       type: String,
       required: true,
-      default: "",
-    },
+      default: ''
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
-const Game = mongoose.model("Game", gameSchema);
+const Game = mongoose.model('Game', gameSchema);
 
 export default Game;

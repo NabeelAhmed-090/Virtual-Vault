@@ -1,5 +1,5 @@
-import axios from "axios";
-import React, { useState } from "react";
+import axios from 'axios';
+import React, { useState } from 'react';
 import {
   Badge,
   Button,
@@ -9,21 +9,11 @@ import {
   Form,
   FormControl,
   Modal,
-  Row,
-} from "react-bootstrap";
-import Loader from "../Loader";
+  Row
+} from 'react-bootstrap';
+import Loader from '../Loader';
 
-function RestockPopup({
-  showPopup,
-  setShowPopup,
-  title,
-  price,
-  isGameNew,
-  imagePath,
-  _id,
-  units,
-}) {
-  const [newPrice, setNewPrice] = useState(price);
+function RestockPopup({ showPopup, setShowPopup, title, price, isGameNew, imagePath, _id, units }) {
   const [newIsGameNew, setNewIsGameNew] = useState(isGameNew);
   const [newUnits, setNewUnits] = useState(units);
 
@@ -32,11 +22,10 @@ function RestockPopup({
   const handleGameUpdate = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.put(`/api/games/update/${_id}`, {
+      await axios.put(`/api/games/update/${_id}`, {
         id: _id,
         units: newUnits,
-        price: newPrice,
-        isGameNew: newIsGameNew,
+        isGameNew: newIsGameNew
       });
     } catch (error) {
       console.log(error);
@@ -78,10 +67,10 @@ function RestockPopup({
                       variant="top"
                       src={imagePath}
                       style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        objectPosition: "center",
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center'
                       }}
                     />
                   </div>
@@ -133,21 +122,8 @@ function RestockPopup({
                               </Badge>
                             )}
                           </Col>
-                          <Col
-                            md={6}
-                            lg={6}
-                            sm={12}
-                            className="price-style mt-3"
-                          >
-                            <Form>
-                              <FormControl
-                                type="text"
-                                placeholder="Enter text"
-                                value={newPrice}
-                                onChange={(e) => setNewPrice(e.target.value)}
-                                className="w-100"
-                              />
-                            </Form>
+                          <Col md={6} lg={6} sm={12} className="price-style mt-3">
+                            <p>{price}</p>
                           </Col>
                         </Row>
                       </Container>

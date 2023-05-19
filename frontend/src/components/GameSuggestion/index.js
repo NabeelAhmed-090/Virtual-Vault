@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import HomePageCard from "../HomePageCard";
+import React, { useState } from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import HomePageCard from '../HomePageCard';
 
 function GameSuggestions({ suggestionGames }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -26,15 +26,10 @@ function GameSuggestions({ suggestionGames }) {
   return (
     <Container className="mb-3">
       <Row className="text-center mt-5">
-        <h1 style={{ fontWeight: "bolder" }}>Games Suggestions For You</h1>
+        <h1 style={{ fontWeight: 'bolder' }}>Games Suggestions For You</h1>
       </Row>
       <Row className="mt-5 w-100 d-flex justify-content-center">
-        <Col
-          md={2}
-          sm={12}
-          lg={2}
-          className="d-flex align-items-center justify-content-center"
-        >
+        <Col md={2} sm={12} lg={2} className="d-flex align-items-center justify-content-center">
           <Button variant="dark" onClick={handlePreviousPage}>
             <FontAwesomeIcon icon={faArrowLeft} />
           </Button>
@@ -44,12 +39,7 @@ function GameSuggestions({ suggestionGames }) {
             <HomePageCard game={game.game} />
           </Col>
         ))}
-        <Col
-          md={2}
-          sm={12}
-          lg={2}
-          className="d-flex align-items-center justify-content-center"
-        >
+        <Col md={2} sm={12} lg={2} className="d-flex align-items-center justify-content-center">
           <Button variant="dark" onClick={handleNextPage}>
             <FontAwesomeIcon icon={faArrowRight} />
           </Button>

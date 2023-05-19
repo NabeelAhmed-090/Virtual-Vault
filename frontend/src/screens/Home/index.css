@@ -1,7 +1,7 @@
 .main-section {
   height: 80vh;
   width: 100vw;
-  background-image: url("../../Images/home_bg_2.jpg");
+  background-image: url('../../Images/home_bg_2.jpg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;

@@ -1,10 +1,10 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { FaUpload } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import Loader from "../../components/Loader";
-import ErrorToaster from "../../components/ErrorToaster";
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { FaUpload } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import Loader from '../../components/Loader';
+import ErrorToaster from '../../components/ErrorToaster';
 
 function CreateBlog() {
   const [created, setCreated] = useState(false);
@@ -15,8 +15,8 @@ function CreateBlog() {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
-  const [title, setTitle] = useState("");
-  const [blog, setBlog] = useState("");
+  const [title, setTitle] = useState('');
+  const [blog, setBlog] = useState('');
 
   const [isValidTitle, setIsValidTitle] = useState(true);
   const [isValidBlog, setIsValidBlog] = useState(true);
@@ -58,12 +58,12 @@ function CreateBlog() {
     try {
       setLoading(true);
       const blogData = new FormData();
-      blogData.append("title", title);
-      blogData.append("blog", blog);
-      blogData.append("user", userInfo._id);
-      blogData.append("image", selectedImage);
-      await axios.post("http://localhost:5000/api/blogs/create", blogData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      blogData.append('title', title);
+      blogData.append('blog', blog);
+      blogData.append('user', userInfo._id);
+      blogData.append('image', selectedImage);
+      await axios.post('http://localhost:5000/api/blogs/create', blogData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
       setSuccess(true);
       setCreated(true);
@@ -77,9 +77,9 @@ function CreateBlog() {
   return (
     <Container
       style={{
-        minHeight: "70vh",
-        border: "1px solid black",
-        boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.4)",
+        minHeight: '70vh',
+        border: '1px solid black',
+        boxShadow: '1px 1px 5px rgba(0, 0, 0, 0.4)'
       }}
       className="mt-5 mb-5"
     >
@@ -89,16 +89,16 @@ function CreateBlog() {
         </div>
       ) : (
         <>
-          <Row className="text-center" style={{ height: "12vh" }}>
+          <Row className="text-center" style={{ height: '12vh' }}>
             <h1>Create Blog</h1>
           </Row>
-          <Row style={{ minHeight: "70vh" }}>
-            <Col md={12} sm={12} lg={6} style={{ height: "70vh" }}>
+          <Row style={{ minHeight: '70vh' }}>
+            <Col md={12} sm={12} lg={6} style={{ height: '70vh' }}>
               {imageUrl ? (
                 <div
                   style={{
-                    boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.4)",
-                    padding: "10px",
+                    boxShadow: '1px 1px 5px rgba(0, 0, 0, 0.4)',
+                    padding: '10px'
                   }}
                   className="mb-5 full-height"
                 >
@@ -106,19 +106,19 @@ function CreateBlog() {
                     src={imageUrl}
                     alt="blog"
                     style={{
-                      width: "100%",
-                      height: "100%",
+                      width: '100%',
+                      height: '100%'
                     }}
                   />
                 </div>
               ) : (
                 <div
                   style={{
-                    height: "100%",
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    height: '100%',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
                   }}
                 >
                   <label htmlFor="upload-button">
@@ -126,23 +126,23 @@ function CreateBlog() {
                       id="upload-button"
                       type="file"
                       onChange={handleImageChange}
-                      style={{ display: "none" }}
+                      style={{ display: 'none' }}
                     />
                     <span className="cursor">
-                      {" "}
+                      {' '}
                       <FaUpload /> Upload Image
                     </span>
                   </label>
                 </div>
               )}
             </Col>
-            <Col md={12} sm={12} lg={6} style={{ height: "70vh" }}>
+            <Col md={12} sm={12} lg={6} style={{ height: '70vh' }}>
               <Form>
-                <Row className="text-center" style={{ height: "20vh" }}>
+                <Row className="text-center" style={{ height: '20vh' }}>
                   <Form.Group as={Col} md="12">
                     <Form.Label>Title</Form.Label>
                     <Form.Control
-                      className={"shadow-none"}
+                      className={'shadow-none'}
                       required
                       type="text"
                       placeholder="enter title"
@@ -151,24 +151,19 @@ function CreateBlog() {
                       isInvalid={!isValidTitle}
                     />
                     <Row className="d-flex justify-content-end">
-                      <Col
-                        md={2}
-                        sm={12}
-                        lg={2}
-                        className="d-flex justify-content-end"
-                      >
+                      <Col md={2} sm={12} lg={2} className="d-flex justify-content-end">
                         <pre>{title.length}/20</pre>
                       </Col>
                     </Row>
                   </Form.Group>
                 </Row>
 
-                <Row style={{ height: "30vh" }} className="text-center mb-2">
+                <Row style={{ height: '30vh' }} className="text-center mb-2">
                   <Form.Group as={Col} md="12">
                     <Form.Label>Description</Form.Label>
                     <Form.Control
-                      className={"shadow-none"}
-                      style={{ height: "100%" }}
+                      className={'shadow-none'}
+                      style={{ height: '100%' }}
                       required
                       as="textarea"
                       placeholder="Enter description"
@@ -177,12 +172,7 @@ function CreateBlog() {
                       isInvalid={!isValidBlog}
                     />
                     <Row className="d-flex justify-content-end">
-                      <Col
-                        md={2}
-                        sm={12}
-                        lg={2}
-                        className="d-flex justify-content-end"
-                      >
+                      <Col md={2} sm={12} lg={2} className="d-flex justify-content-end">
                         <pre>{blog.length}/500</pre>
                       </Col>
                     </Row>
@@ -205,11 +195,7 @@ function CreateBlog() {
           </Row>
         </>
       )}
-      <ErrorToaster
-        display={!!success}
-        error={false}
-        message={"Blog Created"}
-      />
+      <ErrorToaster display={!!success} error={false} message={'Blog Created'} />
     </Container>
   );
 }

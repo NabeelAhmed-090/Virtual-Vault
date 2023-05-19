@@ -1,6 +1,6 @@
-import asyncHandler from "express-async-handler";
-import User from "../models/userModel.js";
-import generateToken from "../utils/generateToken.js";
+import asyncHandler from 'express-async-handler';
+import User from '../models/userModel.js';
+import generateToken from '../utils/generateToken.js';
 
 // @desc Auth user & get token
 // @route POST /api/users/login
@@ -17,11 +17,11 @@ const authUser = asyncHandler(async (req, res) => {
       userName: user.userName,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      token: generateToken(user._id)
     });
   } else {
     res.status(401);
-    throw new Error("invalid email or password");
+    throw new Error('invalid email or password');
   }
 });
 
@@ -37,11 +37,11 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (emailExists) {
     res.status(400);
-    throw new Error("Email already exists");
+    throw new Error('Email already exists');
   }
   if (userNameExists) {
     res.status(400);
-    throw new Error("Username already exists");
+    throw new Error('Username already exists');
   }
 
   const user = await User.create({
@@ -50,7 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
     userName,
     firstName,
     lastName,
-    city,
+    city
   });
 
   if (user) {
@@ -61,11 +61,11 @@ const registerUser = asyncHandler(async (req, res) => {
       userName: user.userName,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+      token: generateToken(user._id)
     });
   } else {
     res.status(400);
-    throw new Error("Invalid user data");
+    throw new Error('Invalid user data');
   }
 });
 
@@ -82,11 +82,11 @@ const getUserProfile = asyncHandler(async (req, res) => {
       lastName: req.user.lastName,
       firstName: req.user.firstName,
       city: req.user.city,
-      isAdmin: req.user.isAdmin,
+      isAdmin: req.user.isAdmin
     });
   } else {
     res.status(404);
-    throw new Error("User not found");
+    throw new Error('User not found');
   }
 });
 
@@ -104,7 +104,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       user.lastName = req.body.lastName || user.lastName;
       user.firstName = req.body.firstName || user.firstName;
       user.city = req.body.city || user.city;
-      if (req.body.password !== "") {
+      if (req.body.password !== '') {
         user.password = req.body.password;
       }
       const updatedUser = await user.save();
@@ -114,12 +114,12 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         userName: user.userName,
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
-        token: generateToken(updatedUser._id),
+        token: generateToken(updatedUser._id)
       });
     }
   } else {
     res.status(404);
-    throw new Error("User not found");
+    throw new Error('User not found');
   }
 });
 
@@ -135,25 +135,19 @@ const getUserData = asyncHandler(async (req, res) => {
         username: user.userName,
         city: user.city,
         firstName: user.firstName,
-        lastName: user.lastName,
+        lastName: user.lastName
       });
     } else {
       res.status(404);
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
   } catch (error) {
     res.status(404);
     res.json({
       error: error,
-      message: "User not found",
+      message: 'User not found'
     });
   }
 });
 
-export {
-  authUser,
-  getUserProfile,
-  registerUser,
-  updateUserProfile,
-  getUserData,
-};
+export { authUser, getUserProfile, registerUser, updateUserProfile, getUserData };

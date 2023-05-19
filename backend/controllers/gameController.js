@@ -1,18 +1,18 @@
-import asyncHandler from "express-async-handler";
-import User from "../models/userModel.js";
-import Game from "../models/gameModel.js";
-import Transaction from "../models/transactionModel.js";
-import Notification from "../models/notificationModel.js";
-import cloudinary from "cloudinary";
+import asyncHandler from 'express-async-handler';
+import User from '../models/userModel.js';
+import Game from '../models/gameModel.js';
+import Transaction from '../models/transactionModel.js';
+import Notification from '../models/notificationModel.js';
+import cloudinary from 'cloudinary';
 
-import stripe from "stripe";
-import Sales from "../models/salesModel.js";
-import mongoose from "mongoose";
+import stripe from 'stripe';
+import Sales from '../models/salesModel.js';
+
 const secretKey =
-  "sk_test_51N5u3tDPl5TQVYXyckgRZlINHANcViDlr6Hp2rtkWSdhOhE1Z5h48JDuzd1dc3dJ3PchUkIib8XXNrdGh0ZXWh5U00ucQxRpcN";
+  'sk_test_51N5u3tDPl5TQVYXyckgRZlINHANcViDlr6Hp2rtkWSdhOhE1Z5h48JDuzd1dc3dJ3PchUkIib8XXNrdGh0ZXWh5U00ucQxRpcN';
 const stripeInstance = stripe(secretKey);
 
-const DOMAIN = "http://localhost:3000";
+const DOMAIN = 'http://localhost:3000';
 
 // function to upload image to cloudinary
 async function uploadImageToCloudinary(image) {
@@ -21,7 +21,7 @@ async function uploadImageToCloudinary(image) {
     return result;
   } catch (error) {
     console.error(error);
-    throw new Error("Error uploading image to Cloudinary");
+    throw new Error('Error uploading image to Cloudinary');
   }
 }
 
@@ -30,21 +30,20 @@ async function uploadImageToCloudinary(image) {
 // @access Public
 
 const createGame = asyncHandler(async (req, res) => {
-  const { seller, title, description, price, isGameNew, tags, units } =
-    req.body;
+  const { seller, title, description, price, isGameNew, tags, units } = req.body;
   const image = req.file;
   try {
     const cloudinaryResult = await uploadImageToCloudinary(image);
 
     const stripeProduct = await stripeInstance.products.create({
       name: title,
-      images: [cloudinaryResult.secure_url],
+      images: [cloudinaryResult.secure_url]
     });
 
     const stripePrice = await stripeInstance.prices.create({
       product: stripeProduct.id,
       unit_amount: price * 100,
-      currency: "pkr",
+      currency: 'pkr'
     });
 
     const newGame = new Game({
@@ -57,14 +56,14 @@ const createGame = asyncHandler(async (req, res) => {
       units: units,
       imagePath: cloudinaryResult.secure_url,
       stripeProductId: stripeProduct.id,
-      stripePriceId: stripePrice.id,
+      stripePriceId: stripePrice.id
     });
 
     const savedGame = await newGame.save();
     res.status(200).json({ game: savedGame });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
@@ -81,18 +80,18 @@ const getGame = asyncHandler(async (req, res) => {
         game: game,
         seller: {
           userName: seller.userName,
-          city: seller.city,
-        },
+          city: seller.city
+        }
       });
     } else {
       res.status(404);
-      throw new Error("Game not found");
+      throw new Error('Game not found');
     }
   } catch (error) {
     res.status(404);
     res.json({
       error: error,
-      message: "Game not found",
+      message: 'Game not found'
     });
   }
 });
@@ -115,7 +114,7 @@ const getUserGames = asyncHandler(async (req, res) => {
     res.status(404);
     res.json({
       error: error,
-      message: "Error in fetching games",
+      message: 'Error in fetching games'
     });
   }
 });
@@ -130,14 +129,14 @@ const deleteGame = asyncHandler(async (req, res) => {
     res.status(200);
     res.json({
       success: true,
-      message: "Game Deleted Successfully",
+      message: 'Game Deleted Successfully'
     });
   } catch (error) {
     res.status(404);
     res.json({
       success: false,
       error: error,
-      message: "Game not found",
+      message: 'Game not found'
     });
   }
 });
@@ -147,26 +146,21 @@ const deleteGame = asyncHandler(async (req, res) => {
 // @access Public
 
 const searchGames = asyncHandler(async (req, res) => {
-  const { pageSize, pageNumber, searchText, userId, isSearching, tags } =
-    req.body;
+  const { pageSize, pageNumber, searchText, userId, isSearching, tags } = req.body;
   try {
     const unfilteredGames = await Game.find();
     if (isSearching) {
       if (unfilteredGames) {
-        unfilteredGames.sort(
-          (a, b) => b._id.getTimestamp() - a._id.getTimestamp()
-        );
-        const games = unfilteredGames.filter(
-          (game) => game.seller.toString() != userId
-        );
-        if (searchText === "") {
+        unfilteredGames.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp());
+        const games = unfilteredGames.filter((game) => game.seller.toString() != userId);
+        if (searchText === '') {
           const startIndex = (pageNumber - 1) * pageSize;
           const endIndex = pageNumber * pageSize;
           const totalGames = games.length;
           res.send({
             searchGames: games.slice(startIndex, endIndex),
             remainingGames: totalGames - endIndex,
-            remainingPages: Math.ceil((totalGames - endIndex) / pageSize),
+            remainingPages: Math.ceil((totalGames - endIndex) / pageSize)
           });
         } else {
           const filteredGames = games.filter((game) =>
@@ -178,72 +172,66 @@ const searchGames = asyncHandler(async (req, res) => {
           res.send({
             searchGames: filteredGames.slice(startIndex, endIndex),
             remainingGames: totalGames - endIndex,
-            remainingPages: Math.ceil((totalGames - endIndex) / pageSize),
+            remainingPages: Math.ceil((totalGames - endIndex) / pageSize)
           });
         }
       } else {
         res.json({
-          error: error,
-          message: "Error in fetching games",
+          message: 'Error in fetching games'
         });
       }
     } else {
       if (unfilteredGames) {
-        const games = unfilteredGames.filter(
-          (game) => game.seller.toString() != userId
-        );
+        const games = unfilteredGames.filter((game) => game.seller.toString() != userId);
         const filteredGames = games.filter((game) => {
           for (let tag of tags) {
-            if (game.tags[0].split(",").includes(String(tag))) {
+            if (game.tags[0].split(',').includes(String(tag))) {
               return true;
             }
           }
           return false;
         });
-        filteredGames.sort(
-          (a, b) => b._id.getTimestamp() - a._id.getTimestamp()
-        );
+        filteredGames.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp());
         const startIndex = (pageNumber - 1) * pageSize;
         const endIndex = pageNumber * pageSize;
         const totalGames = filteredGames.length;
         res.send({
           searchGames: filteredGames.slice(startIndex, endIndex),
           remainingGames: totalGames - endIndex,
-          remainingPages: Math.ceil((totalGames - endIndex) / pageSize),
+          remainingPages: Math.ceil((totalGames - endIndex) / pageSize)
         });
       } else {
         res.json({
-          error: error,
-          message: "Error in fetching games",
+          message: 'Error in fetching games'
         });
       }
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in fetching games",
+      message: 'Error in fetching games'
     });
   }
 });
 
 const checkoutSession = asyncHandler(async (req, res) => {
-  const { cartItems, total } = req.body;
+  const { cartItems } = req.body;
   const line_items = cartItems.map((item) => {
     return {
       price: item.stripePriceId,
-      quantity: item.unitsInCart,
+      quantity: item.unitsInCart
     };
   });
 
   const session = await stripeInstance.checkout.sessions.create({
     line_items: line_items,
-    mode: "payment",
+    mode: 'payment',
     success_url: `${DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${DOMAIN}?canceled=true`,
+    cancel_url: `${DOMAIN}?canceled=true`
   });
 
   res.json({
-    url: session.url,
+    url: session.url
   });
 });
 
@@ -254,25 +242,22 @@ const updateGameStatus = asyncHandler(async (req, res) => {
     var totalUnits = 0;
     var totalAmount = 0;
     const productIDs = await new Promise((resolve, reject) => {
-      stripeInstance.checkout.sessions.listLineItems(
-        sessionID,
-        (err, lineItems) => {
-          if (err) {
-            reject(err);
-          } else {
-            const productIDs = lineItems.data.map((lineItem) => {
-              totalUnits += lineItem.quantity;
-              totalAmount += lineItem.amount_total / 100;
-              return {
-                id: lineItem.price.product,
-                units: lineItem.quantity,
-                amount: lineItem.amount_total / 100,
-              };
-            });
-            resolve(productIDs);
-          }
+      stripeInstance.checkout.sessions.listLineItems(sessionID, (err, lineItems) => {
+        if (err) {
+          reject(err);
+        } else {
+          const productIDs = lineItems.data.map((lineItem) => {
+            totalUnits += lineItem.quantity;
+            totalAmount += lineItem.amount_total / 100;
+            return {
+              id: lineItem.price.product,
+              units: lineItem.quantity,
+              amount: lineItem.amount_total / 100
+            };
+          });
+          resolve(productIDs);
         }
-      );
+      });
     });
 
     const gameIds = [];
@@ -282,14 +267,14 @@ const updateGameStatus = asyncHandler(async (req, res) => {
     const sellerIds = [];
     const allGames = await Game.find();
     allGames.forEach((game) => {
-      productIDs.forEach((product) => {
+      productIDs.forEach(async (product) => {
         if (game.stripeProductId === product.id) {
           sellerIds.push(game.seller);
           gameIds.push(game._id);
           unitList.push(product.units);
           priceList.push(product.amount);
           game.units -= product.units;
-          game.save();
+          await game.save();
         }
       });
     });
@@ -298,7 +283,7 @@ const updateGameStatus = asyncHandler(async (req, res) => {
       buyer: user,
       games: gameIds,
       units: unitList,
-      price: priceList,
+      price: priceList
     });
     const combinedSellerIds = [];
     sellerIds.forEach((sellerId, index) => {
@@ -314,7 +299,7 @@ const updateGameStatus = asyncHandler(async (req, res) => {
         combinedSellerIds.push({
           seller: sellerId,
           unitsSold: unitList[index],
-          amount: priceList[index],
+          amount: priceList[index]
         });
       }
     });
@@ -322,9 +307,9 @@ const updateGameStatus = asyncHandler(async (req, res) => {
     combinedSellerIds.map(async (sellerId, index) => {
       const newNotification = await new Notification({
         user: sellerId.seller,
-        message: String(unitList[index]) + " units of game Sold",
+        message: String(unitList[index]) + ' units of game Sold',
         unread: true,
-        link: "#",
+        link: '#'
       });
       const unfilteredSales = await Sales.find({});
       var sale = null;
@@ -342,7 +327,7 @@ const updateGameStatus = asyncHandler(async (req, res) => {
         const newSale = await new Sales({
           seller: sellerId.seller,
           unitsSold: sellerId.unitsSold,
-          amount: sellerId.amount,
+          amount: sellerId.amount
         });
         await newSale.save();
       }
@@ -353,11 +338,11 @@ const updateGameStatus = asyncHandler(async (req, res) => {
     res.json({
       productIDs: productIDs,
       totalUnits: totalUnits,
-      totalAmount: totalAmount,
+      totalAmount: totalAmount
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send("An error occurred while retrieving product IDs.");
+    res.status(500).send('An error occurred while retrieving product IDs.');
   }
 });
 
@@ -373,7 +358,7 @@ const getLatestGames = asyncHandler(async (req, res) => {
         id: game._id,
         title: game.title,
         imagePath: game.imagePath,
-        tags: game.tags,
+        tags: game.tags
       };
     });
     if (games) {
@@ -386,7 +371,7 @@ const getLatestGames = asyncHandler(async (req, res) => {
     res.status(404);
     res.json({
       error: error,
-      message: "Error in fetching games",
+      message: 'Error in fetching games'
     });
   }
 });
@@ -401,17 +386,16 @@ const updateGame = asyncHandler(async (req, res) => {
     const game = await Game.findById(id);
     if (game) {
       game.units = req.body.units || game.units;
-      game.price = req.body.price || game.price;
       game.isGameNew = req.body.isGameNew || game.isGameNew;
 
       const updatedGame = await game.save();
       res.json({
-        game: updatedGame,
+        game: updatedGame
       });
     }
   } else {
     res.status(404);
-    throw new Error("Game not found");
+    throw new Error('Game not found');
   }
 });
 
@@ -427,31 +411,31 @@ const suggestUserGames = asyncHandler(async (req, res) => {
     const suggestedGames = [];
 
     latestGames.forEach((game) => {
-      const gameTags = game.tags[0].split(",");
+      const gameTags = game.tags[0].split(',');
       let matchingTagsCount = 0;
 
       Usergames.forEach((userGame) => {
-        const userGameTags = userGame.tags[0].split(",");
-        const matchingTags = gameTags.filter((tag) =>
-          userGameTags.includes(tag)
-        );
-        matchingTagsCount += matchingTags.length;
+        if (game.seller.toString() !== seller) {
+          const userGameTags = userGame.tags[0].split(',');
+          const matchingTags = gameTags.filter((tag) => userGameTags.includes(tag));
+          matchingTagsCount += matchingTags.length;
+        }
       });
       if (matchingTagsCount >= 4) {
         suggestedGames.push({
           game: game,
-          count: matchingTagsCount,
+          count: matchingTagsCount
         });
       }
     });
 
     suggestedGames.sort((a, b) => a.count - b.count);
     res.json({
-      games: suggestedGames.splice(4, suggestedGames.length - 6),
+      games: suggestedGames.splice(0, 5)
     });
   } else {
     res.status(404);
-    throw new Error("Game not found");
+    throw new Error('Game not found');
   }
 });
 
@@ -465,5 +449,5 @@ export {
   updateGameStatus,
   getLatestGames,
   updateGame,
-  suggestUserGames,
+  suggestUserGames
 };

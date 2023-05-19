@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import Loader from "../../components/Loader";
-import { Col, Container, Row } from "react-bootstrap";
-import "./index.css";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import Loader from '../../components/Loader';
+import { Col, Container, Row } from 'react-bootstrap';
+import './index.css';
 
 const Blog = () => {
   let { id } = useParams();
@@ -24,7 +24,7 @@ const Blog = () => {
   }, [id]);
 
   return (
-    <div className={loading ? "temp-height" : "main-blog-div"}>
+    <div className={loading ? 'temp-height' : 'main-blog-div'}>
       {loading ? (
         <Loader message="Fetching Blog..." />
       ) : (
@@ -32,9 +32,7 @@ const Blog = () => {
           <Container className="mt-5">
             <Row>
               <Col>
-                <h1 style={{ textAlign: "center", fontWeight: "bolder" }}>
-                  {blog.title}
-                </h1>
+                <h1 style={{ textAlign: 'center', fontWeight: 'bolder' }}>{blog.title}</h1>
               </Col>
             </Row>
             <Row>
@@ -48,11 +46,7 @@ const Blog = () => {
             <Row>
               <Col>
                 <div className="image-section-blog-page">
-                  <img
-                    src={blog.imagePath}
-                    alt="Blog 1"
-                    className="img-fluid"
-                  />
+                  <img src={blog.imagePath} alt="Blog 1" className="img-fluid" />
                 </div>
               </Col>
             </Row>
@@ -63,7 +57,7 @@ const Blog = () => {
                 <p>{blog.blog}</p>
               </Col>
             </Row>
-            <Row style={{ textAlign: "right" }}>
+            <Row style={{ textAlign: 'right' }}>
               <Col>
                 <h6>{blog.date}</h6>
               </Col>

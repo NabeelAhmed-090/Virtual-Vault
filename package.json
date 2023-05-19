@@ -12,7 +12,9 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
-    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
+    "lint": "eslint backend",
+    "lint:fix": "eslint backend --fix",
+    "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\" --config ./.prettierrc"
   },
   "repository": {
     "type": "git",
@@ -40,11 +42,12 @@
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
-    "eslint": "^8.36.0",
+    "eslint": "^8.40.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
     "nodemon": "^2.0.22",

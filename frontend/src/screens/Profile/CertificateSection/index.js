@@ -1,7 +1,7 @@
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import Logo from "../../../Images/logo.jpg";
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Logo from '../../../Images/logo.jpg';
 
 const CertificateSection = ({ userCertificates }) => {
   let history = useNavigate();
@@ -15,8 +15,8 @@ const CertificateSection = ({ userCertificates }) => {
         <Col md={12} lg={12} sm={12} xs={12}>
           <Container
             style={{
-              minHeight: "50vh",
-              boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.75)",
+              minHeight: '50vh',
+              boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.75)'
             }}
             className="mb-5 p-5"
           >
@@ -27,19 +27,12 @@ const CertificateSection = ({ userCertificates }) => {
               {userCertificates.map((certificate) => {
                 return (
                   <>
-                    <Col
-                      md={2}
-                      lg={2}
-                      sm={4}
-                      xs={4}
-                      className="p-2"
-                      style={{ height: "10vh" }}
-                    >
+                    <Col md={2} lg={2} sm={4} xs={4} className="p-2" style={{ height: '10vh' }}>
                       <img
                         src={Logo}
                         alt={certificate.title}
                         className="certificate-image"
-                        style={{ height: "100%", width: "100%" }}
+                        style={{ height: '100%', width: '100%' }}
                       />
                     </Col>
                     <Col
@@ -47,7 +40,7 @@ const CertificateSection = ({ userCertificates }) => {
                       lg={4}
                       sm={8}
                       xs={8}
-                      style={{ height: "10vh" }}
+                      style={{ height: '10vh' }}
                       className="p-2 d-flex align-items-center"
                     >
                       <h3

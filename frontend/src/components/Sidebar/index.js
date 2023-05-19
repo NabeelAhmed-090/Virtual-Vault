@@ -1,18 +1,18 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { Col, Container, Row } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Col, Container, Row } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faXmark,
   faBlog,
   faMagnifyingGlass,
   faCartShopping,
   faUser,
-  faRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
-import "./index.css";
-import { logout } from "../../actions/userActions";
+  faRightFromBracket
+} from '@fortawesome/free-solid-svg-icons';
+import './index.css';
+import { logout } from '../../actions/userActions';
 
 function Sidebar({ isOpen, handleButtonClick }) {
   let history = useNavigate();
@@ -20,10 +20,10 @@ function Sidebar({ isOpen, handleButtonClick }) {
 
   const handleLogout = async () => {
     dispatch(logout());
-    history("/");
+    history('/');
   };
   return (
-    <div className={`sidebar ${isOpen ? "open" : ""}`}>
+    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
       <Container>
         <Row>
           <Col className="sidebar-button-col">
@@ -44,8 +44,7 @@ function Sidebar({ isOpen, handleButtonClick }) {
           <Row>
             <Col>
               <a className="options" href="/search">
-                Search{" "}
-                <FontAwesomeIcon icon={faMagnifyingGlass} className="icons" />
+                Search <FontAwesomeIcon icon={faMagnifyingGlass} className="icons" />
               </a>
             </Col>
           </Row>
@@ -69,8 +68,7 @@ function Sidebar({ isOpen, handleButtonClick }) {
           <Row>
             <Col>
               <a className="options cursor" onClick={() => handleLogout()}>
-                Logout{" "}
-                <FontAwesomeIcon icon={faRightFromBracket} className="icons" />
+                Logout <FontAwesomeIcon icon={faRightFromBracket} className="icons" />
               </a>
             </Col>
           </Row>

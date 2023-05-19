@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import GameCard from "../../../components/GameCard";
-import axios from "axios";
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import GameCard from '../../../components/GameCard';
+import axios from 'axios';
 
 const ExistingGameSection = ({ userGames, setUserGames }) => {
   const handleGameDeletion = async (_id) => {
     try {
-      const { data } = await axios.delete(
-        `http://localhost:5000/api/games/delete/${_id}`
-      );
+      const { data } = await axios.delete(`http://localhost:5000/api/games/delete/${_id}`);
       if (data.success) {
         setUserGames(userGames.filter((game) => game._id !== _id));
         return true;
@@ -23,8 +21,8 @@ const ExistingGameSection = ({ userGames, setUserGames }) => {
   return (
     <Container
       style={{
-        minHeight: "50vh",
-        boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.75)",
+        minHeight: '50vh',
+        boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.75)'
       }}
       className="mb-5"
     >

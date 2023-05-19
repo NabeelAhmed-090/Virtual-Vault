@@ -1,27 +1,27 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const deliverySchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       default: null,
-      required: true,
+      required: true
     },
     address: {
       type: String,
-      default: "",
-      required: true,
+      default: '',
+      required: true
     },
     additionalInfo: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
-const Delivery = mongoose.model("Delivery", deliverySchema);
+const Delivery = mongoose.model('Delivery', deliverySchema);
 
 export default Delivery;

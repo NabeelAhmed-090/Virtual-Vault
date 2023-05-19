@@ -1,5 +1,5 @@
-import asyncHandler from "express-async-handler";
-import Certificate from "../models/certificateModel.js";
+import asyncHandler from 'express-async-handler';
+import Certificate from '../models/certificateModel.js';
 
 // @desc Get Certificate
 // @route Get /api/certificate/:id
@@ -10,16 +10,16 @@ const getCertificate = asyncHandler(async (req, res) => {
     const certificate = await Certificate.findById(req.params.id);
     if (certificate) {
       res.json({
-        certificate: certificate,
+        certificate: certificate
       });
     } else {
       res.status(404);
-      throw new Error("Certificate not found");
+      throw new Error('Certificate not found');
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in fetching Certificate",
+      message: 'Error in fetching Certificate'
     });
   }
 });
@@ -32,21 +32,19 @@ const getUserCertificate = asyncHandler(async (req, res) => {
   try {
     const user = req.params.id;
     const allCertificates = await Certificate.find();
-    var certificates = allCertificates.filter(
-      (certificate) => certificate.user.toString() == user
-    );
+    var certificates = allCertificates.filter((certificate) => certificate.user.toString() == user);
     if (certificates) {
       res.json({
-        certificates: certificates,
+        certificates: certificates
       });
     } else {
       res.status(404);
-      throw new Error("Certificates not found");
+      throw new Error('Certificates not found');
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in fetching Certificates",
+      message: 'Error in fetching Certificates'
     });
   }
 });
@@ -61,16 +59,16 @@ const grantCertificate = asyncHandler(async (req, res) => {
     const newCertificate = new Certificate({
       user: id,
       title: title,
-      message: message,
+      message: message
     });
     await newCertificate.save();
     res.json({
-      certificate: newCertificate,
+      certificate: newCertificate
     });
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in fetching Certificates",
+      message: 'Error in fetching Certificates'
     });
   }
 });

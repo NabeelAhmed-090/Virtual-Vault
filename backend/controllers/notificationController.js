@@ -1,7 +1,5 @@
-import asyncHandler from "express-async-handler";
-import Notification from "../models/notificationModel.js";
-import User from "../models/userModel.js";
-import mongoose from "mongoose";
+import asyncHandler from 'express-async-handler';
+import Notification from '../models/notificationModel.js';
 
 // @desc Get Notifications
 // @route Get /api/notifications
@@ -14,25 +12,23 @@ const getNotifications = asyncHandler(async (req, res) => {
     var notifications = allNotifications.filter(
       (notification) => notification.user.toString() == user
     );
-    notifications = notifications.sort(
-      (a, b) => b._id.getTimestamp() - a._id.getTimestamp()
-    );
+    notifications = notifications.sort((a, b) => b._id.getTimestamp() - a._id.getTimestamp());
     const unreadNotifications = notifications.filter(
       (notification) => notification.unread == true
     ).length;
     if (notifications) {
       res.json({
         notifications: notifications,
-        unreadNotifications: unreadNotifications,
+        unreadNotifications: unreadNotifications
       });
     } else {
       res.status(404);
-      throw new Error("Notifications not found");
+      throw new Error('Notifications not found');
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in fetching Notificcation",
+      message: 'Error in fetching Notificcation'
     });
   }
 });
@@ -47,12 +43,12 @@ const markAsRead = asyncHandler(async (req, res) => {
       res.json(updatedNotification);
     } else {
       res.status(404);
-      throw new Error("Notification not found");
+      throw new Error('Notification not found');
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in marking Notificcation",
+      message: 'Error in marking Notificcation'
     });
   }
 });

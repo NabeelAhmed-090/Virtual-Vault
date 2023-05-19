@@ -1,26 +1,24 @@
-import React, { useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./index.css";
+import React, { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './index.css';
 
 const ErrorToaster = ({ display, message, error = true }) => {
   const toasterBlock = {
-    position: "bottom-right",
+    position: 'bottom-right',
     autoClose: 3000,
     hideProgressBar: true,
     closeOnClick: false,
     pauseOnHover: true,
     draggable: true,
-    progress: undefined,
+    progress: undefined
   };
 
   useEffect(() => {
     try {
       if (display) {
         {
-          error
-            ? toast.error(message, toasterBlock)
-            : toast.success(message, toasterBlock);
+          error ? toast.error(message, toasterBlock) : toast.success(message, toasterBlock);
         }
       }
     } catch (error) {

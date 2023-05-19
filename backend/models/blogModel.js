@@ -1,45 +1,39 @@
-import mongoose from "mongoose";
-
-const ImageSchema = new mongoose.Schema({
-  publicId: String,
-  url: String,
-  createdAt: Date,
-});
+import mongoose from 'mongoose';
 
 const blogSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      required: true
     },
     title: {
       type: String,
-      required: true,
+      required: true
     },
     blog: {
       type: String,
-      required: true,
+      required: true
     },
     imagePath: {
       type: String,
-      required: true,
+      required: true
     },
     totalViews: {
       type: Number,
       required: true,
-      default: 0,
+      default: 0
     },
     isApproved: {
       type: Boolean,
       required: true,
-      default: false,
-    },
+      default: false
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
-const Blog = mongoose.model("Blog", blogSchema);
+const Blog = mongoose.model('Blog', blogSchema);
 
 export default Blog;

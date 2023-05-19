@@ -1,42 +1,42 @@
-import React, { useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import Loader from "../../../components/Loader";
-import { FaUpload } from "react-icons/fa";
-import ErrorToaster from "../../../components/ErrorToaster";
-import axios from "axios";
-import "./index.css";
+import React, { useState } from 'react';
+import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import Loader from '../../../components/Loader';
+import { FaUpload } from 'react-icons/fa';
+import ErrorToaster from '../../../components/ErrorToaster';
+import axios from 'axios';
+import './index.css';
 
 const GameInfoSection = ({ id, setUserGames }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
   const [units, setUnits] = useState(0);
   const [isGameNew, setIsGameNew] = useState(true);
 
   const [possibleTags] = useState([
-    "action",
-    "thriller",
-    "combat",
-    "adventure",
-    "strategy",
-    "simulation",
-    "sports",
-    "racing",
-    "puzzle",
-    "arcade",
-    "platformer",
-    "shooter",
-    "fighting",
-    "stealth",
-    "survival",
-    "horror",
-    "battle royale",
-    "role-playing",
-    "mmo",
-    "open world",
+    'action',
+    'thriller',
+    'combat',
+    'adventure',
+    'strategy',
+    'simulation',
+    'sports',
+    'racing',
+    'puzzle',
+    'arcade',
+    'platformer',
+    'shooter',
+    'fighting',
+    'stealth',
+    'survival',
+    'horror',
+    'battle royale',
+    'role-playing',
+    'mmo',
+    'open world'
   ]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -84,8 +84,8 @@ const GameInfoSection = ({ id, setUserGames }) => {
     setSelectedImage(null);
     setIsGameNew(true);
     setImageUrl(null);
-    setTitle("");
-    setDescription("");
+    setTitle('');
+    setDescription('');
     setPrice(0);
     setUnits(0);
     setSelectedTags([]);
@@ -102,23 +102,19 @@ const GameInfoSection = ({ id, setUserGames }) => {
     setLoading(true);
     setSuccess(false);
     const gameData = new FormData();
-    gameData.append("seller", id);
-    gameData.append("title", title);
-    gameData.append("description", description);
-    gameData.append("price", price);
-    gameData.append("units", units);
-    gameData.append("isGameNew", isGameNew);
-    gameData.append("tags", selectedTags);
-    gameData.append("image", selectedImage);
+    gameData.append('seller', id);
+    gameData.append('title', title);
+    gameData.append('description', description);
+    gameData.append('price', price);
+    gameData.append('units', units);
+    gameData.append('isGameNew', isGameNew);
+    gameData.append('tags', selectedTags);
+    gameData.append('image', selectedImage);
 
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/games/create",
-        gameData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const { data } = await axios.post('http://localhost:5000/api/games/create', gameData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
       setUserGames((prev) => [...prev, data.game]);
     } catch (error) {
       console.log(error);
@@ -148,8 +144,8 @@ const GameInfoSection = ({ id, setUserGames }) => {
   return (
     <Container
       style={{
-        minHeight: "50vh",
-        boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.75)",
+        minHeight: '50vh',
+        boxShadow: '0px 0px 3px rgba(0, 0, 0, 0.75)'
       }}
     >
       {loading === true ? (
@@ -158,7 +154,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
         </div>
       ) : (
         <>
-          <Row className="text-center mt-2" style={{ height: "12vh" }}>
+          <Row className="text-center mt-2" style={{ height: '12vh' }}>
             <h1 className="mt-4">Upload New Game</h1>
           </Row>
           <Row className="mt-2">
@@ -168,10 +164,8 @@ const GameInfoSection = ({ id, setUserGames }) => {
                 <Form.Select multiple onChange={handleTagSelect}>
                   {possibleTags.map((tag) => (
                     <option
-                      style={{ cursor: "pointer" }}
-                      className={
-                        selectedTags.includes(tag) ? "selected-tag" : ""
-                      }
+                      style={{ cursor: 'pointer' }}
+                      className={selectedTags.includes(tag) ? 'selected-tag' : ''}
                       key={tag}
                       value={tag}
                       disabled={selectedTags.includes(tag)}
@@ -189,28 +183,28 @@ const GameInfoSection = ({ id, setUserGames }) => {
               sm={12}
               lg={12}
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                height: "50px",
+                display: 'flex',
+                justifyContent: 'space-between',
+                height: '50px'
               }}
             >
               {selectedTags.map((tag) => {
                 return (
                   <div
                     style={{
-                      height: "50px",
-                      width: "100px",
-                      borderRadius: "50%",
-                      backgroundColor: "rgba(0, 0, 0, 0.1)",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      cursor: "pointer",
+                      height: '50px',
+                      width: '100px',
+                      borderRadius: '50%',
+                      backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      cursor: 'pointer'
                     }}
                     onClick={() => handleTagDeselect(tag)}
                     key={`selected ${tag}`}
                   >
-                    <p style={{ fontSize: "10px" }} className="mt-3">
+                    <p style={{ fontSize: '10px' }} className="mt-3">
                       {tag}
                     </p>
                   </div>
@@ -218,19 +212,13 @@ const GameInfoSection = ({ id, setUserGames }) => {
               })}
             </Col>
           </Row>
-          <Row style={{ minHeight: "95vh" }} className="mt-5">
-            <Col
-              md={6}
-              sm={12}
-              lg={6}
-              style={{ height: "90vh" }}
-              className="mt-2"
-            >
+          <Row style={{ minHeight: '95vh' }} className="mt-5">
+            <Col md={6} sm={12} lg={6} style={{ height: '90vh' }} className="mt-2">
               {imageUrl ? (
                 <div
                   style={{
-                    boxShadow: "1px 1px 5px rgba(0, 0, 0, 0.4)",
-                    padding: "10px",
+                    boxShadow: '1px 1px 5px rgba(0, 0, 0, 0.4)',
+                    padding: '10px'
                   }}
                   className="mb-5 full-height"
                 >
@@ -238,19 +226,19 @@ const GameInfoSection = ({ id, setUserGames }) => {
                     src={imageUrl}
                     alt="game cover"
                     style={{
-                      width: "100%",
-                      height: "100%",
+                      width: '100%',
+                      height: '100%'
                     }}
                   />
                 </div>
               ) : (
                 <div
                   style={{
-                    height: "100%",
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                    height: '100%',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
                   }}
                 >
                   <label htmlFor="upload-button">
@@ -258,30 +246,24 @@ const GameInfoSection = ({ id, setUserGames }) => {
                       id="upload-button"
                       type="file"
                       onChange={handleImageChange}
-                      style={{ display: "none" }}
+                      style={{ display: 'none' }}
                     />
                     <span className="cursor">
-                      {" "}
+                      {' '}
                       <FaUpload /> Upload Image
                     </span>
                   </label>
                 </div>
               )}
             </Col>
-            <Col
-              md={12}
-              sm={12}
-              lg={6}
-              style={{ height: "95vh" }}
-              className="mt-2"
-            >
+            <Col md={12} sm={12} lg={6} style={{ height: '95vh' }} className="mt-2">
               <Form>
-                <Row className="text-center" style={{ height: "20vh" }}>
+                <Row className="text-center" style={{ height: '20vh' }}>
                   <Col md={6} sm={12} lg={6}>
                     <Form.Group as={Col} md="12">
                       <Form.Label>Title</Form.Label>
                       <Form.Control
-                        className={"shadow-none"}
+                        className={'shadow-none'}
                         required
                         type="text"
                         placeholder="enter title"
@@ -290,12 +272,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
                         isInvalid={!isValidTitle}
                       />
                       <Row className="d-flex justify-content-end">
-                        <Col
-                          md={6}
-                          sm={12}
-                          lg={6}
-                          className="d-flex justify-content-end"
-                        >
+                        <Col md={6} sm={12} lg={6} className="d-flex justify-content-end">
                           <pre>{title.length}/40</pre>
                         </Col>
                       </Row>
@@ -305,7 +282,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
                     <Form.Group as={Col} md="12">
                       <Form.Label>Price</Form.Label>
                       <Form.Control
-                        className={"shadow-none"}
+                        className={'shadow-none'}
                         required
                         type="number"
                         placeholder="enter price"
@@ -326,7 +303,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
                   <Col md={6} sm={12} lg={6}>
                     <Form.Group as={Col} md="12" className="mt-5">
                       <Form.Control
-                        className={"shadow-none"}
+                        className={'shadow-none'}
                         required
                         type="number"
                         placeholder="units"
@@ -340,12 +317,12 @@ const GameInfoSection = ({ id, setUserGames }) => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <Row style={{ height: "30vh" }} className="text-center mt-3">
+                <Row style={{ height: '30vh' }} className="text-center mt-3">
                   <Form.Group as={Col} md="12">
                     <Form.Label>Description</Form.Label>
                     <Form.Control
-                      className={"shadow-none"}
-                      style={{ height: "100%" }}
+                      className={'shadow-none'}
+                      style={{ height: '100%' }}
                       required
                       as="textarea"
                       placeholder="Enter description"
@@ -354,12 +331,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
                       isInvalid={!isValidDescription}
                     />
                     <Row className="d-flex justify-content-end">
-                      <Col
-                        md={6}
-                        sm={12}
-                        lg={6}
-                        className="d-flex justify-content-end"
-                      >
+                      <Col md={6} sm={12} lg={6} className="d-flex justify-content-end">
                         <pre>{description.length}/500</pre>
                       </Col>
                     </Row>
@@ -382,11 +354,7 @@ const GameInfoSection = ({ id, setUserGames }) => {
           </Row>
         </>
       )}
-      <ErrorToaster
-        display={!!success}
-        error={false}
-        message={"Game Uploaded"}
-      />
+      <ErrorToaster display={!!success} error={false} message={'Game Uploaded'} />
     </Container>
   );
 };

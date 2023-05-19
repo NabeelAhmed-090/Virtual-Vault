@@ -1,6 +1,6 @@
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import GenericCard from "./Card";
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import GenericCard from './Card';
 
 const GenericSection = ({ mostViewed, heading }) => {
   return (

@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { useEffect, useState } from 'react';
+import { GoogleMap, Marker } from '@react-google-maps/api';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 
 const AddressMap = ({ address, setAddress }) => {
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-  });
+  const isLoaded = false;
 
   const [center, setCenter] = useState({
     lat: 31.481630977050962,
-    lng: 74.30299263917533,
+    lng: 74.30299263917533
   });
 
   const handleLocationChange = (event) => {
@@ -17,7 +15,7 @@ const AddressMap = ({ address, setAddress }) => {
   };
 
   const handleSearch = () => {
-    const [lat, lng] = address.split(",").map(parseFloat);
+    const [lat, lng] = address.split(',').map(parseFloat);
     if (!isNaN(lat) && !isNaN(lng)) {
       setCenter({ lat, lng });
     }
@@ -25,7 +23,7 @@ const AddressMap = ({ address, setAddress }) => {
 
   useEffect(() => {
     if (address) {
-      const [lat, lng] = address.split(",").map(parseFloat);
+      const [lat, lng] = address.split(',').map(parseFloat);
       if (!isNaN(lat) && !isNaN(lng)) {
         setCenter({ lat, lng });
       }
@@ -39,7 +37,7 @@ const AddressMap = ({ address, setAddress }) => {
           <Col md={8} sm={12} lg={8}>
             <Form.Group as={Col} md="12">
               <Form.Control
-                className={"shadow-none"}
+                className={'shadow-none'}
                 required
                 type="text"
                 value={address}
@@ -59,11 +57,7 @@ const AddressMap = ({ address, setAddress }) => {
       {!isLoaded ? (
         <h1>Loading...</h1>
       ) : (
-        <GoogleMap
-          mapContainerClassName="map-container"
-          center={center}
-          zoom={10}
-        >
+        <GoogleMap mapContainerClassName="map-container" center={center} zoom={10}>
           <Marker position={center} />
         </GoogleMap>
       )}

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import LatestSection from "../../components/BlogSections/LatestSection";
-import Loader from "../../components/Loader";
-import GenericSection from "../../components/BlogSections/GenericSection";
-import "./index.css";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import LatestSection from '../../components/BlogSections/LatestSection';
+import Loader from '../../components/Loader';
+import GenericSection from '../../components/BlogSections/GenericSection';
+import './index.css';
 
 const Blogs = () => {
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ const Blogs = () => {
 
   useEffect(() => {
     const getBlogs = async () => {
-      const { data } = await axios.get("/api/blogs");
+      const { data } = await axios.get('/api/blogs');
       setMostViewed(data.mostViewed);
       setLatest(data.latest);
       setOldArticles(data.oldArticles);
@@ -38,9 +38,9 @@ const Blogs = () => {
 
   const styles = {
     backgroundImage: `url(${selected.imagePath})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center center",
-    backgroundRepeat: "no-repeat",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat'
   };
 
   const handleListClick = (index) => {
@@ -49,7 +49,7 @@ const Blogs = () => {
   };
 
   return (
-    <div className={loading ? "temp-height" : "blog-main-container"}>
+    <div className={loading ? 'temp-height' : 'blog-main-container'}>
       {loading ? (
         <Loader message="Fetching Blogs..." />
       ) : (
@@ -58,10 +58,7 @@ const Blogs = () => {
             <Row>
               <Col className="mt-5" md={3} lg={3} sm={12} xs={12}>
                 <Button variant="dark" className="ml-auto w-100">
-                  <a
-                    style={{ textDecoration: "none", color: "white" }}
-                    href="/blogs/create"
-                  >
+                  <a style={{ textDecoration: 'none', color: 'white' }} href="/blogs/create">
                     Write your Own Blog
                   </a>
                 </Button>

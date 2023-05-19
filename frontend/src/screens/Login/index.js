@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
-import LoginForm from "../../components/LoginForm";
-import SignupForm from "../../components/SignupForm";
-import "./index.css";
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+import LoginForm from '../../components/LoginForm';
+import SignupForm from '../../components/SignupForm';
+import './index.css';
 
 const Login = () => {
   let history = useNavigate();
@@ -16,9 +16,9 @@ const Login = () => {
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin === true) {
-      history("/admin");
+      history('/admin');
     } else if (userInfo) {
-      history("/home");
+      history('/home');
     }
   }, [userInfo, history]);
 

@@ -1,7 +1,7 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Badge, Button, Card, Col, Container, Row } from "react-bootstrap";
-import "./index.css";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap';
+import './index.css';
 
 const SearchGameCard = ({ _id, title, price, isGameNew, imagePath, units }) => {
   let history = useNavigate();
@@ -15,10 +15,10 @@ const SearchGameCard = ({ _id, title, price, isGameNew, imagePath, units }) => {
           variant="top"
           src={imagePath}
           style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center",
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center'
           }}
         />
       </div>

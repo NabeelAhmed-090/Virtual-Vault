@@ -1,8 +1,6 @@
-import asyncHandler from "express-async-handler";
-import Delivery from "../models/deliveryModel.js";
-import mongoose from "mongoose";
-import ObjectId from "mongodb";
-import User from "../models/userModel.js";
+import asyncHandler from 'express-async-handler';
+import Delivery from '../models/deliveryModel.js';
+import User from '../models/userModel.js';
 
 // @desc Get Delivery Address
 // @route Get /api/delivery/:id
@@ -13,17 +11,17 @@ const getDeliveryAddress = asyncHandler(async (req, res) => {
     const address = await Delivery.findOne({ user: req.params.id });
     if (address) {
       res.json({
-        address: address,
+        address: address
       });
     } else {
       res.json({
-        address: null,
+        address: null
       });
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in fetching Address",
+      message: 'Error in fetching Address'
     });
   }
 });
@@ -44,12 +42,12 @@ const setDeliveryAddress = asyncHandler(async (req, res) => {
     } else {
       const existingUser = await User.findById(user);
       if (!existingUser) {
-        throw new Error("User not found");
+        throw new Error('User not found');
       }
       const newDelivery = await Delivery.create({
         address,
         additionalInfo,
-        user: existingUser._id,
+        user: existingUser._id
       });
       res.json({ newDelivery });
     }

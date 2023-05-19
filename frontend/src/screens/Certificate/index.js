@@ -1,17 +1,17 @@
-import html2pdf from "html2pdf.js";
-import React, { useEffect, useRef, useState } from "react";
-import { Container, Row, Col, Image, Button } from "react-bootstrap";
-import signature from "../../Images/signature.jpg";
-import logo from "../../Images/logo.jpg";
-import axios from "axios";
-import Loader from "../../components/Loader";
-import { useParams } from "react-router-dom";
+import html2pdf from 'html2pdf.js';
+import React, { useEffect, useRef, useState } from 'react';
+import { Container, Row, Col, Image, Button } from 'react-bootstrap';
+import signature from '../../Images/signature.jpg';
+import logo from '../../Images/logo.jpg';
+import axios from 'axios';
+import Loader from '../../components/Loader';
+import { useParams } from 'react-router-dom';
 
 const Certificate = () => {
   let { id } = useParams();
 
   const [certificate, setCertificate] = useState({});
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState('');
 
   const [loading, setLoading] = useState(true);
 
@@ -20,10 +20,10 @@ const Certificate = () => {
       const { data } = await axios.get(`/api/certificate/${id}`);
       setCertificate(data.certificate);
       const date = new Date(data.certificate.createdAt);
-      const formattedDate = date.toLocaleDateString("en-US", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
+      const formattedDate = date.toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
       });
       setDate(formattedDate);
       setLoading(false);
@@ -42,10 +42,10 @@ const Certificate = () => {
     const height = input.offsetHeight;
     const options = {
       margin: 0.5,
-      filename: "certificate.pdf",
-      image: { type: "jpeg", quality: 0.98 },
+      filename: 'certificate.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait", height },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait', height }
     };
 
     html2pdf().set(options).from(input).save();
@@ -54,14 +54,14 @@ const Certificate = () => {
   return (
     <>
       {loading ? (
-        <div style={{ height: "60vh" }}>
+        <div style={{ height: '60vh' }}>
           <Loader />
         </div>
       ) : (
         <>
           <Container
             className="my-5 p-5"
-            style={{ boxShadow: "0 0 6px rgb(0,0,0.5)" }}
+            style={{ boxShadow: '0 0 6px rgb(0,0,0.5)' }}
             ref={componentRef}
           >
             <Row className="mt-3">

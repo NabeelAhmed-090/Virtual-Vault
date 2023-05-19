@@ -1,8 +1,8 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import "./index.css";
-import Map from "../Maps";
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import './index.css';
+import Map from '../Maps';
 
 /* eslint-disable react/prop-types */
 

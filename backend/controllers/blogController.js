@@ -1,8 +1,8 @@
-import asyncHandler from "express-async-handler";
-import Blog from "../models/blogModel.js";
-import Notification from "../models/notificationModel.js";
-import User from "../models/userModel.js";
-import cloudinary from "cloudinary";
+import asyncHandler from 'express-async-handler';
+import Blog from '../models/blogModel.js';
+import Notification from '../models/notificationModel.js';
+import User from '../models/userModel.js';
+import cloudinary from 'cloudinary';
 
 // @desc Get All blogs
 // @route Get /api/blogs/all
@@ -16,13 +16,13 @@ const getAllBlogs = asyncHandler(async (req, res) => {
 
     if (blogs) {
       res.json({
-        blogs: blogs,
+        blogs: blogs
       });
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in fetching blogs",
+      message: 'Error in fetching blogs'
     });
   }
 });
@@ -37,13 +37,13 @@ const getUserBlogs = asyncHandler(async (req, res) => {
     var blogs = allBlogs.filter((blog) => blog.user.toString() == user);
     if (blogs) {
       res.json({
-        blogs: blogs,
+        blogs: blogs
       });
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in fetching blogs",
+      message: 'Error in fetching blogs'
     });
   }
 });
@@ -61,29 +61,26 @@ const updateBlogApproval = asyncHandler(async (req, res) => {
       blog.isApproved = isApproved;
       const newNotification = new Notification({
         user: blog.user,
-        message:
-          isApproved == true
-            ? "Your blog has been approved"
-            : "Your blog has been rejected",
+        message: isApproved == true ? 'Your blog has been approved' : 'Your blog has been rejected',
         unread: true,
-        link: "/blogs/" + blog._id,
+        link: '/blogs/' + blog._id
       });
       await newNotification.save();
       await blog.save();
       res.json({
-        blog: blog,
+        blog: blog
       });
     } else {
       res.isApproved(404);
       res.json({
         blog: null,
-        message: "Blog not found",
+        message: 'Blog not found'
       });
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in updating isApproved",
+      message: 'Error in updating isApproved'
     });
   }
 });
@@ -109,13 +106,13 @@ const getBlogs = asyncHandler(async (req, res) => {
       res.json({
         mostViewed: mostViewed,
         latest: latest,
-        oldArticles: oldArticles,
+        oldArticles: oldArticles
       });
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in fetching blogs",
+      message: 'Error in fetching blogs'
     });
   }
 });
@@ -135,17 +132,17 @@ const getBlog = asyncHandler(async (req, res) => {
       res.send({
         ...blog._doc,
         user: user.userName,
-        date: date,
+        date: date
       });
     } else {
       res.status(404);
-      throw new Error("Blog not found");
+      throw new Error('Blog not found');
     }
   } catch (error) {
     res.status(404);
     res.json({
       error: error,
-      message: "Blog not found",
+      message: 'Blog not found'
     });
   }
 });
@@ -157,7 +154,7 @@ async function uploadImageToCloudinary(image) {
     return result;
   } catch (error) {
     console.error(error);
-    throw new Error("Error uploading image to Cloudinary");
+    throw new Error('Error uploading image to Cloudinary');
   }
 }
 
@@ -177,7 +174,7 @@ const createBlog = asyncHandler(async (req, res) => {
       title: title,
       blog: blog,
       totalViews: 0,
-      imagePath: cloudinaryResult.secure_url,
+      imagePath: cloudinaryResult.secure_url
     });
 
     const savedBlog = await newBlog.save();
@@ -185,15 +182,8 @@ const createBlog = asyncHandler(async (req, res) => {
     res.status(201).json(savedBlog);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
-export {
-  getBlogs,
-  getBlog,
-  createBlog,
-  getAllBlogs,
-  updateBlogApproval,
-  getUserBlogs,
-};
+export { getBlogs, getBlog, createBlog, getAllBlogs, updateBlogApproval, getUserBlogs };

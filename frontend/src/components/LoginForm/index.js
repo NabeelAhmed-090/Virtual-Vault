@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Form, Button, InputGroup } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { loginFunction } from "../../actions/userActions";
-import Loader from "../Loader";
-import ErrorToaster from "../ErrorToaster";
-import "./index.css";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { loginFunction } from '../../actions/userActions';
+import Loader from '../Loader';
+import ErrorToaster from '../ErrorToaster';
+import './index.css';
 
 const LoginForm = ({ login, setLogin }) => {
   const dispatch = useDispatch();
@@ -14,15 +14,15 @@ const LoginForm = ({ login, setLogin }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error } = userLogin;
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [type, setType] = useState(true);
   const [validated, setValidated] = useState(false);
 
   const resetForm = () => {
-    setEmail("");
-    setPassword("");
+    setEmail('');
+    setPassword('');
     setValidated(false);
   };
 
@@ -48,9 +48,9 @@ const LoginForm = ({ login, setLogin }) => {
   }, [error]);
 
   return (
-    <div className={login ? "display main-div" : "hide main-div"}>
+    <div className={login ? 'display main-div' : 'hide main-div'}>
       {loading ? (
-        <div style={{ height: "30vh" }}>
+        <div style={{ height: '30vh' }}>
           <Loader />
         </div>
       ) : (
@@ -62,16 +62,14 @@ const LoginForm = ({ login, setLogin }) => {
                   <Form.Group as={Col} md="12" controlId="validationEmail">
                     <Form.Label>Email</Form.Label>
                     <Form.Control
-                      className={"shadow-none"}
+                      className={'shadow-none'}
                       required
                       type="email"
                       placeholder="enter email"
                       onBlur={(e) => setEmail(e.target.value)}
                     />
                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                    <Form.Control.Feedback type="invalid">
-                      Email is required.
-                    </Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">Email is required.</Form.Control.Feedback>
                   </Form.Group>
                 </Row>
                 <Row className="mb-3">
@@ -79,9 +77,9 @@ const LoginForm = ({ login, setLogin }) => {
                     <Form.Label>Password</Form.Label>
                     <InputGroup hasValidation>
                       <Form.Control
-                        className={"shadow-none"}
+                        className={'shadow-none'}
                         required
-                        type={type ? "password" : "text"}
+                        type={type ? 'password' : 'text'}
                         placeholder="password"
                         onChange={(e) => setPassword(e.target.value)}
                       />
@@ -99,7 +97,7 @@ const LoginForm = ({ login, setLogin }) => {
                   </Form.Group>
                 </Row>
                 <Button type="submit" variant="dark" className="w-100 mt-3">
-                  {" "}
+                  {' '}
                   Login
                 </Button>
               </Form>
@@ -118,9 +116,7 @@ const LoginForm = ({ login, setLogin }) => {
           <ErrorToaster
             display={!!error}
             message={
-              error && error.includes("500") === true
-                ? "Unable to connect to server"
-                : `${error}`
+              error && error.includes('500') === true ? 'Unable to connect to server' : `${error}`
             }
           />
         </>

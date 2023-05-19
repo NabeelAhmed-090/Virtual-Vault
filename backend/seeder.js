@@ -1,17 +1,12 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import colors from "colors";
-import users from "./data/users.js";
-import certificates from "./data/certificate.js";
-import blogs from "./data/blogs.js";
-import User from "./models/userModel.js";
-import Certificate from "./models/certificateModel.js";
-import Notification from "./models/notificationModel.js";
-import Blog from "./models/blogModel.js";
-import connectDB from "./config/db.js";
-import notifications from "./data/notifications.js";
-import transactions from "./data/transaction.js";
-import Transaction from "./models/transactionModel.js";
+import dotenv from 'dotenv';
+import colors from 'colors'; // eslint-disable-line no-unused-vars
+import User from './models/userModel.js';
+import Certificate from './models/certificateModel.js';
+import Notification from './models/notificationModel.js';
+import Blog from './models/blogModel.js';
+import connectDB from './config/db.js';
+import transactions from './data/transaction.js';
+import Transaction from './models/transactionModel.js';
 
 dotenv.config();
 
@@ -23,7 +18,7 @@ const importData = async () => {
 
     await Transaction.insertMany(transactions);
 
-    console.log("Data Imported!".green.inverse);
+    console.log('Data Imported!'.green.inverse);
     process.exit(0);
   } catch (error) {
     console.log(`${error}`.red.inverse.underline);
@@ -34,7 +29,12 @@ const importData = async () => {
 const destroyData = async () => {
   try {
     await User.deleteMany();
-    console.log("Data Destroyed!".red.inverse.bold);
+    await Certificate.deleteMany();
+    await Notification.deleteMany();
+    await Blog.deleteMany();
+    await Transaction.deleteMany();
+
+    console.log('Data Destroyed!'.red.inverse.bold);
     process.exit(0);
   } catch (error) {
     console.log(`${error}`.red.inverse.underline);
@@ -42,7 +42,7 @@ const destroyData = async () => {
   }
 };
 
-if (process.argv[2] === "-d") {
+if (process.argv[2] === '-d') {
   destroyData();
 } else {
   importData();

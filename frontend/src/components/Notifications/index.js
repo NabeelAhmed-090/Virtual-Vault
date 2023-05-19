@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
-import { Col, Dropdown, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { Col, Dropdown, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const Notifications = ({ id }) => {
   let history = useNavigate();
@@ -32,9 +32,7 @@ const Notifications = ({ id }) => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:5000/api/notifications/${id}`
-        );
+        const res = await fetch(`http://localhost:5000/api/notifications/${id}`);
         const data = await res.json();
         setNotifications(data.notifications);
         setUnreadCount(data.unreadNotifications);
@@ -59,9 +57,9 @@ const Notifications = ({ id }) => {
     const dayDiff = Math.floor(timeDiff / 86400000);
 
     if (dayDiff === 1) {
-      return "yesterday";
+      return 'yesterday';
     } else if (dayDiff === 0) {
-      return "today";
+      return 'today';
     } else {
       return `${dayDiff} days ago`;
     }
@@ -81,27 +79,25 @@ const Notifications = ({ id }) => {
               className="cursor"
               onClick={() => handleOnClick(notification.link, notification._id)}
             >
-              <Row style={{ width: "32vw" }}>
+              <Row style={{ width: '32vw' }}>
                 <Col md={1} sm={12} lg={1}>
                   <div
                     className="mt-2"
                     style={{
-                      height: "10px",
-                      width: "10px",
-                      borderRadius: "50%",
-                      backgroundColor: notification.unread
-                        ? "#00006d"
-                        : "black",
+                      height: '10px',
+                      width: '10px',
+                      borderRadius: '50%',
+                      backgroundColor: notification.unread ? '#00006d' : 'black'
                     }}
                   ></div>
                 </Col>
                 <Col md={7} sm={12} lg={7}>
                   <div
                     style={{
-                      width: "100%",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      width: '100%',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis'
                     }}
                   >
                     {notification.message}
@@ -116,7 +112,7 @@ const Notifications = ({ id }) => {
           ))
         ) : (
           <Dropdown.Item>
-            <Row style={{ width: "32vw" }}>
+            <Row style={{ width: '32vw' }}>
               <Col className="text-center">
                 <h3>No notifications</h3>
               </Col>

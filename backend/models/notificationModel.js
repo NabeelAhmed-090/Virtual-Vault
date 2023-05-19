@@ -1,30 +1,30 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const notificationSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      default: null,
+      default: null
     },
     message: {
       type: String,
-      required: true,
+      required: true
     },
     unread: {
       type: Boolean,
       default: true,
-      required: true,
+      required: true
     },
     link: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
-const Notification = mongoose.model("Notification", notificationSchema);
+const Notification = mongoose.model('Notification', notificationSchema);
 
 export default Notification;

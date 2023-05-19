@@ -1,6 +1,6 @@
-import asyncHandler from "express-async-handler";
-import Sales from "../models/salesModel.js";
-import User from "../models/userModel.js";
+import asyncHandler from 'express-async-handler';
+import Sales from '../models/salesModel.js';
+import User from '../models/userModel.js';
 
 // @desc Get Sales
 // @route Get /api/sales
@@ -15,22 +15,22 @@ const getSales = asyncHandler(async (req, res) => {
         return {
           user: user,
           amount: sale.amount,
-          units: sale.unitsSold,
+          units: sale.unitsSold
         };
       });
       const users = await Promise.all(userPromises);
       res.json({
-        sellers: users,
+        sellers: users
       });
     } else {
       res.json({
-        sellers: [],
+        sellers: []
       });
     }
   } catch (error) {
     res.json({
       error: error,
-      message: "Error in fetching Sales",
+      message: 'Error in fetching Sales'
     });
   }
 });

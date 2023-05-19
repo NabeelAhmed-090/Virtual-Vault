@@ -1,6 +1,6 @@
-import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import SearchGameCard from "../SearchGameCard";
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import SearchGameCard from '../SearchGameCard';
 
 const SearchGamesDisplayArea = ({ gamesData }) => {
   return (
