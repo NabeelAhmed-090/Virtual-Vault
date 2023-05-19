@@ -1,4 +1,3 @@
-
 # Virtual Vault
 
 Virtual Vault is an innovative and user-friendly e-commerce store designed exclusively for games. It offers a wide range of gaming products and facilitates a smooth buying and selling experience for gamers and enthusiasts.
@@ -9,12 +8,9 @@ One of the unique aspects of Virtual Vault is the recognition it gives to except
 
 Whether you're a passionate gamer looking for the latest releases or an aspiring seller seeking a reliable platform to showcase your products, Virtual Vault provides a secure, immersive, and rewarding environment for all your gaming needs.
 
-
-
 ## Authors
 
 - [@NabeelAhmed-090](https://github.com/NabeelAhmed-090)
-
 
 ## Contributing
 
@@ -50,24 +46,25 @@ To format the frontend files run in root
   cd frontend
   npm run format
 ```
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
 
 `NODE_ENV`
-`PORT` 
+`PORT`
 `STRIPE_SECRET_KEY`
-`MONGO_URI` 
+`MONGO_URI`
 `JWT_SECRET`
 `CLOUD_NAME`
 `API_KEY`
 `API_SECRET`
+
 ## Tech Stack
 
-**Client:** React, Redux, Bootstrap 
+**Client:** React, Redux, Bootstrap
 
 **Server:** Node, Express
-
 
 ## Run Locally
 
@@ -117,7 +114,6 @@ To run both server and client together
   npm run dev
 ```
 
-
 ## Features
 
 - Login/Signup/Logout
@@ -132,21 +128,18 @@ To run both server and client together
 - Notifications
 - Certificates
 - Blogs
+
 ## Color Reference
 
-| Color             | Hex                                                                |
-| ----------------- | ------------------------------------------------------------------ |
-| Theme Color 1 | ![#00000](https://via.placeholder.com/10/000000?text=+) #000000 |
+| Color         | Hex                                                              |
+| ------------- | ---------------------------------------------------------------- |
+| Theme Color 1 | ![#00000](https://via.placeholder.com/10/000000?text=+) #000000  |
 | Theme Color 2 | ![#FFFFFF](https://via.placeholder.com/10/FFFFFF?text=+) #FFFFFF |
-
-
 
 ## Acknowledgements
 
- - [Alpha Coders](https://alphacoders.com/)
-
+- [Alpha Coders](https://alphacoders.com/)
 
 ## Support
 
 For support, email nabeelahmedamir@gmail.com
-
